@@ -225,4 +225,3 @@ const AdminTableComponent = () => {
 
 export default AdminTableComponent;
 
-export default AdminTableComponent;
