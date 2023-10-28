@@ -106,7 +106,7 @@ const KYC = () => {
 
 
         const API = axios.create({
-          baseURL: "http://localhost:8000",
+          baseURL: "https://service-provider-apis.onrender.com",
           withCredentials: true,
         });
        API
@@ -122,6 +122,23 @@ const KYC = () => {
       return;
     }
     return alert("Please enter Details");
+  }
+
+  const handleSingleKycSubmit = (e)=>{
+    e.preventDefault();
+
+
+    const API = axios.create({
+      baseURL: "https://service-provider-apis.onrender.com",
+      withCredentials: true,
+    });
+   API
+     .post(
+       `/api/v1/superadmin/kyc/${singleRole.role}`,
+     )
+    .then((res) => console.log('KYC Res: ',res))
+    .catch((error)=>console.log('kyc Error: ',error));
+
   }
       
    
@@ -290,7 +307,7 @@ const KYC = () => {
         </div>
 
         :
-
+                       // for single KYC
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 
           <form className="space-y-6" action="#" method="POST">
@@ -304,12 +321,12 @@ const KYC = () => {
                     <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
                       <span className="flex items-center">
                         <img
-                          src={kycSelected.avatar}
+                          src={singleRole.avatar}
                           alt=""
                           className="h-5 w-5 flex-shrink-0 rounded-full"
                         />
                         <span className="ml-3 block truncate">
-                          {kycSelected.role}
+                          {singleRole.role}
                         </span>
                       </span>
                       <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
@@ -390,7 +407,7 @@ const KYC = () => {
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                onClick={handleFileSubmit}
+                onClick={handleSingleKycSubmit}
               >
                 KYC
               </button>
@@ -466,24 +483,6 @@ const KYC = () => {
 
         }
       </div>
-
-
-
-      {/* <div className="col-span-2 p-4">
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            File KYC Page
-          </h2>
-        </div>
-
-
-
-
-        </div>
-        </div> */}
-
-
 
     </div>
   );
