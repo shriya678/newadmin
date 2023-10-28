@@ -25,4 +25,3 @@ const CardItem = ({CardTitle,CardData,FluctuateData,BadgeColor,BadgeIcon,DeltaVa
 
 export default CardItem;
 
-export default CardItem;
