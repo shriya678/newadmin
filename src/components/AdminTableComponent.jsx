@@ -1,4 +1,3 @@
-// import { BellIcon, ChartBarIcon, ExternalLinkIcon, MailIcon, StatusOnlineIcon } from "@heroicons/react/outline";
 import { SearchIcon } from "@heroicons/react/solid";
 import {
   Card,
@@ -63,7 +62,7 @@ const AdminTableComponent = () => {
   useEffect(()=>{
 
     const API = axios.create({
-      baseURL: "http://localhost:8000",
+      baseURL: "https://service-provider-apis.onrender.com",
       withCredentials: true,
     });
 
@@ -83,7 +82,7 @@ const AdminTableComponent = () => {
   const handleEdit = (id)=>{
 
     const API = axios.create({
-      baseURL: "http://localhost:8000",
+      baseURL: "https://service-provider-apis.onrender.com",
       withCredentials: true,
     });
 
@@ -107,7 +106,7 @@ const AdminTableComponent = () => {
   const handleUpdate = () =>{
 
     const API = axios.create({
-      baseURL: "http://localhost:8000",
+      baseURL: "https://service-provider-apis.onrender.com",
       withCredentials: true,
     });
 
@@ -223,5 +222,7 @@ const AdminTableComponent = () => {
   )
   
 };
+
+export default AdminTableComponent;
 
 export default AdminTableComponent;
