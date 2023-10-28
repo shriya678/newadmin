@@ -181,4 +181,3 @@ const BarChartComponent = () => {
 
 export default BarChartComponent;
 
-export default BarChartComponent;
