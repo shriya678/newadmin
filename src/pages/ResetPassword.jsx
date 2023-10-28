@@ -22,9 +22,6 @@ export default function ResetPassword() {
             `https://service-provider-apis.onrender.com/api/v1/superadmin/resetPassword/${token}`,
             
             {
-                // params: {
-                //     token: token,
-                //   },
               password:password,
               confirmPassword:confirmPassword
             }
