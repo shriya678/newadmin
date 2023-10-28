@@ -61,13 +61,12 @@ export default function SignUp() {
     if (email && password) {
 
       const API = axios.create({
-        baseURL: "http://localhost:8000",
+        baseURL: "https://service-provider-apis.onrender.com",
         withCredentials: true,
       });
 
       API
        .post(
-          // "https://service-provider-apis.onrender.com/api/v1/superadmin/",
           "/api/v1/superadmin/",
           {
             name:name,
