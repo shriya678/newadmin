@@ -30,17 +30,15 @@ function App() {
 
   const logindata = JSON.parse(localStorage.getItem("login"));
 
-  console.log("login: ",logindata.email);
+
 
   // profiledata ? setUser(profiledata) : setUser(undefined)
 
-  // if(profiledata){
-  //   setUser(profiledata);
-  // }
 
   useEffect(()=>{
+    if(logindata){
     const API = axios.create({
-             baseURL: "http://localhost:8000",
+             baseURL: "https://service-provider-apis.onrender.com",
              withCredentials: true,
            });
     
@@ -52,36 +50,9 @@ function App() {
            }).catch((error)=>{
             console.log("error: ",error);
            })
-  },[logindata.email, logindata.password])
+          }
+  },[logindata])
 
-
-  // function handleLogin() {
-  //   if (email && password) {
-  //     const API = axios.create({
-  //       baseURL: "http://localhost:8000",
-  //       withCredentials: true,
-  //     });
-
-  //     API?.post("/api/v1/superadmin/login/Web", {
-  //       email: email,
-  //       password: password,
-  //     })
-
-  //       .then((res) => {
-        
-  //         console.log("Login Res: ", res);
-
-  //         const pdata = res.data.admin;
-
-  //         localStorage.setItem("profile", JSON.stringify({ pdata }));
-
-  //       //  const profiledata = JSON.parse(localStorage.getItem("profile"));
-  //       })
-  //       .catch((error) => console.log(error));
-  //     return;
-  //   }
-  //   return alert("Please enter your email");
-  // }
   
 
   return (
