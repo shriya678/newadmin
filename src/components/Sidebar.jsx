@@ -95,13 +95,13 @@ const Sidebar = () => {
         <h1 className="text-gray-200 mb-4">Top</h1>
         </div>
 
-        <div className="items-center justify-start flex m-4 gap-2 cursor-pointer">
+        {/* <div className="items-center justify-start flex m-4 gap-2 cursor-pointer">
         <LogoutIcon
           width={40}
           className="bg-gray-600 p-2 rounded-lg mb-4 text-gray-300"
         />
          <h1 className="text-gray-200 mb-4">SignOut</h1>
-        </div>
+        </div> */}
 
       </div>
     </div>
@@ -109,5 +109,4 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
 
