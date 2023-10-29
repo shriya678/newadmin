@@ -40,6 +40,10 @@ const KYC = () => {
   const [singleRole,setSingleRole] = useState (people[0]);
 
   const [fileKYC,setFileKYC] = useState();
+  const [singleKYC,setSingleKYC] = useState();
+  const [downloadKYC,setDownloadKYC] = useState();
+
+  const [selectedFile,setSelectedFile] = useState();
 
   // submit state
   const [excelData, setExcelData] = useState(null);
@@ -67,7 +71,7 @@ const KYC = () => {
 
   //  console.log(role);
 
-  let selectedFile;
+  
   // onchange event
   const handleFile = (e) => {
     let fileTypes = [
@@ -76,8 +80,10 @@ const KYC = () => {
       "text/csv",
     ];
 
-    selectedFile = e.target.files[0];
-    console.log(selectedFile);
+  //  selectedFile = e.target.files[0];
+    setSelectedFile(e.target.files[0]);
+
+
     if (selectedFile) {
       if (selectedFile && fileTypes.includes(selectedFile.type)) {
         setTypeError(null);
@@ -87,6 +93,10 @@ const KYC = () => {
           setExcelFile(e.target.result);
         };
 
+        // console.log("Excel: ",excelFile);
+
+        // console.log("Selected: ",selectedFile);
+
       } else {
         setTypeError("Please select only excel file types");
         setExcelFile(null);
@@ -94,6 +104,8 @@ const KYC = () => {
     } else {
       console.log("Please select your file");
     }
+
+
   };
 
   // submit event
@@ -102,19 +114,32 @@ const KYC = () => {
      console.log("hello");
      e.preventDefault();
 
-      if (excelData && kycSelected ) {
+     console.log("Selected: ",selectedFile);
+
+      // if (excelData && kycSelected ) {
+      if (selectedFile && kycSelected ) {
+
+        const formData = new FormData();
+        formData.append('KYC_file', selectedFile)
+
+
 
 
         const API = axios.create({
-          baseURL: "https://service-provider-apis.onrender.com",
+          baseURL: `${import.meta.env.VITE_BASE_URL}`,
           withCredentials: true,
+          // headers:{
+          //   "Content-Type":"multipart/form-data"
+          // }
         });
        API
          .post(
-           `/api/v1/superadmin/kycfile/${kycSelected.role}`,
-          
+           `/api/v1/superadmin/kycfile/${kycSelected.role}`,formData,
            {
-            "KYC_file":selectedFile,
+            // "KYC_file":selectedFile
+            headers:{
+              "Content-Type":"multipart/form-data"
+            }
            }
          )
         .then((res) => console.log('KYC Res: ',res))
@@ -129,7 +154,7 @@ const KYC = () => {
 
 
     const API = axios.create({
-      baseURL: "https://service-provider-apis.onrender.com",
+      baseURL: `${import.meta.env.VITE_BASE_URL}`,
       withCredentials: true,
     });
    API
@@ -139,6 +164,40 @@ const KYC = () => {
     .then((res) => console.log('KYC Res: ',res))
     .catch((error)=>console.log('kyc Error: ',error));
 
+  }
+
+  // some error in part
+  const handleDownloadFile = ()=>{
+    // e.preventDefault();
+
+
+    const API = axios.create({
+      baseURL: `${import.meta.env.VITE_BASE_URL}`,
+      withCredentials: true,
+    });
+   API
+     .get(
+       `/api/v1/superadmin/kyc/download/${singleRole.role}`,
+       {
+        responseType:'blob'
+       }
+     )
+    .then((res)=>{
+      const url = window.URL.createObjectURL(res.data);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'kyc.csv';
+
+      document.body.appendChild(link);
+
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+
+      // link.parentNode.removeChild(link);
+    })
+    .catch((error)=>console.log('kyc Error: ',error));
   }
       
    
@@ -158,9 +217,21 @@ const KYC = () => {
         <Card className="w-xs dark:bg-tremor-background " decoration="top" decorationColor="indigo">
       <Flex justifyContent="between" alignItems="center">
 
-      <Button onClick={()=>setFileKYC(true)}>File KYC</Button>
-      <Button onClick={()=>setFileKYC(false)}>Single KYC</Button>
-      <Button>Download KYC</Button>
+      <Button onClick={()=>{
+        setFileKYC(true)
+        setDownloadKYC(false)
+        setSingleKYC(false)
+        }}>File KYC</Button>
+      <Button onClick={()=>{
+        setFileKYC(false)
+        setSingleKYC(true)
+        setDownloadKYC(false)
+        }}>Single KYC</Button>
+      <Button onClick={()=>{
+         setFileKYC(false)
+        setSingleKYC(false)
+        setDownloadKYC(true)
+      }}>Download KYC</Button>
       </Flex>
       {/* <Metric>$ 34,743</Metric> */}
     </Card>
@@ -169,8 +240,12 @@ const KYC = () => {
          {fileKYC ? <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             File KYC Page
           </h2> :
+          singleKYC ?
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Single KYC Page
+          </h2> :
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            Download KYC Page
           </h2>
          }
 
@@ -288,11 +363,11 @@ const KYC = () => {
               onChange={handleFile}
             />
 
-            {typeError && (
+            {typeError ? 
               <div className="mt-2 text-sm text-red-600" role="alert">
                 {typeError}
-              </div>
-            )}
+              </div> : ""
+            }
 
             <div>
               <button
@@ -307,7 +382,7 @@ const KYC = () => {
         </div>
 
         :
-                       // for single KYC
+      singleKYC ?                  // for single KYC
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 
           <form className="space-y-6" action="#" method="POST">
@@ -416,6 +491,114 @@ const KYC = () => {
           </form>
 
           </div>
+
+          :
+                          // for download kyc
+          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+
+          <form className="space-y-6" action="#" method="GET">
+          <Listbox value={singleRole} onChange={setSingleRole}>
+              {({ open }) => (
+                <>
+                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">
+                    Select Role
+                  </Listbox.Label>
+                  <div className="relative mt-2">
+                    <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
+                      <span className="flex items-center">
+                        <img
+                          src={singleRole.avatar}
+                          alt=""
+                          className="h-5 w-5 flex-shrink-0 rounded-full"
+                        />
+                        <span className="ml-3 block truncate">
+                          {singleRole.role}
+                        </span>
+                      </span>
+                      <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                        <ChevronDownIcon
+                          className="h-5 w-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </Listbox.Button>
+
+                    <Transition
+                      show={open}
+                      as={Fragment}
+                      leave="transition ease-in duration-100"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
+                      <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1
+                       ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        {people.map((person) => (
+                          <Listbox.Option
+                            key={person.id}
+                            className={({ active }) =>
+                              classNames(
+                                active
+                                  ? "bg-indigo-600 text-white"
+                                  : "text-gray-900",
+                                "relative cursor-default select-none py-2 pl-3 pr-9"
+                              )
+                            }
+                            value={person}
+                          >
+                            {({ selected, active }) => (
+                              <>
+                                <div className="flex items-center">
+                                  <img
+                                    src={person.avatar}
+                                    alt=""
+                                    className="h-5 w-5 flex-shrink-0 rounded-full"
+                                  />
+                                  <span
+                                    className={classNames(
+                                      selected
+                                        ? "font-semibold"
+                                        : "font-normal",
+                                      "ml-3 block truncate"
+                                    )}
+                                  >
+                                    {person.role}
+                                  </span>
+                                </div>
+
+                                {selected ? (
+                                  <span
+                                    className={classNames(
+                                      active ? "text-white" : "text-indigo-600",
+                                      "absolute inset-y-0 right-0 flex items-center pr-4"
+                                    )}
+                                  >
+                                    <CheckIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                ) : null}
+                              </>
+                            )}
+                          </Listbox.Option>
+                        ))}
+                      </Listbox.Options>
+                    </Transition>
+                  </div>
+                </>
+              )}
+            </Listbox>
+
+            <button
+            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+           onClick={() => handleDownloadFile()}
+             >
+           Download file
+           </button>
+
+          </form>
+
+          </div> 
 
 
 
