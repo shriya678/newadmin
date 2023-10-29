@@ -33,6 +33,12 @@ export default function SignUp() {
 
   const [selected, setSelected] = useState(people[0]);
 
+  const [sucess,setSucess] = useState();
+  const [loginError,setLoginError] = useState();
+  const [loading,setLoading] = useState();
+
+
+
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
@@ -43,25 +49,16 @@ export default function SignUp() {
   const [error,setError] = useState(false);
 
 
-  // console.log("User: ",setUser);
-
-
-  // const API = axios.create({
-  //   baseURL: "http://localhost:8000",
-  //   withCredentials: true,
-  // });
-
-  // API?.post("/api/v1/superadmin/login/Web", {
-  //   email: email,
-  //   password: password,
-  // })
-
 
   function handleSignUp() {
     if (email && password) {
 
+      setLoading(true);
+      setSucess(false);
+      setLoginError(false);
+
       const API = axios.create({
-        baseURL: "https://service-provider-apis.onrender.com",
+        baseURL: `${import.meta.env.VITE_BASE_URL}`,
         withCredentials: true,
       });
 
@@ -77,10 +74,23 @@ export default function SignUp() {
           }
         )
         .then((res) => {
+
+          setSucess(true);
+          setLoading(false);
+          setLoginError(false);
+
         console.log(res.data)
+        location.reload();
         }
         )
-        .catch(console.log);
+        .catch((error)=>{
+
+          setSucess(false);
+          setLoading(false);
+          setLoginError(true);
+
+          console.log(error);
+        });
       return;
     }
     return alert("Please enter your email");
@@ -254,6 +264,10 @@ export default function SignUp() {
                   </button>
                 </div>
               </form>
+
+              {loading ? <div><h1>Loading...</h1></div>
+                 : sucess ? <div><h1>Admin Created Successfully</h1></div> 
+                 : loginError ? <div><h1>Authentication Error</h1></div> : ""}
             </div>
           </div>
         </div>
