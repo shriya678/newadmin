@@ -18,7 +18,7 @@ const Sidebar = () => {
   return (
     <div className="bg-slate-800 w-14 sm:w-60 h-[300vh]">
 
-    <div className="fixed left-[-7px] sm:left-1">
+    <div className=" left-[-7px] sm:left-1">
     <div className="items-center justify-start flex m-4 gap-2 cursor-pointer">
     <PresentationChartBarIcon width={40} className="bg-gray-600 p-2 rounded-lg mb-4 text-gray-300" />
     <h1 className="text-gray-200 mb-4 text-base font-bold">Logo</h1>
