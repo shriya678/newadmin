@@ -19,7 +19,7 @@ export default function ResetPassword() {
   
         axios
           .post(
-            `https://service-provider-apis.onrender.com/api/v1/superadmin/resetPassword/${token}`,
+            `${import.meta.env.VITE_BASE_URL}/api/v1/superadmin/resetPassword/${token}`,
             
             {
               password:password,
@@ -115,3 +115,4 @@ export default function ResetPassword() {
     </div>
   );
 }
+
