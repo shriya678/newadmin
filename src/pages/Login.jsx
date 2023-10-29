@@ -13,6 +13,10 @@ export default function Login() {
 
   // console.log("User: ",setUser);
 
+  const [sucess,setSucess] = useState();
+  const [loginError,setLoginError] = useState();
+  const [loading,setLoading] = useState();
+
   function nagigateToReset() {
     if (email) {
       // const OTP = Math.floor(Math.random() * 9000 + 1000);
@@ -41,8 +45,13 @@ export default function Login() {
 
   function handleLogin() {
     if (email && password) {
+
+      setLoading(true);
+      setSucess(false);
+      setLoginError(false);
+
       const API = axios.create({
-        baseURL: "https://service-provider-apis.onrender.com",
+        baseURL: `${import.meta.env.VITE_BASE_URL}`,
         withCredentials: true,
       });
 
@@ -55,6 +64,10 @@ export default function Login() {
           // console.log(res.data)
 
           console.log("Login Res: ", res);
+
+          setSucess(true);
+          setLoading(false);
+          setLoginError(false);
 
           // const loginToken = res.data.token;
           const pdata = res.data.admin;
@@ -69,7 +82,12 @@ export default function Login() {
             navigate("../home");
           }
         })
-        .catch((error) => console.log(error));
+        .catch((error) =>{
+          setSucess(false);
+          setLoading(false);
+          setLoginError(true);
+           console.log(error)
+          });
       return;
     }
     return alert("Please enter your email");
@@ -170,6 +188,10 @@ export default function Login() {
                     Login
                   </button>
                 </div>
+
+                {loading ? <div><h1>Loading...</h1></div>
+                 : sucess ? <div><h1>You Logged In Successfully</h1></div> 
+                 : loginError ? <div><h1>Please Enter Valid Email And Password</h1></div> : ""}
               </form>
             </div>
           </div>
