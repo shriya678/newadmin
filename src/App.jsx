@@ -58,7 +58,7 @@ function App() {
   return (
     <BrowserRouter>
 
-      <RecoveryContext.Provider value={{user,setUser,isSuperAdmin,setSuperAdmin}}>
+      <RecoveryContext.Provider value={{user,setUser,isSuperAdmin,setSuperAdmin,profiledata}}>
         <main className="flex">
           <Sidebar />
           <div className="flex flex-col flex-1 relative">
