@@ -1,27 +1,82 @@
 import React from "react";
-import { Badge, BadgeDelta, Card, Flex, Metric, Text } from "@tremor/react";
-import { ShoppingBagIcon } from "@heroicons/react/outline";
+import { Card, Metric, Text, Flex, BadgeDelta, Grid } from "@tremor/react";
 
-const CardItem = ({CardTitle,CardData,FluctuateData,BadgeColor,BadgeIcon,DeltaValue}) => {
+const categories = [
+  {
+    title: "Active Orders",
+    metric: "12,699",
+    metricPrev: "9,456",
+    delta: "34.3%",
+    deltaType: "moderateIncrease",
+  },
+  {
+    title: "Pending Orders",
+    metric: "4598",
+    metricPrev: "4564",
+    delta: "10.9%",
+    deltaType: "moderateDecrease",
+  },
+  {
+    title: "Completed Orders",
+    metric: "1072",
+    metricPrev: "856",
+    delta: "25.3%",
+    deltaType: "moderateIncrease",
+  },
+  {
+    title: "Cancelled Orders",
+    metric: "4598",
+    metricPrev: "$ 4564",
+    delta: "10.9%",
+    deltaType: "moderateDecrease",
+  },
+  {
+    title: "Customers",
+    metric: "12,699",
+    metricPrev: "9,456",
+    delta: "34.3%",
+    deltaType: "moderateIncrease",
+  },
+  {
+    title: "Categories",
+    metric: "4598",
+    metricPrev: "4564",
+    delta: "10.9%",
+    deltaType: "moderateDecrease",
+  },
+  {
+    title: "Service Providers",
+    metric: "1072",
+    metricPrev: "856",
+    delta: "25.3%",
+    deltaType: "moderateIncrease",
+  },
+  {
+    title: "PromoCodes",
+    metric: "4598",
+    metricPrev: "$ 4564",
+    delta: "10.9%",
+    deltaType: "moderateDecrease",
+  },
+];
+
+export default function Example() {
+    const customTextSizeClass = "text-size-2";
   return (
-    <Card className="w-xs dark:bg-tremor-background" decoration="top" decorationColor="indigo">
-      <Flex justifyContent="between" alignItems="center">
-        <Badge className=" px-10 py-10 rounded-tremor-full " color={BadgeColor}>
-          {BadgeIcon}
-        </Badge> 
-
-        <Flex flexDirection="col">
-        <Text className="mt-8">{CardTitle}</Text>
-        <Metric className="dark:text-slate-950">{CardData}</Metric>
-        
-         <BadgeDelta  deltaType={DeltaValue}>{FluctuateData}</BadgeDelta>
-         <Text>This Month</Text>  
-        </Flex>
-      </Flex>
-      {/* <Metric>$ 34,743</Metric> */}
-    </Card>
+    <Grid numItemsSm={2} numItemsLg={4} className="ml-3 gap-4">
+      {categories.map((item) => (
+        <Card key={item.title}>
+          <Flex alignItems="start">
+            <Text className="text-xl mr-3 md-5">{item.title}</Text>
+            <BadgeDelta deltaType={item.deltaType}>{item.delta}</BadgeDelta>
+          </Flex>
+          <Flex justifyContent="start" alignItems="baseline" className="truncate space-x-3">
+            <Metric>{item.metric}</Metric>
+            <Text className="truncate">from {item.metricPrev}</Text>
+          </Flex>
+        </Card>
+      ))}
+    </Grid>
+    
   );
-};
-
-export default CardItem;
-
+}

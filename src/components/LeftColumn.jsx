@@ -14,15 +14,8 @@ const LeftColumn = () => {
     <div className="w-full flex flex-col justify-between p-2">
       <div className="flex flex-col lg:flex-row gap-2 w-full">
         <CardItem
-          CardTitle={"Earning"}
-          CardData={'$198k'}
-          FluctuateData={'+37.8'}
-          color={"text-green-600"}
-          BadgeColor={"emerald"}
-          BadgeIcon={<CurrencyRupeeIcon width={50}/>}
-          DeltaValue={'increase'}
         />
-        <CardItem
+        {/* <CardItem
           CardTitle={"Orders"}
           CardData={'$2.4k'}
           FluctuateData={'-2'}
@@ -48,7 +41,7 @@ const LeftColumn = () => {
           BadgeColor={"pink"}
           BadgeIcon={<ShoppingBagIcon width={50} />}
           DeltaValue={'increase'}
-        />
+        /> */}
       </div>
       
     </div>

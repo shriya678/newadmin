@@ -170,7 +170,7 @@ const BarChartComponent = () => {
           data={selectBar =="Yearly" ?  chartdata1 : selectBar == "Monthly" ? chartdata2 : chartdata3}
           index="date"
           categories={["running"]}
-          colors={["blue"]}
+          colors={["green"]}
           yAxisWidth={30}
           customTooltip={customTooltip}
         />
