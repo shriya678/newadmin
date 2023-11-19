@@ -10,15 +10,18 @@ const Dashboard = () => {
 
  
 
-  const [selectRole,setSelectRole] = useState();
+  const [selectStatus,setSelectStatus] = useState();
 
   const [selectBar,setSelectBar] = useState();
 
-  console.log("select Role: ",selectRole);
+  const [selectService, setSelectService] = useState();
+
+  console.log("select Role: ",selectStatus);
+  console.log("select Service: ",selectService);
   console.log("Select Bar: ",selectBar);
 
   return (
-    <SelectBoxContext.Provider value={{selectRole,setSelectRole,selectBar,setSelectBar}}>
+    <SelectBoxContext.Provider value={{selectStatus,setSelectStatus,selectBar,setSelectBar,selectService,setSelectService}}>
     <div className="grid grid-cols-1 w-full">
     <div className="col-span-2">
       <LeftColumn />

@@ -21,35 +21,31 @@ import { SelectBoxContext } from "../pages/Dashboard";
 const data = [
   {
     name: "Pawan Kumar",
-    email: "pawan@gmail.com",
-    Avatar:<HomeIcon width={40}/>,
-    price: "$ 45.99",
-    role: "driver",
-    status: "active",
+    typeOfService: "On-time",
+    dateOfIssue: "22/07/2023",
+    completionDate: "20/08/2023",
+    status: "pending",
   },
   {
     name: "Chaman Lal",
-    email: "chaman@gmail.com",
-    Avatar:<SearchIcon width={40}/>,
-    price: "$ 45.99",
-    role: "mechanic",
-    status: "active",
+    typeOfService: "Schedule",
+    dateOfIssue: "16/08/2023",
+    completionDate: "27/08/2023",
+    status: "completed",
   },
   {
     name: "Somya Kriplani",
-    email: "somya@gmail.com",
-    Avatar:<BellIcon width={40}/>,
-    price: "$ 20",
-    role:"cleaner",
-    status: "inactive",
+    typeOfService: "On-time",
+    dateOfIssue: "02/09/2023",
+    completionDate: "20/09/2023",
+    status: "accepted",
   },
   {
     name: "Priya Desai",
-    email: "priya@gmail.com",
-    Avatar:<ChartBarIcon width={40}/>,
-    price: "$ 29.66",
-    role:"driver",
-    status: "inactive",
+    typeOfService: "Schedule",
+    dateOfIssue: "22/08/2023",
+    completionDate: "20/08/2023",
+    status: "completed",
   },
 ];
 
@@ -58,14 +54,29 @@ const filterData = [...data];
 
 const TableComponent = () => {
 
-  const roleDB = ['driver','cleaner','mechanic','all'];
+  const roleDB = ['completed','pending','accepted'];
 
-  const { selectRole } = useContext(SelectBoxContext);
+  const serviceTypeDB = ['On-time','Schedule']
 
-  // console.log("SelectBat: ",selectRole);
+  const {selectService} =useContext(SelectBoxContext);
 
-  const result = selectRole==='all' ? data :selectRole==undefined ? data : filterData.filter((user)=>user.role === selectRole);
-  console.log("result: ",result);
+  const { selectStatus } = useContext(SelectBoxContext);
+
+  const result = filterData.filter((user) => {
+    // Check if both status and service type are selected
+    if (selectStatus !== '' && selectService !== '') {
+      return user.status === selectStatus && user.typeOfService === selectService;
+    }
+    // Check if only status is selected
+    else if (selectStatus !== '') {
+      return user.status === selectStatus;
+    }
+    // Check if only service type is selected
+    else if (selectService !== '') {
+      return user.typeOfService === selectService;
+    }
+    return true;
+  });
 
 
   // console.log("RoleDB: ",roleDB)
@@ -74,12 +85,12 @@ const TableComponent = () => {
     <Card className="mt-4 dark:bg-tremor-background">
 
     <div className="sm:flex justify-between items-center">
-    <Title>Product List</Title>
+    <Title>Order List</Title>
     <div className="py-2">
     <div className="sm:flex justify-between items-center">
-        <TextInput className="dark:bg-tremor-background mr-4 mb-2" icon={SearchIcon} placeholder="Search..." />
-
+        {/* <TextInput className="dark:bg-tremor-background mr-4 mb-2" icon={SearchIcon} placeholder="Search..." /> */}
         <SelectComponent roleDB={roleDB}/>
+        <SelectComponent serviceTypeDB={serviceTypeDB}/>
         </div>
 
       </div>
@@ -90,10 +101,10 @@ const TableComponent = () => {
       <TableHead>
         <TableRow>
           <TableHeaderCell>Name</TableHeaderCell>
-          <TableHeaderCell>Email</TableHeaderCell>
-          <TableHeaderCell>Earning</TableHeaderCell>
-          <TableHeaderCell>Role</TableHeaderCell>
+          <TableHeaderCell>Type of Service</TableHeaderCell>
           <TableHeaderCell>Status</TableHeaderCell>
+          <TableHeaderCell>Date of issue</TableHeaderCell>
+          <TableHeaderCell>Completion Date</TableHeaderCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -103,25 +114,20 @@ const TableComponent = () => {
           <TableRow key={item.name}>
 
           <div className="flex justify-start items-center">
-          <TableCell>
-          {item.Avatar}
-          </TableCell>
-          {item.name}
+            <TableCell>{item.name}</TableCell>
           </div>
            
             <TableCell>
-              <Text>{item.email}</Text>
+              <Text>{item.typeOfService}</Text>
             </TableCell>
             <TableCell>
-              <Text>{item.price}</Text>
+              <Text>{item.status}</Text>
             </TableCell>
             <TableCell>
-              <Text>{item.role}</Text>
+              <Text>{item.dateOfIssue}</Text>
             </TableCell>
             <TableCell>
-              <Badge color={item.status==='active' ? "emerald" :"red"} icon={ item.status==='active' ? StatusOnlineIcon:StatusOfflineIcon}>
-                {item.status}
-              </Badge>
+              <Text>{item.completionDate}</Text>
             </TableCell>
           </TableRow>
         )

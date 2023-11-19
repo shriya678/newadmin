@@ -142,7 +142,7 @@ const Sidebar = () => {
         <h1 className="text-black mb-1">Subscription Plan</h1>
         </NavLink>
 
-        <NavLink to="/manageAdmin" className="items-center justify-start flex cursor-pointer">
+        <NavLink to="ManageAdmin" className="items-center justify-start flex cursor-pointer">
         <TableIcon
           width={40}
           className="p-2 mb-1 text-black"
