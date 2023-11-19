@@ -1,5 +1,18 @@
 import React from "react";
+import axios from "axios";
 import { Card, Metric, Text, Flex, BadgeDelta, Grid } from "@tremor/react";
+
+axios.get("https://service-provider-apis.onrender.com/api/v1/admin/getAllOrders/?status=pending&page=1&limit=100", {
+  withCredentials: true,
+})
+  .then(response => {
+    // Handle the successful response
+    console.log('Response:', response.data);
+  })
+  .catch(error => {
+    // Handle errors
+    console.error('Error:', error.message);
+  });
 
 const categories = [
   {
@@ -72,7 +85,7 @@ export default function Example() {
           </Flex>
           <Flex justifyContent="start" alignItems="baseline" className="truncate space-x-3">
             <Metric>{item.metric}</Metric>
-            <Text className="truncate">from {item.metricPrev}</Text>
+            {/* <Text className="truncate">from {item.metricPrev}</Text> */}
           </Flex>
         </Card>
       ))}

@@ -17,7 +17,7 @@ const RightColumn = () => {
 
       <div className="flex flex-col lg:flex-row gap-2 w-full">
         <BarChartComponent />   
-        <SalesItem />
+        <BarChartComponent/>
       </div>
 
       <TableComponent />

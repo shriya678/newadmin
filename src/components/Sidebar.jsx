@@ -68,8 +68,8 @@ const Sidebar = () => {
 
 
 
-      <div className="fixed top-[80px]">
-    
+      <div className="fixed pr-8 top-[80px]">
+
         <NavLink to="/" className="items-center justify-start flex cursor-pointer">
         <TableIcon
           width={40}
@@ -77,8 +77,8 @@ const Sidebar = () => {
         />
         <h1 className="text-black mb-1">Dashboard</h1>
         </NavLink>
-
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer" activeClassName= "bg-gray-50">
+      
+        <NavLink to="/" className="items-center justify-start flex cursor-pointer">
         <DatabaseIcon
           width={40}
           className="p-2 mb-1 text-black"
@@ -86,7 +86,7 @@ const Sidebar = () => {
         <h1 className="text-black mb-1">Brands Database</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer" activeClassName= "bg-gray-700">
+        <NavLink to="/" className="items-center justify-start flex cursor-pointer">
         <UsersIcon
           width={40}
           className="p-2 mb-1 text-black"
@@ -94,7 +94,7 @@ const Sidebar = () => {
         <h1 className="text-black mb-1">Customers</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer" activeClassName= "bg-gray-700">
+        <NavLink to="/" className="items-center justify-start flex cursor-pointer">
         <UserCircleIcon
           width={40}
           className="p-2 mb-1 text-black"
@@ -102,7 +102,7 @@ const Sidebar = () => {
         <h1 className="text-black mb-1">Service Providers</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer" activeClassName= "bg-gray-700">
+        <NavLink to="ServiceOrders" className="items-center justify-start flex cursor-pointer">
         <ShoppingCartIcon
           width={40}
           className="p-2 mb-1 text-black"
@@ -110,7 +110,7 @@ const Sidebar = () => {
         <h1 className="text-black mb-1">Service Orders</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer" activeClassName= "bg-gray-700">
+        <NavLink to="/" className="items-center justify-start flex cursor-pointer">
         <CurrencyRupeeIcon
           width={40}
           className="p-2 mb-1 text-black"
@@ -118,7 +118,7 @@ const Sidebar = () => {
         <h1 className="text-black mb-1">Payment Reports</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer" activeClassName= "bg-gray-700">
+        <NavLink to="/" className="items-center justify-start flex cursor-pointer">
         <TableIcon
           width={40}
           className="p-2 mb-1 text-black"
@@ -126,7 +126,7 @@ const Sidebar = () => {
         <h1 className="text-black mb-1">Customer Support LO</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer" activeClassName= "bg-gray-700">
+        <NavLink to="/" className="items-center justify-start flex cursor-pointer">
         <TableIcon
           width={40}
           className="p-2 mb-1 text-black"
@@ -134,7 +134,7 @@ const Sidebar = () => {
         <h1 className="text-black mb-1">Service Management</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer" activeClassName= "bg-gray-700">
+        <NavLink to="/" className="items-center justify-start flex cursor-pointer">
         <TableIcon
           width={40}
           className="p-2 mb-1 text-black"
@@ -142,7 +142,7 @@ const Sidebar = () => {
         <h1 className="text-black mb-1">Subscription Plan</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer" activeClassName= "bg-gray-700">
+        <NavLink to="/" className="items-center justify-start flex cursor-pointer">
         <TableIcon
           width={40}
           className="p-2 mb-1 text-black"
@@ -150,7 +150,7 @@ const Sidebar = () => {
         <h1 className="text-black mb-1">Admin Management</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer" activeClassName= "bg-gray-700">
+        <NavLink to="/" className="items-center justify-start flex cursor-pointer">
         <TableIcon
           width={40}
           className="p-2 mb-1 text-black"
@@ -159,7 +159,7 @@ const Sidebar = () => {
         </NavLink>
 
         <div className='relative'>
-        <div className="items-center justify-start flex cursor-pointer" onClick={toggleMarketingDropdown} activeClassName= "bg-gray-700">
+        <div className="items-center justify-start flex cursor-pointer" onClick={toggleMarketingDropdown}>
         <TableIcon
           width={40}
           className="p-2 mb-1 text-black"
