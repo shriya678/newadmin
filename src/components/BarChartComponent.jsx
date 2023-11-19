@@ -148,33 +148,118 @@ const customTooltip = ({ payload, active }) => {
   );
 };
 
+// ... (existing imports)
 
+// const BarChartComponent = () => {
+
+//   const BarDB = ['Yearly', 'Monthly', 'Weekly'];
+
+//   const { selectBar } = useContext(SelectBoxContext);
+
+//   console.log("SelectBat: ", selectBar);
+
+//   return (
+//     <>
+//       <SelectComponent BarDB={BarDB} />
+//     <>
+//       <Card className="mt-4 dark:bg-tremor-background">
+//         <Flex justifyContent="between" alignItems="center">
+//           <Title className="dark:text-slate-950">Overview</Title>
+//           {/* <SelectComponent BarDB={BarDB} /> */}
+//         </Flex>
+//         <Flex>
+//           {/* First BarChart */}
+//           <BarChart
+//             className="dark:bg-tremor-background h-72 mt-4 rounded-tremor-default"
+//             data={selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3}
+//             index="date"
+//             categories={["running"]}
+//             colors={["green"]}
+//             yAxisWidth={30}
+//             customTooltip={customTooltip}
+//           />
+//         </Flex>
+//       </Card>
+//       <Card className="mt-4 dark:bg-tremor-background">
+//         <Flex justifyContent="between" alignItems="center">
+//           <Title className="dark:text-slate-950">Overview</Title>
+//         </Flex>
+//         <Flex>
+//       <BarChart
+//             className="dark:bg-tremor-background h-72 mt-4 ml-4 rounded-tremor-default"
+//             data={selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3}
+//             index="date"
+//             categories={["running"]}
+//             colors={["orange"]} 
+//             yAxisWidth={30}
+//             customTooltip={customTooltip}
+//           />
+//         </Flex>
+//       </Card>
+//     </>
+//     </>
+//   );
+// };
+
+// export default BarChartComponent;
 
 const BarChartComponent = () => {
 
-  const BarDB = ['Yearly','Monthly','Weekly'];
+  const BarDB = ['Yearly', 'Monthly', 'Weekly'];
 
   const { selectBar } = useContext(SelectBoxContext);
 
-  console.log("SelectBat: ",selectBar);
+  console.log("SelectBar: ", selectBar);
 
   return (
     <>
-      <Card className="mt-4 dark:bg-tremor-background">
-      <Flex justifyContent="between" alignItems="center">
-      <Title className=" dark:text-slate-950">Overview</Title>
-      <SelectComponent BarDB={BarDB}/>
+      {/* Top Section: SelectComponent */}
+      {/* <SelectComponent BarDB={BarDB} /> */}
+
+      {/* Middle Section: Two BarCharts side by side */}
+      <Flex>
+        <Card>
+        <SelectComponent BarDB={BarDB} />
+        {/* First BarChart */}
+        <div className="flex flex-col lg:flex-row gap-2 w-full">
+
+        <Card className="mt-4 flex-1 dark:bg-tremor-background">
+          <Flex justifyContent="between" alignItems="center">
+            <Title className="dark:text-slate-950">Revenue</Title>
+          </Flex>
+          <Flex>
+            <BarChart
+              className="dark:bg-tremor-background h-72 mt-4 rounded-tremor-default"
+              data={selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3}
+              index="date"
+              categories={["running"]}
+              colors={["green"]}
+              yAxisWidth={30}
+              customTooltip={customTooltip}
+            />
+          </Flex>
+        </Card>
+
+        {/* Second BarChart */}
+        <Card className="mt-4 ml-4 flex-1 dark:bg-tremor-background">
+          <Flex justifyContent="between" alignItems="center">
+            <Title className="dark:text-slate-950">Orders</Title>
+          </Flex>
+          <Flex>
+            <BarChart
+              className="dark:bg-tremor-background h-72 mt-4 rounded-tremor-default"
+              data={selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3}
+              index="date"
+              categories={["running"]}
+              colors={["orange"]}
+              yAxisWidth={30}
+              customTooltip={customTooltip}
+            />
+          </Flex>
+        </Card>
+        </div>
+        </Card>
       </Flex>
-        <BarChart
-          className=" dark:bg-tremor-background h-72 mt-4 rounded-tremor-default"
-          data={selectBar =="Yearly" ?  chartdata1 : selectBar == "Monthly" ? chartdata2 : chartdata3}
-          index="date"
-          categories={["running"]}
-          colors={["green"]}
-          yAxisWidth={30}
-          customTooltip={customTooltip}
-        />
-      </Card>
     </>
   );
 };

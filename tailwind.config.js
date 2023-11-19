@@ -29,7 +29,7 @@ export default {
             DEFAULT: "#e5e7eb", // gray-200
           },
           ring: {
-            DEFAULT: "#e5e7eb", // gray-200
+            DEFAULT: "#bbf7d0", //green-200
           },
           content: {
             subtle: "#9ca3af", // gray-400
@@ -59,7 +59,7 @@ export default {
             DEFAULT: "#d1d5db", // gray-800    #1f2937
           },
           ring: {
-            DEFAULT: "#e5e7eb", // gray-800    #1f2937
+            DEFAULT: "#bbf7d0", //green-200
           },
           content: {
             subtle: "#4b5563", // gray-600

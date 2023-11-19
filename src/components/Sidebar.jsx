@@ -58,7 +58,7 @@ const Sidebar = () => {
   return (
     <div className="bg-white w-14 sm:w-60 h-[300vh]">
 
-    <div className="fixed left bg-green-300 h-17">
+    <div className="fixed left bg-emerald-400 h-17">
     <div className="items-center justify-start flex m-4 mr-16 gap-1 cursor-pointer">
       <img src={Logo} alt='logo' className='w-[40px] h-[40px] object-contain'/>
     {/* <PresentationChartBarIcon width={40} className="bg-gray-600 p-2 rounded-lg mb-4 text-gray-300" /> */}
@@ -142,7 +142,7 @@ const Sidebar = () => {
         <h1 className="text-black mb-1">Subscription Plan</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer">
+        <NavLink to="/manageAdmin" className="items-center justify-start flex cursor-pointer">
         <TableIcon
           width={40}
           className="p-2 mb-1 text-black"
