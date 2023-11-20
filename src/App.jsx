@@ -12,6 +12,7 @@ import ManageAdmin from "./pages/ManageAdmin";
 import ResetPassword from "./pages/ResetPassword";
 // import { getUser } from "./pages/CheckAuth";
 import axios from "axios";
+import VehicleData from "./components/VehicleData";
 
 
 export const RecoveryContext = createContext();
@@ -65,12 +66,13 @@ function App() {
             <Navbar />
 
             <Routes>
-        <Route path="/" element={profiledata ? <Navigate to="home"/> : <Navigate to="auth"/>}/>
-        <Route path="/home" element={profiledata ? <Dashboard/> : <Navigate to="../auth"/>}/>
-        <Route path="/auth" element={profiledata ? <Navigate to='../home/'/>:<Login/>}/>
-        <Route path="/kyc" element={profiledata ? <KYC/>:<Navigate to="../auth"/>}/>
-        <Route path="/manageAdmin" element={profiledata ? <ManageAdmin/>:<Navigate to="../auth"/>}/>
-        <Route path='/reset' element={isSuperAdmin? <ResetPassword/> : ''} />
+              <Route path="/" element={profiledata ? <Navigate to="home"/> : <Navigate to="auth"/>}/>
+              <Route path="/home" element={profiledata ? <Dashboard/> : <Navigate to="../auth"/>}/>
+              <Route path="/auth" element={profiledata ? <Navigate to='../home/'/>:<Login/>}/>
+              <Route path="/kyc" element={profiledata ? <KYC/>:<Navigate to="../auth"/>}/>
+              <Route path="/manageAdmin" element={profiledata ? <ManageAdmin/>:<Navigate to="../auth"/>}/>
+              <Route path='/reset' element={isSuperAdmin? <ResetPassword/> : ''} />
+              <Route path="/vehicleData" element={<VehicleData />} />
             </Routes>
           </div>
         </main>
