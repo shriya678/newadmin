@@ -81,7 +81,7 @@ const Sidebar = () => {
         <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Dashboard</h1>
         </NavLink>
       
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer">
+        <NavLink to="/vehicleData" className="items-center justify-start flex cursor-pointer">
         <DatabaseIcon
           width={40}
           className="p-2 mb-1 text-black"
