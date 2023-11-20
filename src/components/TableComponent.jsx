@@ -17,6 +17,7 @@ import {
 import { SelectComponent } from "./SelectComponent";
 import { useContext } from "react";
 import { SelectBoxContext } from "../pages/Dashboard";
+import Datepickertofrom from "./DatePicker";
 
 const data = [
   {
@@ -85,8 +86,8 @@ const TableComponent = () => {
     <div className="sm:flex justify-between items-center">
     <Title>Order List</Title>
     <div className="py-2">
-    <div className="sm:flex justify-between items-center">
-        {/* <TextInput className="dark:bg-tremor-background mr-4 mb-2" icon={SearchIcon} placeholder="Search..." /> */}
+    <div className="sm:flex justify-between items-center gap-4">
+        <Datepickertofrom/>
         <SelectComponent roleDB={roleDB}/>
         <SelectComponent serviceTypeDB={serviceTypeDB}/>
         </div>

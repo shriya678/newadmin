@@ -1,80 +1,89 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
 import { Card, Metric, Text, Flex, BadgeDelta, Grid } from "@tremor/react";
 
-axios.get("https://service-provider-apis.onrender.com/api/v1/admin/getAllOrders/?status=pending&page=1&limit=100", {
-  withCredentials: true,
-})
-  .then(response => {
-    // Handle the successful response
-    console.log('Response:', response.data);
-  })
-  .catch(error => {
-    // Handle errors
-    console.error('Error:', error.message);
-  });
-
-const categories = [
-  {
-    title: "Active Orders",
-    metric: "12,699",
-    metricPrev: "9,456",
-    delta: "34.3%",
-    deltaType: "moderateIncrease",
-  },
-  {
-    title: "Pending Orders",
-    metric: "4598",
-    metricPrev: "4564",
-    delta: "10.9%",
-    deltaType: "moderateDecrease",
-  },
-  {
-    title: "Completed Orders",
-    metric: "1072",
-    metricPrev: "856",
-    delta: "25.3%",
-    deltaType: "moderateIncrease",
-  },
-  {
-    title: "Cancelled Orders",
-    metric: "4598",
-    metricPrev: "$ 4564",
-    delta: "10.9%",
-    deltaType: "moderateDecrease",
-  },
-  {
-    title: "Customers",
-    metric: "12,699",
-    metricPrev: "9,456",
-    delta: "34.3%",
-    deltaType: "moderateIncrease",
-  },
-  {
-    title: "Categories",
-    metric: "4598",
-    metricPrev: "4564",
-    delta: "10.9%",
-    deltaType: "moderateDecrease",
-  },
-  {
-    title: "Service Providers",
-    metric: "1072",
-    metricPrev: "856",
-    delta: "25.3%",
-    deltaType: "moderateIncrease",
-  },
-  {
-    title: "PromoCodes",
-    metric: "4598",
-    metricPrev: "$ 4564",
-    delta: "10.9%",
-    deltaType: "moderateDecrease",
-  },
-];
-
 export default function Example() {
+
+  const [countArray, setCountArray] = useState([]);
+  const [totalCount, setTotalCount] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response1 = await axios.get("https://service-provider-apis.onrender.com/api/v1/admin/getTotalOrders/", {
+          withCredentials: true,
+        });
+
+        const response2 = await axios.get("https://service-provider-apis.onrender.com/api/v1/admin/getTotals", {
+        withCredentials: true,
+      });
+
+        setCountArray(response1.data?.ordersCount);
+        setTotalCount(response2.data?.totals);
+
+      } catch (error) {
+        console.error('Error:', error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const { active, pending, completed, rejected } = countArray;
+  const { users, serviceProviders } = totalCount;
+  const categories = [
+    {
+      title: "Active Orders",
+      metric: active,
+      delta: "34.3%",
+      deltaType: "moderateIncrease",
+    },
+    {
+      title: "Pending Orders",
+      metric: pending,
+      delta: "10.9%",
+      deltaType: "moderateDecrease",
+    },
+    {
+      title: "Completed Orders",
+      metric: completed,
+      delta: "25.3%",
+      deltaType: "moderateIncrease",
+    },
+    {
+      title: "Cancelled Orders",
+      metric: rejected,
+      delta: "10.9%",
+      deltaType: "moderateDecrease",
+    },
+    {
+      title: "Customers",
+      metric: users,
+      delta: "34.3%",
+      deltaType: "moderateIncrease",
+    },
+    {
+      title: "Categories",
+      metric: "4598",
+      delta: "10.9%",
+      deltaType: "moderateDecrease",
+    },
+    {
+      title: "Service Providers",
+      metric: serviceProviders,
+      delta: "25.3%",
+      deltaType: "moderateIncrease",
+    },
+    {
+      title: "PromoCodes",
+      metric: "4598",
+      delta: "10.9%",
+      deltaType: "moderateDecrease",
+    },
+  ];
+
     const customTextSizeClass = "text-size-2";
+    
   return (
     <Grid numItemsSm={2} numItemsLg={4} className="ml-3 gap-4">
       {categories.map((item) => (
