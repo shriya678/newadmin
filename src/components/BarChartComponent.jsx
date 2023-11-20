@@ -1,7 +1,10 @@
-import { Card, Title, BarChart, Flex } from "@tremor/react";
+import { Card, Title, BarChart, Flex, DateRangePicker } from "@tremor/react";
 import { SelectComponent } from "./SelectComponent";
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { SelectBoxContext } from "../pages/Dashboard";
+import Datepickertofrom from "./DatePicker";
+import { saveAs } from 'file-saver';
+
 
 const chartdata1 = [
   {
@@ -148,36 +151,83 @@ const customTooltip = ({ payload, active }) => {
   );
 };
 
-
-
 const BarChartComponent = () => {
-
-  const BarDB = ['Yearly','Monthly','Weekly'];
-
+  const BarDB = ['Yearly', 'Monthly', 'Weekly'];
   const { selectBar } = useContext(SelectBoxContext);
+  const [dates, setDates] = useState([]);
 
-  console.log("SelectBat: ",selectBar);
+  const [exportData, setExportData] = useState([]);
+  const convertToCSV = (chartData) => {
+    const csvData = [];
+    csvData.push(['Date', 'Value']);
+    chartData.forEach((item) => {
+      csvData.push([item.date, item.running]);
+    });
+    const csvContent = csvData.map((row) => row.join(',')).join('\n');
+    return csvContent;
+  };
+
+  const handleExportClick = (id, data) => {
+    const csvContent = convertToCSV(data);
+
+    // Create a Blob and save the file
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+    saveAs(blob, `exported_data_${id}.csv`);
+  };
+
 
   return (
     <>
-      <Card className="mt-4 dark:bg-tremor-background">
-      <Flex justifyContent="between" alignItems="center">
-      <Title className=" dark:text-slate-950">Overview</Title>
-      <SelectComponent BarDB={BarDB}/>
-      </Flex>
-        <BarChart
-          className=" dark:bg-tremor-background h-72 mt-4 rounded-tremor-default"
-          data={selectBar =="Yearly" ?  chartdata1 : selectBar == "Monthly" ? chartdata2 : chartdata3}
-          index="date"
-          categories={["running"]}
-          colors={["blue"]}
-          yAxisWidth={30}
-          customTooltip={customTooltip}
-        />
+      <Flex>
+        <Card>
+          <Flex className="justify-between">
+            <Datepickertofrom />
+            <SelectComponent BarDB={BarDB} />
+          </Flex>
+          <div className="flex flex-col lg:flex-row gap-2 w-full">
+          <Card className="mt-4 flex-1 dark:bg-tremor-background">
+        <Flex justifyContent="between" alignItems="center">
+          <Title className="dark:text-slate-950">Revenue</Title>
+          <button onClick={() => handleExportClick('Revenue', selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3)}>Export</button>
+        </Flex>
+        <Flex>
+          <BarChart
+            id="Revenue"
+            className="dark:bg-tremor-background h-72 mt-4 rounded-tremor-default"
+            data={selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3}
+            index="date"
+            categories={["running"]}
+            colors={["green"]}
+            yAxisWidth={30}
+            customTooltip={customTooltip}
+          />
+        </Flex>
       </Card>
+
+      {/* Second BarChart */}
+      <Card className="mt-4 ml-4 flex-1 dark:bg-tremor-background">
+        <Flex justifyContent="between" alignItems="center">
+          <Title className="dark:text-slate-950">Orders</Title>
+          <button onClick={() => handleExportClick('Orders', selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3)}>Export</button>
+        </Flex>
+        <Flex>
+          <BarChart
+            id="Orders"
+            className="dark:bg-tremor-background h-72 mt-4 rounded-tremor-default"
+            data={selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3}
+            index="date"
+            categories={["running"]}
+            colors={["emerald"]}
+            yAxisWidth={30}
+            customTooltip={customTooltip}
+          />
+        </Flex>
+      </Card>
+        </div>
+        </Card>
+      </Flex>
     </>
   );
 };
 
 export default BarChartComponent;
-

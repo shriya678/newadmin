@@ -15,72 +15,83 @@ import {
   TextInput,
 } from "@tremor/react";
 import { SelectComponent } from "./SelectComponent";
-import { useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { SelectBoxContext } from "../pages/Dashboard";
-
-const data = [
-  {
-    name: "Pawan Kumar",
-    email: "pawan@gmail.com",
-    Avatar:<HomeIcon width={40}/>,
-    price: "$ 45.99",
-    role: "driver",
-    status: "active",
-  },
-  {
-    name: "Chaman Lal",
-    email: "chaman@gmail.com",
-    Avatar:<SearchIcon width={40}/>,
-    price: "$ 45.99",
-    role: "mechanic",
-    status: "active",
-  },
-  {
-    name: "Somya Kriplani",
-    email: "somya@gmail.com",
-    Avatar:<BellIcon width={40}/>,
-    price: "$ 20",
-    role:"cleaner",
-    status: "inactive",
-  },
-  {
-    name: "Priya Desai",
-    email: "priya@gmail.com",
-    Avatar:<ChartBarIcon width={40}/>,
-    price: "$ 29.66",
-    role:"driver",
-    status: "inactive",
-  },
-];
-
-const filterData = [...data];
+import Datepickertofrom from "./DatePicker";
+import axios from "axios";
 
 
 const TableComponent = () => {
 
-  const roleDB = ['driver','cleaner','mechanic','all'];
+  const roleDB = ['completed','pending','accepted'];
 
-  const { selectRole } = useContext(SelectBoxContext);
+  const serviceTypeDB = ['onTime','Schedule']
 
-  // console.log("SelectBat: ",selectRole);
+  const { selectService, selectStatus } = useContext(SelectBoxContext);
 
-  const result = selectRole==='all' ? data :selectRole==undefined ? data : filterData.filter((user)=>user.role === selectRole);
-  console.log("result: ",result);
+  const [userData, setUserData] = useState([]);
 
+  const result = userData.filter((user) => {
+    // Check if both status and service type are selected
+    if (selectStatus && selectService) {
+      return user.status === selectStatus && user.scheduleOfService === selectService;
+    }
+    // Check if only status is selected
+    else if (selectStatus) {
+      return user.status === selectStatus;
+    }
+    // Check if only service type is selected
+    else if (selectService) {
+      return user.scheduleOfService === selectService;
+    }
+    return true;
+  });
 
-  // console.log("RoleDB: ",roleDB)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(
+          "https://service-provider-apis.onrender.com/api/v1/admin/getAllOrders/?status=&page=1&limit=20",
+          {
+            startDate: "2023-11-15",
+            endDate: "2023-11-20",
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        let mechanicTickets = response.data?.orders.mechanicTickets;
+        let driverTickets = response.data?.orders.driverTickets;
+        let cleanerTickets = response.data?.orders.cleanerTickets;
+        let allTickets = [...mechanicTickets, ...driverTickets, ...cleanerTickets];
+        console.log(allTickets);
+        setUserData(allTickets);
+        console.log(userData);
+      } catch (error) {
+        console.error("Error:", error.message);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <Card className="mt-4 dark:bg-tremor-background">
 
     <div className="sm:flex justify-between items-center">
-    <Title>Product List</Title>
+    <Title>Order List</Title>
     <div className="py-2">
-    <div className="sm:flex justify-between items-center">
-        <TextInput className="dark:bg-tremor-background mr-4 mb-2" icon={SearchIcon} placeholder="Search..." />
+    <div className="sm:flex justify-between items-center gap-4">
+      <Datepickertofrom/>
+  <div>
+    <SelectComponent roleDB={roleDB} />
+    <p className="ml-1 text-xs font-semibold text-gray-500">Status</p>
+  </div>
 
-        <SelectComponent roleDB={roleDB}/>
-        </div>
+  <div>
+    <SelectComponent serviceTypeDB={serviceTypeDB} />
+    <p className="ml-1 text-xs font-semibold text-gray-500">Service Type</p>
+  </div>
+</div>
 
       </div>
     </div>
@@ -90,10 +101,10 @@ const TableComponent = () => {
       <TableHead>
         <TableRow>
           <TableHeaderCell>Name</TableHeaderCell>
-          <TableHeaderCell>Email</TableHeaderCell>
-          <TableHeaderCell>Earning</TableHeaderCell>
-          <TableHeaderCell>Role</TableHeaderCell>
+          <TableHeaderCell>Type of Service</TableHeaderCell>
           <TableHeaderCell>Status</TableHeaderCell>
+          <TableHeaderCell>Date of issue</TableHeaderCell>
+          <TableHeaderCell>Completion Date</TableHeaderCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -103,25 +114,20 @@ const TableComponent = () => {
           <TableRow key={item.name}>
 
           <div className="flex justify-start items-center">
-          <TableCell>
-          {item.Avatar}
-          </TableCell>
-          {item.name}
+            <TableCell>{item.customer_name}</TableCell>
           </div>
            
             <TableCell>
-              <Text>{item.email}</Text>
+              <Text>{item.scheduleOfService}</Text>
             </TableCell>
             <TableCell>
-              <Text>{item.price}</Text>
+              <Text>{item.status}</Text>
             </TableCell>
             <TableCell>
-              <Text>{item.role}</Text>
+              <Text>{item.createdAt.slice(0,10)}</Text>
             </TableCell>
             <TableCell>
-              <Badge color={item.status==='active' ? "emerald" :"red"} icon={ item.status==='active' ? StatusOnlineIcon:StatusOfflineIcon}>
-                {item.status}
-              </Badge>
+              <Text>{item.updatedAt.slice(0,10)}</Text>
             </TableCell>
           </TableRow>
         )

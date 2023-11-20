@@ -1,56 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import CardItem from "./CardItem";
-import BarChartComponent from "./BarChartComponent";
-import TableComponent from "./TableComponent";
-import SalesItem from "./SalesItem";
-
-import { ShoppingBagIcon } from "@heroicons/react/outline";
-import { ShoppingCartIcon } from "@heroicons/react/outline";
-import { CurrencyRupeeIcon } from "@heroicons/react/outline";
-import { CashIcon } from "@heroicons/react/outline";
 
 const LeftColumn = () => {
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response1 = await axios.get(
+          "https://service-provider-apis.onrender.com/api/v1/admin/getTop5Services",
+          {
+            withCredentials: true,
+          }
+        );
+        console.log(response1.data);
+        setServices(response1.data?.services);
+      } catch (error) {
+        console.error("Error:", error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+  console.log(services);
   return (
     <div className="w-full flex flex-col justify-between p-2">
       <div className="flex flex-col lg:flex-row gap-2 w-full">
-        <CardItem
-          CardTitle={"Earning"}
-          CardData={'$198k'}
-          FluctuateData={'+37.8'}
-          color={"text-green-600"}
-          BadgeColor={"emerald"}
-          BadgeIcon={<CurrencyRupeeIcon width={50}/>}
-          DeltaValue={'increase'}
-        />
-        <CardItem
-          CardTitle={"Orders"}
-          CardData={'$2.4k'}
-          FluctuateData={'-2'}
-          color={"text-fuchsia-600"}
-          BadgeColor={"fuchsia"}
-          BadgeIcon={<ShoppingCartIcon width={50} />}
-          DeltaValue={'decrease'}
-        />
-        <CardItem
-          CardTitle={"Balance"}
-          CardData={'$2.4k'}
-          FluctuateData={'-2'}
-          color={"text-blue-600"}
-          BadgeColor={"blue"}
-          BadgeIcon={<CashIcon width={50} />}
-          DeltaValue={'decrease'}
-        />
-        <CardItem
-          CardTitle={"Total Sales"}
-          CardData={'$89k'}
-          FluctuateData={'+11'}
-          color={"text-pink-600"}
-          BadgeColor={"pink"}
-          BadgeIcon={<ShoppingBagIcon width={50} />}
-          DeltaValue={'increase'}
-        />
+        <CardItem />
       </div>
-      
+      <div className="flex flex-col lg:flex-row m-4 gap-2 justify-center w-full">
+        <h1 className="text-2xl font-bold">Top 5 Services</h1>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 m-2 w-full">
+        {services.map((service, index) => (
+          <div
+            key={index}
+            className="bg-white m-2 ring ring-green-400 w-60 h-28 rounded-lg flex items-center justify-center text-xl text-center focus:outline-none">
+            {service.name}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
