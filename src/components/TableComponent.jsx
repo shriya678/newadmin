@@ -87,10 +87,17 @@ const TableComponent = () => {
     <Title>Order List</Title>
     <div className="py-2">
     <div className="sm:flex justify-between items-center gap-4">
-        <Datepickertofrom/>
-        <SelectComponent roleDB={roleDB}/>
-        <SelectComponent serviceTypeDB={serviceTypeDB}/>
-        </div>
+      <Datepickertofrom/>
+  <div>
+    <SelectComponent roleDB={roleDB} />
+    <p className="ml-1 text-xs font-semibold text-gray-500">Status</p>
+  </div>
+
+  <div>
+    <SelectComponent serviceTypeDB={serviceTypeDB} />
+    <p className="ml-1 text-xs font-semibold text-gray-500">Service Type</p>
+  </div>
+</div>
 
       </div>
     </div>

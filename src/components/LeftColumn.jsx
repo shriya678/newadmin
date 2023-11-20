@@ -36,8 +36,7 @@ const LeftColumn = () => {
         {services.map((service, index) => (
           <div
             key={index}
-            className="bg-white m-2 ring ring-emerald-400 w-60 h-28 rounded-lg flex items-center justify-center text-xl text-center focus:outline-none"
-          >
+            className="bg-white m-2 ring ring-green-400 w-60 h-28 rounded-lg flex items-center justify-center text-xl text-center focus:outline-none">
             {service.name}
           </div>
         ))}

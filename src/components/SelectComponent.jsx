@@ -9,10 +9,6 @@ export function SelectComponent({ roleDB, BarDB, serviceTypeDB }) {
   const { setSelectStatus, setSelectBar, setSelectService } =
     useContext(SelectBoxContext);
 
-  // const roleDB = ['driver','cleaner','mechanic'];
-
-  // const [value, setValue] = useState("");
-
   return (
     <div className="max-w-sm space-y-6 dark:bg-tremor-background">
       <Select
