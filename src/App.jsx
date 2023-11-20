@@ -13,6 +13,7 @@ import ResetPassword from "./pages/ResetPassword";
 // import { getUser } from "./pages/CheckAuth";
 import axios from "axios";
 import VehicleData from "./components/VehicleData";
+import AdminManagement from "./components/AdminManagement";
 
 
 export const RecoveryContext = createContext();
@@ -73,6 +74,7 @@ function App() {
               <Route path="/manageAdmin" element={profiledata ? <ManageAdmin/>:<Navigate to="../auth"/>}/>
               <Route path='/reset' element={isSuperAdmin? <ResetPassword/> : ''} />
               <Route path="/vehicleData" element={<VehicleData />} />
+              <Route path="/adminManagement" element={<AdminManagement />} />
             </Routes>
           </div>
         </main>
