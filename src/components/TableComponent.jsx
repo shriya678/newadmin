@@ -58,21 +58,19 @@ const TableComponent = () => {
 
   const serviceTypeDB = ['On-time','Schedule']
 
-  const {selectService} =useContext(SelectBoxContext);
-
-  const { selectStatus } = useContext(SelectBoxContext);
+  const { selectService, selectStatus } = useContext(SelectBoxContext);
 
   const result = filterData.filter((user) => {
     // Check if both status and service type are selected
-    if (selectStatus !== '' && selectService !== '') {
+    if (selectStatus && selectService) {
       return user.status === selectStatus && user.typeOfService === selectService;
     }
     // Check if only status is selected
-    else if (selectStatus !== '') {
+    else if (selectStatus) {
       return user.status === selectStatus;
     }
     // Check if only service type is selected
-    else if (selectService !== '') {
+    else if (selectService) {
       return user.typeOfService === selectService;
     }
     return true;
