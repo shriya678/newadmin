@@ -55,16 +55,20 @@ const Sidebar = () => {
     setMarketingDropdownOpen(!marketingDropdownOpen);
   };
 
-  return (
-    <div className="bg-white w-14 sm:w-60 h-[300vh]">
+    const [isCollapsed, setIsCollapsed] = useState(false);
+  
+    const toggleCollapse = () => {
+      setIsCollapsed(!isCollapsed);
+    };
 
-    <div className="fixed left bg-green-400 h-17">
-    <div className="items-center justify-start flex m-4 mr-16 gap-1 cursor-pointer">
-      <img src={Logo} alt='logo' className='w-[40px] h-[40px] object-contain'/>
-    {/* <PresentationChartBarIcon width={40} className="bg-gray-600 p-2 rounded-lg mb-4 text-gray-300" /> */}
-    <h1 className="text-black-300 text-base ml-1 mb-1 text-xl items-center font-bold">Helpy Moto</h1>
-    </div>
-    </div>
+  return (
+    <div className={`bg-white w-${isCollapsed ? '14' : '60'} h-screen transition-all duration-300 ease-in-out`}>
+      <div className={`fixed left bg-emerald-400 h-17 ${isCollapsed ? 'w-14' : 'w-60'} transition-all duration-300 ease-in-out`} onClick={toggleCollapse}>
+        <div className="items-center justify-start flex m-4 gap-1 cursor-pointer">
+          <img src={Logo} alt='logo' className={`w-[40px] h-[40px] object-contain ${isCollapsed ? 'hidden' : 'block'}`} />
+          <h1 className={`text-black-300 text-base ml-1 mb-1 text-xl items-center font-bold ${isCollapsed ? 'hidden' : 'block'} `}>Helpy Moto</h1>
+        </div>
+      </div>
 
 
 
@@ -73,9 +77,8 @@ const Sidebar = () => {
         <NavLink to="/" className="items-center justify-start flex cursor-pointer">
         <TableIcon
           width={40}
-          className="p-2 mb-1 text-black"
-        />
-        <h1 className="text-black mb-1">Dashboard</h1>
+          className="p-2 mb-1 text-black"/>
+        <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Dashboard</h1>
         </NavLink>
       
         <NavLink to="/" className="items-center justify-start flex cursor-pointer">
@@ -83,7 +86,7 @@ const Sidebar = () => {
           width={40}
           className="p-2 mb-1 text-black"
         />
-        <h1 className="text-black mb-1">Brands Database</h1>
+        <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Brands Database</h1>
         </NavLink>
 
         <NavLink to="/" className="items-center justify-start flex cursor-pointer">
@@ -91,7 +94,7 @@ const Sidebar = () => {
           width={40}
           className="p-2 mb-1 text-black"
         />
-        <h1 className="text-black mb-1">Customers</h1>
+        <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Customers</h1>
         </NavLink>
 
         <NavLink to="/" className="items-center justify-start flex cursor-pointer">
@@ -99,7 +102,7 @@ const Sidebar = () => {
           width={40}
           className="p-2 mb-1 text-black"
         />
-        <h1 className="text-black mb-1">Service Providers</h1>
+        <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Service Providers</h1>
         </NavLink>
 
         <NavLink to="ServiceOrders" className="items-center justify-start flex cursor-pointer">
@@ -107,7 +110,7 @@ const Sidebar = () => {
           width={40}
           className="p-2 mb-1 text-black"
         />
-        <h1 className="text-black mb-1">Service Orders</h1>
+        <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Service Orders</h1>
         </NavLink>
 
         <NavLink to="/" className="items-center justify-start flex cursor-pointer">
@@ -115,7 +118,7 @@ const Sidebar = () => {
           width={40}
           className="p-2 mb-1 text-black"
         />
-        <h1 className="text-black mb-1">Payment Reports</h1>
+        <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Payment Reports</h1>
         </NavLink>
 
         <NavLink to="/" className="items-center justify-start flex cursor-pointer">
@@ -123,7 +126,7 @@ const Sidebar = () => {
           width={40}
           className="p-2 mb-1 text-black"
         />
-        <h1 className="text-black mb-1">Customer Support LO</h1>
+        <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Customer Support LO</h1>
         </NavLink>
 
         <NavLink to="/" className="items-center justify-start flex cursor-pointer">
@@ -131,7 +134,7 @@ const Sidebar = () => {
           width={40}
           className="p-2 mb-1 text-black"
         />
-        <h1 className="text-black mb-1">Service Management</h1>
+        <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Service Management</h1>
         </NavLink>
 
         <NavLink to="/" className="items-center justify-start flex cursor-pointer">
@@ -139,7 +142,7 @@ const Sidebar = () => {
           width={40}
           className="p-2 mb-1 text-black"
         />
-        <h1 className="text-black mb-1">Subscription Plan</h1>
+        <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Subscription Plan</h1>
         </NavLink>
 
         <NavLink to="ManageAdmin" className="items-center justify-start flex cursor-pointer">
@@ -147,24 +150,18 @@ const Sidebar = () => {
           width={40}
           className="p-2 mb-1 text-black"
         />
-        <h1 className="text-black mb-1">Admin Management</h1>
+        <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Admin Management</h1>
         </NavLink>
 
         <NavLink to="/" className="items-center justify-start flex cursor-pointer">
-        <TableIcon
-          width={40}
-          className="p-2 mb-1 text-black"
-        />
-        <h1 className="text-black mb-1">Server Monitoring</h1>
+        <TableIcon width={40} className="p-2 mb-1 text-black"/>
+        <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Server Monitoring</h1>
         </NavLink>
 
         <div className='relative'>
         <div className="items-center justify-start flex cursor-pointer" onClick={toggleMarketingDropdown}>
-        <TableIcon
-          width={40}
-          className="p-2 mb-1 text-black"
-        />
-        <h1 className="text-black mb-1">Marketing Management</h1>
+        <TableIcon width={40} className="p-2 mb-1 text-black"/>
+        <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Marketing Management</h1>
         </div>
         {marketingDropdownOpen && <MarketingDropdown />}
 
@@ -175,64 +172,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
-// const Sidebar = () => {
-//   const [isCollapsed, setIsCollapsed] = useState(false);
-
-//   const toggleCollapse = () => {
-//     setIsCollapsed(!isCollapsed);
-//   };
-
-//   return (
-//     <div className={`bg-white w-${isCollapsed ? '14' : '60'} h-screen transition-all duration-300 ease-in-out`}>
-//       <div className={`fixed left bg-emerald-400 h-17 ${isCollapsed ? 'w-14' : 'w-60'} transition-all duration-300 ease-in-out`} onClick={toggleCollapse}>
-//         <div className="items-center justify-start flex m-4 gap-1 cursor-pointer">
-//           <img src={Logo} alt='logo' className={`w-[40px] h-[40px] object-contain ${isCollapsed ? 'hidden' : 'block'}`} />
-//           <h1 className={`text-black-300 text-base ml-1 mb-1 text-xl items-center font-bold ${isCollapsed ? 'hidden' : 'block'} `}>Helpy Moto</h1>
-//         </div>
-//       </div>
-
-//       <div className={`fixed pr-8 top-[80px] ${isCollapsed ? 'w-14' : 'w-60'} transition-all duration-300 ease-in-out`}>
-//         <NavLink to="/" className="items-center justify-start flex cursor-pointer">
-//           <TableIcon width={40}   className={`p-2 mb-1 text-black ${isCollapsed ? 'p-2 mb-1' : 'p-0 mb-0'}`} />
-//           <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Dashboard</h1>
-//         </NavLink>
-      
-//         <NavLink to="/" className="items-center justify-start flex cursor-pointer">
-//           <DatabaseIcon width={40} className="p-2 mb-1 text-black" />
-//           <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Brands Database</h1>
-//         </NavLink>
-
-//         <NavLink to="/" className="items-center justify-start flex cursor-pointer">
-//           <UsersIcon width={40} className="p-2 mb-1 text-black" />
-//           <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Customers</h1>
-//         </NavLink>
-
-//         <NavLink to="/" className="items-center justify-start flex cursor-pointer">
-//           <UserCircleIcon width={40} className="p-2 mb-1 text-black" />
-//           <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Service Providers</h1>
-//         </NavLink>
-
-//         <NavLink to="ServiceOrders" className="items-center justify-start flex cursor-pointer">
-//           <ShoppingCartIcon width={40} className="p-2 mb-1 text-black" />
-//           <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Service Orders</h1>
-//         </NavLink>
-
-//         <NavLink to="/" className="items-center justify-start flex cursor-pointer">
-//           <CurrencyRupeeIcon width={40} className="p-2 mb-1 text-black" />
-//           <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Payment Reports</h1>
-//         </NavLink>
-
-//         <div className='relative'>
-//           <div className="items-center justify-start flex cursor-pointer">
-//             <TableIcon width={40} className="p-2 mb-1 text-black" />
-//             <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Marketing Management</h1>
-//           </div>
-//           {isCollapsed && <MarketingDropdown />}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Sidebar;

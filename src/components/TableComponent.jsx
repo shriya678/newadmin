@@ -15,56 +15,26 @@ import {
   TextInput,
 } from "@tremor/react";
 import { SelectComponent } from "./SelectComponent";
-import { useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { SelectBoxContext } from "../pages/Dashboard";
 import Datepickertofrom from "./DatePicker";
-
-const data = [
-  {
-    name: "Pawan Kumar",
-    typeOfService: "On-time",
-    dateOfIssue: "22/07/2023",
-    completionDate: "20/08/2023",
-    status: "pending",
-  },
-  {
-    name: "Chaman Lal",
-    typeOfService: "Schedule",
-    dateOfIssue: "16/08/2023",
-    completionDate: "27/08/2023",
-    status: "completed",
-  },
-  {
-    name: "Somya Kriplani",
-    typeOfService: "On-time",
-    dateOfIssue: "02/09/2023",
-    completionDate: "20/09/2023",
-    status: "accepted",
-  },
-  {
-    name: "Priya Desai",
-    typeOfService: "Schedule",
-    dateOfIssue: "22/08/2023",
-    completionDate: "20/08/2023",
-    status: "completed",
-  },
-];
-
-const filterData = [...data];
+import axios from "axios";
 
 
 const TableComponent = () => {
 
   const roleDB = ['completed','pending','accepted'];
 
-  const serviceTypeDB = ['On-time','Schedule']
+  const serviceTypeDB = ['onTime','Schedule']
 
   const { selectService, selectStatus } = useContext(SelectBoxContext);
 
-  const result = filterData.filter((user) => {
+  const [userData, setUserData] = useState([]);
+
+  const result = userData.filter((user) => {
     // Check if both status and service type are selected
     if (selectStatus && selectService) {
-      return user.status === selectStatus && user.typeOfService === selectService;
+      return user.status === selectStatus && user.scheduleOfService === selectService;
     }
     // Check if only status is selected
     else if (selectStatus) {
@@ -72,13 +42,37 @@ const TableComponent = () => {
     }
     // Check if only service type is selected
     else if (selectService) {
-      return user.typeOfService === selectService;
+      return user.scheduleOfService === selectService;
     }
     return true;
   });
 
-
-  // console.log("RoleDB: ",roleDB)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(
+          "https://service-provider-apis.onrender.com/api/v1/admin/getAllOrders/?status=&page=1&limit=20",
+          {
+            startDate: "2023-11-15",
+            endDate: "2023-11-20",
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        let mechanicTickets = response.data?.orders.mechanicTickets;
+        let driverTickets = response.data?.orders.driverTickets;
+        let cleanerTickets = response.data?.orders.cleanerTickets;
+        let allTickets = [...mechanicTickets, ...driverTickets, ...cleanerTickets];
+        console.log(allTickets);
+        setUserData(allTickets);
+        console.log(userData);
+      } catch (error) {
+        console.error("Error:", error.message);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <Card className="mt-4 dark:bg-tremor-background">
@@ -120,20 +114,20 @@ const TableComponent = () => {
           <TableRow key={item.name}>
 
           <div className="flex justify-start items-center">
-            <TableCell>{item.name}</TableCell>
+            <TableCell>{item.customer_name}</TableCell>
           </div>
            
             <TableCell>
-              <Text>{item.typeOfService}</Text>
+              <Text>{item.scheduleOfService}</Text>
             </TableCell>
             <TableCell>
               <Text>{item.status}</Text>
             </TableCell>
             <TableCell>
-              <Text>{item.dateOfIssue}</Text>
+              <Text>{item.createdAt.slice(0,10)}</Text>
             </TableCell>
             <TableCell>
-              <Text>{item.completionDate}</Text>
+              <Text>{item.updatedAt.slice(0,10)}</Text>
             </TableCell>
           </TableRow>
         )

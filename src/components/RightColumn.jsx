@@ -21,8 +21,6 @@ const RightColumn = () => {
       </div>
 
       <TableComponent />
-      <WebAnalytics />
-      <ScoreList />
     </div>
   );
 };
