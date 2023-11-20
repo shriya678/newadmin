@@ -1,10 +1,19 @@
-
+import { useState } from "react";
 
 
 function BrandData(props){
 
+    const [isPopupOpen, setPopupOpen] = useState(false);
     const carBrands = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
     const {name, logo} = props.currentBrand;
+
+    const openPopup = () => {
+        setPopupOpen(true);
+    };
+
+    const closePopup = () => {
+        setPopupOpen(false);
+    }
 
     return (
         <div className="px-4 relative">
@@ -43,41 +52,41 @@ function BrandData(props){
 
             <div className="flex justify-end">
                 <div className="flex">
-                    <p className="pr-2">Add</p>
+                    <p className="pr-2 cursor-pointer" onClick={openPopup}>Add</p>
                     <p>Delete</p>
-                    {/* {isPopupOpen && (
+                    {isPopupOpen && (
                         <div className="z-50 fixed top-0 left-[8%] w-full h-full flex items-center justify-center ">
                             <div className="bg-white p-8 rounded shadow-md">
-                                <h2 className="text-2xl font-bold mb-4">Add a New Brand</h2>
+                                <h2 className="text-2xl font-bold mb-4">Add a New Model</h2>
 
                                 <label htmlFor="newBrandName" className="block mb-2">
-                                    Brand Name:
+                                    Enter Model Name:
                                 </label>
 
                                 <input
                                     type="text"
                                     id="newBrandName"
-                                    placeholder="Enter brand name"
-                                    value={newBrandName}
-                                    onChange={(e) => setNewBrandName(e.target.value)}
+                                    placeholder="Enter model name"
+                                    // value={newBrandName}
+                                    // onChange={(e) => setNewBrandName(e.target.value)}
                                     className="border p-2 mb-4 w-full"
                                 />
 
                                 <label htmlFor="newBrandLogo" className="block mb-2">
-                                    Brand Logo URL:
+                                    Add Fuel Types:
                                 </label>
 
                                 <input
                                     type="text"
                                     id="newBrandLogo"
-                                    placeholder="Enter brand logo URL"
-                                    value={newBrandLogo}
-                                    onChange={(e) => setNewBrandLogo(e.target.value)}
+                                    placeholder="Fuel type"
+                                    // value={newBrandLogo}
+                                    // onChange={(e) => setNewBrandLogo(e.target.value)}
                                     className="border p-2 mb-4 w-full"
                                 />
 
                                 <button
-                                    onClick={submitNewBrand}
+                                    // onClick={submitNewBrand}
                                     className="bg-blue-500 text-white px-4 py-2 rounded"
                                 >
                                     Submit
@@ -91,7 +100,7 @@ function BrandData(props){
                                 </button>
                             </div>
                         </div>
-                    )} */}
+                    )}
                 </div>
             </div>
 
