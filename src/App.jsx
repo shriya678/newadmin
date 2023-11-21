@@ -24,6 +24,8 @@ function App() {
 
   const [user,setUser] = useState();
   const [isSuperAdmin,setSuperAdmin] = useState();
+  const [showNavbar, setShowNavbar] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
 
 
   console.log("user: ", user);
@@ -39,34 +41,37 @@ function App() {
   // profiledata ? setUser(profiledata) : setUser(undefined)
 
 
-  useEffect(()=>{
-    if(logindata){
-    const API = axios.create({
-             baseURL: "https://service-provider-apis.onrender.com",
-             withCredentials: true,
-           });
-    
-           API?.post("/api/v1/superadmin/login/Web", {
-             email: logindata.email,
-             password: logindata.password,
-           }).then((res)=>{
-            console.log("loginAPP: ",res);
-           }).catch((error)=>{
-            console.log("error: ",error);
-           })
-          }
-  },[logindata])
+  useEffect(() => {
+    if (logindata) {
+      const API = axios.create({
+        baseURL: "https://service-provider-apis.onrender.com",
+        withCredentials: true,
+      });
 
+      API?.post("/api/v1/superadmin/login/Web", {
+        email: logindata.email,
+        password: logindata.password,
+      })
+        .then((res) => {
+          console.log("loginAPP: ", res);
+          setShowNavbar(true); // Set to true after successful login
+          setShowSidebar(true); // Set to true after successful login
+        })
+        .catch((error) => {
+          console.log("error: ", error);
+        });
+    }
+  }, [logindata]);
   
 
   return (
     <BrowserRouter>
 
       <RecoveryContext.Provider value={{user,setUser,isSuperAdmin,setSuperAdmin,profiledata}}>
-        <main className="flex">
-          <Sidebar />
+      <main className="flex">
+          {showSidebar && <Sidebar />} {/* Show Sidebar based on condition */}
           <div className="flex flex-col flex-1 relative">
-            <Navbar />
+            {showNavbar && <Navbar />} {/* Show Navbar based on condition */}
 
             <Routes>
               <Route path="/" element={profiledata ? <Navigate to="home"/> : <Navigate to="auth"/>}/>
