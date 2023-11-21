@@ -9,7 +9,9 @@ import Auth from "./pages/Auth";
 import { createContext, useEffect, useState } from "react";
 import Login from "./pages/Login";
 import ManageAdmin from "./pages/ManageAdmin";
+import ServiceOrders from "./pages/ServiceOrders";
 import ResetPassword from "./pages/ResetPassword";
+import OTPValidation from "./pages/OTPValidation";
 // import { getUser } from "./pages/CheckAuth";
 import axios from "axios";
 import VehicleData from "./components/VehicleData";
@@ -73,9 +75,12 @@ function App() {
               <Route path="/kyc" element={profiledata ? <KYC/>:<Navigate to="../auth"/>}/>
               <Route path="/manageAdmin" element={profiledata ? <ManageAdmin/>:<Navigate to="../auth"/>}/>
               <Route path='/reset' element={isSuperAdmin? <ResetPassword/> : ''} />
+              <Route path='/otp' element={isSuperAdmin? <OTPValidation/> : ''} />
               <Route path="/vehicleData" element={<VehicleData />} />
               <Route path="/adminManagement" element={<AdminManagement />} />
+              <Route path="/ServiceOrders" element={<ServiceOrders />} />
             </Routes>
+
           </div>
         </main>
       </RecoveryContext.Provider>

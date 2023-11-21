@@ -1,5 +1,4 @@
-// import AdminTableComponent from "../components/AdminTableComponent";
-// import SignUp from "./SignUp";
+
 
 const ServiceOrders = () =>
 {

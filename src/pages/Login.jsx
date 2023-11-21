@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { RecoveryContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast'
+import '../loading.css'
 
 export default function Login() {
   const { setUser, setSuperAdmin } = useContext(RecoveryContext);
@@ -11,39 +13,42 @@ export default function Login() {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
-  // console.log("User: ",setUser);
-
   const [sucess,setSucess] = useState();
   const [loginError,setLoginError] = useState();
   const [loading,setLoading] = useState();
 
-  function nagigateToReset() {
+  // if email exist then go reset page
+  function nagigateToOTP() {
     if (email) {
-      // const OTP = Math.floor(Math.random() * 9000 + 1000);
-      // console.log(OTP);
-      // setOTP(OTP);
 
-      axios
+      const API = axios.create({
+        baseURL:`${import.meta.env.VITE_BASE_URL}`,
+         withCredentials: true,
+       });
+
+      API
         .post(
-          "https://service-provider-apis.onrender.com/api/v1/superadmin/forgotPassword/",
+          "/api/v1/superadmin/forgotPassword/",
           {
             email: email,
           }
         )
         .then(() => {
-          //  setPage("reset")
+          localStorage.setItem("resetEmail",email);
           setSuperAdmin(true);
-          navigate("../reset");
+          navigate("../otp");
         })
-        .catch(setError(true));
+        .catch(()=>{
+          console.log("Error: ",error);
+          setError(true)});
       return;
     }
     return alert("Please enter your email");
   }
 
-  // axios.defaults.withCredentials = true;
 
   function handleLogin() {
+
     if (email && password) {
 
       setLoading(true);
@@ -61,16 +66,17 @@ export default function Login() {
       })
 
         .then((res) => {
-          // console.log(res.data)
-
+          
           console.log("Login Res: ", res);
+
+          toast.success("SucessFull");
 
           setSucess(true);
           setLoading(false);
           setLoginError(false);
 
-          // const loginToken = res.data.token;
           const pdata = res.data.admin;
+
 
           localStorage.setItem("profile", JSON.stringify({ pdata }));
           localStorage.setItem("login",JSON.stringify({email,password}));
@@ -79,73 +85,55 @@ export default function Login() {
 
           if (profiledata) {
             setUser(pdata);
-            navigate("../home");
+            navigate("../");
           }
         })
         .catch((error) =>{
+          toast.error("Login Error");
           setSucess(false);
           setLoading(false);
           setLoginError(true);
            console.log(error)
           });
+
       return;
     }
     return alert("Please enter your email");
   }
-
  
 
-  //   console.log("User: ",setUser);
-
   return (
-    <div>
+    <div className=" bg-white">
+
       <section className="h-screen">
         <div className="px-6 h-full text-gray-800">
           <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
-            <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
+            
+            <div className=" h-96 w-auto overflow-hidden">
               <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                className="w-full"
+                src='../../public/companyLogo.jpeg'
+                className="w-full h-full object-cover"
                 alt="Sample image"
               />
-            </div>
+              </div>
+
             <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
               <form>
                 <div className="flex flex-row items-center justify-center lg:justify-center">
                   <div className="px-6 sm:px-0 max-w-sm">
-                    <button
-                      type="button"
-                      className="text-white w-full  bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-between dark:focus:ring-[#4285F4]/55 mr-2 mb-2"
-                    >
-                      <svg
-                        className="mr-2 -ml-1 w-4 h-4"
-                        aria-hidden="true"
-                        focusable="false"
-                        data-prefix="fab"
-                        data-icon="google"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 488 512"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"
-                        ></path>
-                      </svg>
-                      Sign up with Google<div></div>
-                    </button>
                   </div>
                 </div>
 
                 <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
-                  <p className="text-center font-semibold mx-4 mb-0">Or</p>
+                  <p className="text-center font-semibold mx-4 mb-0 text-4xl">Login</p>
                 </div>
 
                 <div className="mb-6">
+
                   <input
                     onChange={(e) => setEmail(e.target.value)}
                     type="text"
-                    className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    className="bg-gray-50 border border-green-500 text-gray-900 text-xl font-normal rounded-lg focus:ring-green-500 block w-full p-2.5"
                     id="exampleFormControlInput2"
                     placeholder="Email address"
                   />
@@ -155,45 +143,52 @@ export default function Login() {
                   <input
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
-                    className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    className="bg-gray-50 border border-green-500 text-gray-900 text-xl font-normal rounded-lg focus:ring-green-500 block w-full p-2.5"
                     id="exampleFormControlInput2"
                     placeholder="Password"
                   />
                 </div>
 
-                <div className="flex justify-center items-center mb-6">
+                <div className="flex justify-center items-center mb-6 mt-10">
                   <a
                     href="#"
-                    onClick={() => nagigateToReset()}
-                    className="text-gray-800"
+                    onClick={() => nagigateToOTP()}
+                    className=" text-green-500 text-lg"
                   >
                     Forgot password?
                   </a>
+                </div>
 
-                  {error ? (
-                    <div className="mt-2 text-sm text-red-600" role="alert">
+                {error ? (
+                    <div className="mt-2 text-lg text-center text-red-600" role="alert">
                       Sorry! You are not Authenticated Please Login
                     </div>
                   ) : (
                     ""
                   )}
-                </div>
+
 
                 <div className="text-center lg:text-left">
                   <button
                     type="button"
-                    className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                   className=" w-full text-[28px] mt-6 rounded-full bg-green-300 font-medium text-white
+                   hover:bg-emerald-600 py-2 transition-colors duration-300 hover:text-white"
                     onClick={handleLogin}
                   >
                     Login
                   </button>
-                </div>
 
-                {loading ? <div><h1>Loading...</h1></div>
-                 : sucess ? <div><h1>You Logged In Successfully</h1></div> 
-                 : loginError ? <div><h1>Please Enter Valid Email And Password</h1></div> : ""}
+                </div>
+                
+                
+               
+
+                {loading ? <div className="loader flex items-center mt-10 ml-52"></div> 
+                 : sucess ? <div className="mt-4 text-lg text-center text-gray-700"><h1>You Logged In Successfully</h1></div> 
+                 : loginError ? <div className="mt-4 text-lg text-center text-red-500"><h1>Please Enter Valid Email And Password</h1></div> : ""}
               </form>
             </div>
+
           </div>
         </div>
       </section>

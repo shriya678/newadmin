@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BrandData from "./BrandData";
 
 
@@ -11,28 +11,44 @@ function VehicleData(){
     const [brandDetail, setBrandDetail] = useState(false);
     const [currentBrand, setCurrentBrand] = useState(null);
 
+    useEffect(() => {
+        fetch(`https://service-provider-apis.onrender.com/api/v1/brand/getAll`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`Network response was not ok: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const initialData = data?.brands;
+            setCarBrandsWithLogos(initialData);
+    
+          })
+          .catch((error) => console.error(error));
+      }, []);
+
 
     const [carBrandsWithLogos, setCarBrandsWithLogos] = useState([
-        { name: 'Toyota', logo: 'https://www.carlogos.org/car-logos/toyota-logo-2020-europe-640.png' },
-        { name: 'Ford', logo: 'https://www.carlogos.org/car-logos/ford-logo-2017-640.png' },
-        { name: 'Chevrolet', logo: 'https://www.carlogos.org/car-logos/chevrolet-logo.png' },
-        { name: 'Honda', logo: 'https://www.carlogos.org/car-logos/honda-logo.png' },
-        { name: 'BMW', logo: 'https://www.carlogos.org/car-logos/bmw-logo.png' },
-        { name: 'Mercedes-Benz', logo: 'https://www.carlogos.org/car-logos/mercedes-benz-logo.png' },
-        { name: 'Volkswagen', logo: 'https://www.carlogos.org/car-logos/volkswagen-logo.png' },
-        { name: 'Audi', logo: 'https://www.carlogos.org/car-logos/audi-logo.png' },
-        { name: 'Nissan', logo: 'https://www.carlogos.org/car-logos/nissan-logo.png' },
-        { name: 'Hyundai', logo: 'https://www.carlogos.org/car-logos/hyundai-logo.png' },
-        { name: 'Kia', logo: 'https://www.carlogos.org/car-logos/kia-logo.png' },
-        { name: 'Mazda', logo: 'https://www.carlogos.org/car-logos/mazda-logo.png' },
-        { name: 'Subaru', logo: 'https://www.carlogos.org/car-logos/subaru-logo.png' },
-        { name: 'Tesla', logo: 'https://www.carlogos.org/car-logos/tesla-logo.png' },
-        { name: 'Lexus', logo: 'https://www.carlogos.org/car-logos/lexus-logo.png' },
-        { name: 'Lamborghini', logo: 'https://www.carlogos.org/car-logos/lamborghini-logo.png' },
-        { name: 'Ferrari', logo: 'https://www.carlogos.org/car-logos/ferrari-logo.png' },
-        { name: 'Porsche', logo: 'https://www.carlogos.org/car-logos/porsche-logo.png' },
-        { name: 'Jaguar', logo: 'https://www.carlogos.org/car-logos/jaguar-logo.png' },
-        { name: 'Land Rover', logo: 'https://www.carlogos.org/car-logos/land-rover-logo.png' },
+        // { name: 'Toyota', logo: 'https://www.carlogos.org/car-logos/toyota-logo-2020-europe-640.png' },
+        // { name: 'Ford', logo: 'https://www.carlogos.org/car-logos/ford-logo-2017-640.png' },
+        // { name: 'Chevrolet', logo: 'https://www.carlogos.org/car-logos/chevrolet-logo.png' },
+        // { name: 'Honda', logo: 'https://www.carlogos.org/car-logos/honda-logo.png' },
+        // { name: 'BMW', logo: 'https://www.carlogos.org/car-logos/bmw-logo.png' },
+        // { name: 'Mercedes-Benz', logo: 'https://www.carlogos.org/car-logos/mercedes-benz-logo.png' },
+        // { name: 'Volkswagen', logo: 'https://www.carlogos.org/car-logos/volkswagen-logo.png' },
+        // { name: 'Audi', logo: 'https://www.carlogos.org/car-logos/audi-logo.png' },
+        // { name: 'Nissan', logo: 'https://www.carlogos.org/car-logos/nissan-logo.png' },
+        // { name: 'Hyundai', logo: 'https://www.carlogos.org/car-logos/hyundai-logo.png' },
+        // { name: 'Kia', logo: 'https://www.carlogos.org/car-logos/kia-logo.png' },
+        // { name: 'Mazda', logo: 'https://www.carlogos.org/car-logos/mazda-logo.png' },
+        // { name: 'Subaru', logo: 'https://www.carlogos.org/car-logos/subaru-logo.png' },
+        // { name: 'Tesla', logo: 'https://www.carlogos.org/car-logos/tesla-logo.png' },
+        // { name: 'Lexus', logo: 'https://www.carlogos.org/car-logos/lexus-logo.png' },
+        // { name: 'Lamborghini', logo: 'https://www.carlogos.org/car-logos/lamborghini-logo.png' },
+        // { name: 'Ferrari', logo: 'https://www.carlogos.org/car-logos/ferrari-logo.png' },
+        // { name: 'Porsche', logo: 'https://www.carlogos.org/car-logos/porsche-logo.png' },
+        // { name: 'Jaguar', logo: 'https://www.carlogos.org/car-logos/jaguar-logo.png' },
+        // { name: 'Land Rover', logo: 'https://www.carlogos.org/car-logos/land-rover-logo.png' },
     ]);
 
     const openPopup = () => {
@@ -158,7 +174,7 @@ function VehicleData(){
                             return searchBrand.toLowerCase() === '' ? Brand : Brand.name.toLowerCase().includes(searchBrand)
                         }).map((brand, index) => (
                             <div key={index} className='text-center m-5 w-[15%] cursor-pointer hover:border-2 hover:scale-110 transform transition duration-300 ease-in-out hover:bg-indigo-100 rounded-md' onClick={() => handleBrand(brand)}>
-                                <img src={brand.logo} alt="Random image" />
+                                <img src="https://www.carlogos.org/car-logos/toyota-logo-2020-europe-640.png" alt="Random image" />
                                 <h3>{brand.name}</h3>
                             </div>
                         ))}
