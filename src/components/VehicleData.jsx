@@ -109,7 +109,7 @@ function VehicleData(){
                 <div className="flex justify-end">
                     <div className="flex">
                         <p className="pr-2">Bulk Import</p>
-                        <p className="cursor-pointer" onClick={openPopup}>Add a new Brand</p>
+                        <p className="cursor-pointer" onClick={openPopup}>Add Brand</p>
                         {isPopupOpen && (
                             <div className="z-50 fixed top-0 left-[8%] w-full h-full flex items-center justify-center ">
                                 <div className="bg-white p-8 rounded shadow-md">
@@ -166,7 +166,7 @@ function VehicleData(){
                             return searchBrand.toLowerCase() === '' ? Brand : Brand.name.toLowerCase().includes(searchBrand)
                         }).map((brand, index) => (
                             <div key={index} className='text-center m-5 w-[15%] cursor-pointer hover:border-2 hover:scale-110 transform transition duration-300 ease-in-out hover:bg-indigo-100 rounded-md' onClick={() => handleBrand(brand)}>
-                                <img src="https://www.carlogos.org/car-logos/toyota-logo-2020-europe-640.png" alt="Random image" />
+                                <img src={brand.logo} alt="Random image" />
                                 <h3>{brand.name}</h3>
                             </div>
                         ))}

@@ -6,6 +6,7 @@ function BrandData(props){
 
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [newModelName, setNewModelName] = useState('');
+    const [searchBrand, setSearchBrand] = useState('');
     const [newModelFuelType, setNewModelFuelType] = useState('');
     const [carBrands, setCarBrands] = useState([]);
     const {name, logo, _id} = props.currentBrand;
@@ -34,16 +35,16 @@ function BrandData(props){
       }, []);
 
       const submitNewModel = async () => {
-        if (newModelName && newModelFuelType) {
+        if (newModelName && newModelFuelType && _id) {
             try {
                 const response1 = await axios.post(
-                    "https://service-provider-apis.onrender.com/api/v1/brand/create",
+                    "https://service-provider-apis.onrender.com/api/v1/model/create",  // Adjust the endpoint accordingly
                     {
                         name: newModelName,
                         fuelType: newModelFuelType,
                         bodyType: "hatchback",
                         photo: "logo",
-                        brandId: _id
+                        brandId: _id,
                     },
                     {
                         withCredentials: true,
@@ -51,13 +52,14 @@ function BrandData(props){
                 );
                 console.log(response1.data);
             } catch (error) {
-                console.error("Error:", error.message);
+                console.error("Error:", error);
             }
             closePopup();
         } else {
-            alert('Please enter both brand name and logo URL.');
+            alert('Please enter both model name and fuel type, and ensure brand ID is available.');
         }
     };
+    
 
     return (
         <div className="px-4 relative">
@@ -87,7 +89,7 @@ function BrandData(props){
                 </div>
                 <div className="flex items-center w-[60%]">
                     <input
-                        // onChange={(e) => setSearchBrand(e.target.value)}
+                        onChange={(e) => setSearchBrand(e.target.value)}
                         placeholder="Search by name"
                         className="max-w-xs block w-full rounded-md border-2 pl-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     />
@@ -150,9 +152,11 @@ function BrandData(props){
 
             <div>
                 <div className='flex flex-wrap gap-6'>
-                    {carBrands.map((model, index) => (
+                {carBrands.filter((model) => {
+                            return searchBrand.toLowerCase() === '' ? model : model.name.toLowerCase().includes(searchBrand)
+                        }).map((model, index) => (
                             <div key={index} className='text-center m-5 w-[15%] cursor-pointer hover:border-2 hover:scale-110 transform transition duration-300 ease-in-out hover:bg-indigo-100 rounded-md'>
-                            <img src={model.photo} alt="Random image" />
+                            {/* <img src={model.photo} alt="Random image" /> */}
                             <h3>{model.name}</h3>
                             <p>{model.fuelType}</p>
                         </div>
