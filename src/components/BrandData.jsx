@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 
 function BrandData(props){
 
     const [isPopupOpen, setPopupOpen] = useState(false);
-    const carBrands = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-    const {name, logo} = props.currentBrand;
+    const [newModelName, setNewModelName] = useState('');
+    const [newModelFuelType, setNewModelFuelType] = useState('');
+    const [carBrands, setCarBrands] = useState([]);
+    const {name, logo, _id} = props.currentBrand;
 
     const openPopup = () => {
         setPopupOpen(true);
@@ -14,6 +17,47 @@ function BrandData(props){
     const closePopup = () => {
         setPopupOpen(false);
     }
+
+    useEffect(() => {
+        fetch(`https://service-provider-apis.onrender.com/api/v1/model/getAll`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`Network response was not ok: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const initialData = data?.models.filter(model => model.brandId === _id);
+            setCarBrands(initialData);
+          })
+          .catch((error) => console.error(error));
+      }, []);
+
+      const submitNewModel = async () => {
+        if (newModelName && newModelFuelType) {
+            try {
+                const response1 = await axios.post(
+                    "https://service-provider-apis.onrender.com/api/v1/brand/create",
+                    {
+                        name: newModelName,
+                        fuelType: newModelFuelType,
+                        bodyType: "hatchback",
+                        photo: "logo",
+                        brandId: _id
+                    },
+                    {
+                        withCredentials: true,
+                    }
+                );
+                console.log(response1.data);
+            } catch (error) {
+                console.error("Error:", error.message);
+            }
+            closePopup();
+        } else {
+            alert('Please enter both brand name and logo URL.');
+        }
+    };
 
     return (
         <div className="px-4 relative">
@@ -67,8 +111,8 @@ function BrandData(props){
                                     type="text"
                                     id="newBrandName"
                                     placeholder="Enter model name"
-                                    // value={newBrandName}
-                                    // onChange={(e) => setNewBrandName(e.target.value)}
+                                    value={newModelName}
+                                    onChange={(e) => setNewModelName(e.target.value)}
                                     className="border p-2 mb-4 w-full"
                                 />
 
@@ -80,13 +124,13 @@ function BrandData(props){
                                     type="text"
                                     id="newBrandLogo"
                                     placeholder="Fuel type"
-                                    // value={newBrandLogo}
-                                    // onChange={(e) => setNewBrandLogo(e.target.value)}
+                                    value={newModelFuelType}
+                                    onChange={(e) => setNewModelFuelType(e.target.value)}
                                     className="border p-2 mb-4 w-full"
                                 />
 
                                 <button
-                                    // onClick={submitNewBrand}
+                                    onClick={submitNewModel}
                                     className="bg-blue-500 text-white px-4 py-2 rounded"
                                 >
                                     Submit
@@ -106,11 +150,11 @@ function BrandData(props){
 
             <div>
                 <div className='flex flex-wrap gap-6'>
-                    {carBrands.map((index) => (
-                        <div key={index} className='text-center m-5 w-[28%] cursor-pointer hover:border-2 hover:scale-110 transform transition duration-300 ease-in-out hover:bg-indigo-100 rounded-md'>
-                            {/* <img src={brand.logo} alt="Random image" /> */}
-                            <h3>Model Name</h3>
-                            <p>Fuel Type</p>
+                    {carBrands.map((model, index) => (
+                            <div key={index} className='text-center m-5 w-[15%] cursor-pointer hover:border-2 hover:scale-110 transform transition duration-300 ease-in-out hover:bg-indigo-100 rounded-md'>
+                            <img src={model.photo} alt="Random image" />
+                            <h3>{model.name}</h3>
+                            <p>{model.fuelType}</p>
                         </div>
                     ))}
                 </div>

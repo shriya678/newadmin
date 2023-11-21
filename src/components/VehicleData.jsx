@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import BrandData from "./BrandData";
+import axios from "axios";
 
 
 function VehicleData(){
@@ -28,28 +29,7 @@ function VehicleData(){
       }, []);
 
 
-    const [carBrandsWithLogos, setCarBrandsWithLogos] = useState([
-        // { name: 'Toyota', logo: 'https://www.carlogos.org/car-logos/toyota-logo-2020-europe-640.png' },
-        // { name: 'Ford', logo: 'https://www.carlogos.org/car-logos/ford-logo-2017-640.png' },
-        // { name: 'Chevrolet', logo: 'https://www.carlogos.org/car-logos/chevrolet-logo.png' },
-        // { name: 'Honda', logo: 'https://www.carlogos.org/car-logos/honda-logo.png' },
-        // { name: 'BMW', logo: 'https://www.carlogos.org/car-logos/bmw-logo.png' },
-        // { name: 'Mercedes-Benz', logo: 'https://www.carlogos.org/car-logos/mercedes-benz-logo.png' },
-        // { name: 'Volkswagen', logo: 'https://www.carlogos.org/car-logos/volkswagen-logo.png' },
-        // { name: 'Audi', logo: 'https://www.carlogos.org/car-logos/audi-logo.png' },
-        // { name: 'Nissan', logo: 'https://www.carlogos.org/car-logos/nissan-logo.png' },
-        // { name: 'Hyundai', logo: 'https://www.carlogos.org/car-logos/hyundai-logo.png' },
-        // { name: 'Kia', logo: 'https://www.carlogos.org/car-logos/kia-logo.png' },
-        // { name: 'Mazda', logo: 'https://www.carlogos.org/car-logos/mazda-logo.png' },
-        // { name: 'Subaru', logo: 'https://www.carlogos.org/car-logos/subaru-logo.png' },
-        // { name: 'Tesla', logo: 'https://www.carlogos.org/car-logos/tesla-logo.png' },
-        // { name: 'Lexus', logo: 'https://www.carlogos.org/car-logos/lexus-logo.png' },
-        // { name: 'Lamborghini', logo: 'https://www.carlogos.org/car-logos/lamborghini-logo.png' },
-        // { name: 'Ferrari', logo: 'https://www.carlogos.org/car-logos/ferrari-logo.png' },
-        // { name: 'Porsche', logo: 'https://www.carlogos.org/car-logos/porsche-logo.png' },
-        // { name: 'Jaguar', logo: 'https://www.carlogos.org/car-logos/jaguar-logo.png' },
-        // { name: 'Land Rover', logo: 'https://www.carlogos.org/car-logos/land-rover-logo.png' },
-    ]);
+    const [carBrandsWithLogos, setCarBrandsWithLogos] = useState([]);
 
     const openPopup = () => {
         setPopupOpen(true);
@@ -61,18 +41,30 @@ function VehicleData(){
         setNewBrandLogo('');
     };
 
-    const submitNewBrand = () => {
+    const submitNewBrand = async () => {
         if (newBrandName && newBrandLogo) {
-            setCarBrandsWithLogos((prevBrands) => [
-                ...prevBrands,
-                { name: newBrandName, logo: newBrandLogo },
-            ]);
+            try {
+                const response1 = await axios.post(
+                    "https://service-provider-apis.onrender.com/api/v1/brand/create",
+                    {
+                        name: newBrandName,
+                        logo: newBrandLogo,
+                        companyName: "Tata Motors"
+                    },
+                    {
+                        withCredentials: true,
+                    }
+                );
+                console.log(response1.data);
+            } catch (error) {
+                console.error("Error:", error.message);
+            }
             closePopup();
-        } 
-        else {
+        } else {
             alert('Please enter both brand name and logo URL.');
         }
     };
+    
 
     const handleBrand = (brand) => {
         setBrandDetail(true);
