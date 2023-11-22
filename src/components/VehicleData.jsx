@@ -77,7 +77,7 @@ function VehicleData(){
 
     return (
         <>
-            {!brandDetail ? <div className="px-4 relative">
+            {!brandDetail ? <div className="px-4 my-2 relative">
 
                 <div className="flex justify-between">
                     <div>
@@ -108,8 +108,8 @@ function VehicleData(){
 
                 <div className="flex justify-end">
                     <div className="flex">
-                        <p className="pr-2">Bulk Import</p>
-                        <p className="cursor-pointer" onClick={openPopup}>Add Brand</p>
+                        <button className="px-2 py-1 cursor-pointer bg-emerald-300 mx-1 rounded hover:bg-emerald-400 transition-colors duration-300">Bulk Import</button>
+                        <button className="px-2 py-1 cursor-pointer bg-emerald-300 mx-1 rounded hover:bg-emerald-400 transition-colors duration-300" onClick={openPopup}>Add Brand</button>
                         {isPopupOpen && (
                             <div className="z-50 fixed top-0 left-[8%] w-full h-full flex items-center justify-center ">
                                 <div className="bg-white p-8 rounded shadow-md">
@@ -143,7 +143,7 @@ function VehicleData(){
 
                                     <button
                                         onClick={submitNewBrand}
-                                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                                        className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors duration-300"
                                     >
                                         Submit
                                     </button>

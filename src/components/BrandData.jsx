@@ -62,7 +62,7 @@ function BrandData(props){
     
 
     return (
-        <div className="px-4 relative">
+        <div className="px-4 my-2 relative">
 
             <div className="flex justify-between">
                 <div onClick={() => props.goBack()}>
@@ -98,8 +98,8 @@ function BrandData(props){
 
             <div className="flex justify-end">
                 <div className="flex">
-                    <p className="pr-2 cursor-pointer" onClick={openPopup}>Add</p>
-                    <p>Delete</p>
+                    <button className="px-2 py-1 cursor-pointer bg-emerald-300 mx-1 rounded hover:bg-emerald-500 transition-colors duration-300" onClick={openPopup}>Add</button>
+                    <button className="px-2 py-1 cursor-pointer bg-red-300 mx-1 rounded hover:bg-red-500 transition-colors duration-300">Delete</button>
                     {isPopupOpen && (
                         <div className="z-50 fixed top-0 left-[8%] w-full h-full flex items-center justify-center ">
                             <div className="bg-white p-8 rounded shadow-md">
@@ -133,8 +133,8 @@ function BrandData(props){
 
                                 <button
                                     onClick={submitNewModel}
-                                    className="bg-blue-500 text-white px-4 py-2 rounded"
-                                >
+                                    className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors duration-300"
+                                    >
                                     Submit
                                 </button>
 
