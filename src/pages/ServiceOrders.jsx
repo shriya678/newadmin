@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const sampleData = [
   {
@@ -275,17 +276,19 @@ const ServiceOrders = () => {
             </tr>
           </thead>
           <tbody>
-            {result.map((data, index) => (
-              <tr key={index}>
-                <td style={headerCellStyle}>{index + 1}</td>
-                <td style={headerCellStyle}>{data.orderId}</td>
-                <td style={headerCellStyle}>{data.shortDescription}</td>
-                <td style={headerCellStyle}>{data.orderType}</td>
-                <td style={headerCellStyle}>{data.serviceCategory}</td>
-                <td style={headerCellStyle}>{data.status}</td>
-              </tr>
-            ))}
-          </tbody>
+  {result.map((data, index) => (
+    <tr key={index}>
+      <td style={headerCellStyle}>{index + 1}</td>
+      <td style={headerCellStyle}>
+        <Link to={`/order/${data.orderId}`}>{data.orderId}</Link>
+      </td>
+      <td style={headerCellStyle}>{data.shortDescription}</td>
+      <td style={headerCellStyle}>{data.orderType}</td>
+      <td style={headerCellStyle}>{data.serviceCategory}</td>
+      <td style={headerCellStyle}>{data.status}</td>
+    </tr>
+  ))}
+</tbody>
         </table>
       </div>
 

@@ -16,7 +16,7 @@ import OTPValidation from "./pages/OTPValidation";
 import axios from "axios";
 import VehicleData from "./components/VehicleData";
 import AdminManagement from "./components/AdminManagement";
-
+import OrderDetails from './components/OrderDetails';
 
 export const RecoveryContext = createContext();
 
@@ -84,6 +84,9 @@ function App() {
               <Route path="/vehicleData" element={<VehicleData />} />
               <Route path="/adminManagement" element={<AdminManagement />} />
               <Route path="/ServiceOrders" element={<ServiceOrders />} />
+              <Route path="/order/:orderId" element={<OrderDetails/>} />
+              
+              
             </Routes>
 
           </div>
