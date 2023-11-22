@@ -111,7 +111,7 @@ export default function Login() {
             
             <div className=" h-96 w-auto overflow-hidden">
               <img
-                src='../../public/companyLogo.jpeg'
+                src='../../public/Logo.png'
                 className="w-full h-full object-cover"
                 alt="Sample image"
               />
