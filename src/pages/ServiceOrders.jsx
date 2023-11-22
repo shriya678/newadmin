@@ -1,15 +1,63 @@
 import React, { useEffect, useState } from 'react';
 
-const DropdownOptions = {
-  orderTypes: ['onTime', 'schedule'],
-  serviceCategories: ['mechanic', 'cleaner', 'driver'],
-  statuses: ['inProgress', 'open', 'closed'],
-};
+const sampleData = [
+  {
+    id: 1,
+    orderId: 'ORD001',
+    shortDescription: 'Sample Description 1',
+    orderType: 'onTime',
+    serviceCategory: 'mechanic',
+    status: 'open',
+  },
+  {
+    id: 2,
+    orderId: 'ORD002',
+    shortDescription: 'Sample Description 2',
+    orderType: 'schedule',
+    serviceCategory: 'cleaner',
+    status: 'inProgress',
+  },
+  // Add more sample data entries as needed
+];
 
 const ServiceOrders = () => {
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [serviceType, setServiceType] = useState("ontime");
     const [isScheduleOpen, setScheduleOpen] = useState(false);
+
+    const [orderType, setOrderType] = useState();
+    const [serviceCategory, setServiceCategory] = useState();
+    const [status, setStatus] = useState();
+
+    console.log(orderType);
+
+    const result = sampleData.filter((sampleData) => {
+      // Check if both status and service type are selected
+      if (status && orderType && serviceCategory) {
+        return sampleData.status === status && sampleData.serviceCategory === serviceCategory && sampleData.orderType === orderType;
+      }
+      // Check if only status is selected
+      else if (status && orderType) {
+        return sampleData.status === status && sampleData.orderType === orderType;
+      }
+      // Check if only service type is selected
+      else if (status && serviceCategory) {
+        return sampleData.status === status && sampleData.serviceCategory === serviceCategory;
+      }
+      else if (orderType && serviceCategory) {
+        return sampleData.orderType === orderType && sampleData.serviceCategory === serviceCategory;
+      }
+      else if (status) {
+        return sampleData.status === status;
+      }
+      else if (serviceCategory) {
+        return sampleData.serviceCategory === serviceCategory;
+      }
+      else if (orderType) {
+        return sampleData.orderType === orderType;
+      }
+      return true;
+    });
 
     useEffect(() => {
       if (serviceType === 'schedule'){
@@ -18,18 +66,6 @@ const ServiceOrders = () => {
         setScheduleOpen(false);
       }
     })
-
-
-    const [filterOptions, setFilterOptions] = useState({
-        orderType: '',
-        serviceCategory: '',
-        status: '',
-    });
-
-    const handleFilterChange = (e, filterKey) => {
-        const updatedFilterOptions = { ...filterOptions, [filterKey]: e.target.value };
-        setFilterOptions(updatedFilterOptions);
-    };
 
     const openPopup = () => {
         setPopupOpen(true);
@@ -206,31 +242,50 @@ const ServiceOrders = () => {
               <th style={headerCellStyle}>Order ID</th>
               <th style={headerCellStyle}>Short Description</th>
               <th style={headerCellStyle}>
-                <select value={filterOptions.orderType} onChange={(e) => handleFilterChange(e, 'orderType')} style={dropdownStyle}>
+                <select 
+                  // value={filterOptions.orderType} 
+                  onChange={(e) => setOrderType(e.target.value)}                  
+                  style={dropdownStyle}>
                   <option value="">Order Type</option>
-                  {DropdownOptions.orderTypes.map((type) => (
-                    <option key={type} value={type}>{type}</option>
-                  ))}
+                  <option value="onTime">Ontime</option>
+                  <option value="schedule">Schedule</option>
                 </select>
               </th>
               <th style={headerCellStyle}>
-                <select value={filterOptions.serviceCategory} onChange={(e) => handleFilterChange(e, 'serviceCategory')} style={dropdownStyle}>
+                <select   
+                  // value={filterOptions.serviceCategory}   
+                  onChange={(e) => setServiceCategory(e.target.value)}
+                  style={dropdownStyle}>
                   <option value="">Service Categories</option>
-                  {DropdownOptions.serviceCategories.map((category) => (
-                    <option key={category} value={category}>{category}</option>
-                  ))}
+                  <option value="mechanic">Mechanic</option>
+                  <option value="cleaner">Cleaner</option>
+                  <option value="driver">Driver</option>
                 </select>
               </th>
               <th style={headerCellStyle}>
-                <select value={filterOptions.status} onChange={(e) => handleFilterChange(e, 'status')} style={dropdownStyle}>
+                <select   
+                  // value={filterOptions.status}  
+                  onChange={(e) => setStatus(e.target.value)}
+                  style={dropdownStyle}>
                   <option value="">Status</option>
-                  {DropdownOptions.statuses.map((status) => (
-                    <option key={status} value={status}>{status}</option>
-                  ))}
+                  <option value="inProgress">In Progress</option>
+                  <option value="open">Open</option>
                 </select>
               </th>
             </tr>
           </thead>
+          <tbody>
+            {result.map((data, index) => (
+              <tr key={index}>
+                <td style={headerCellStyle}>{index + 1}</td>
+                <td style={headerCellStyle}>{data.orderId}</td>
+                <td style={headerCellStyle}>{data.shortDescription}</td>
+                <td style={headerCellStyle}>{data.orderType}</td>
+                <td style={headerCellStyle}>{data.serviceCategory}</td>
+                <td style={headerCellStyle}>{data.status}</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
 
