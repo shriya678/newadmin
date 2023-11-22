@@ -1,10 +1,17 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import { ChevronLeftIcon } from '@heroicons/react/solid';
 
 const OrderDetails = () => {
   // Access the orderId from the URL params using useParams hook
   const { orderId } = useParams();
   console.log(orderId);
+  const history = useHistory();
+
+  const handleBack = () => {
+    // Go back to the previous page when the "Back" button is clicked
+    history.goBack();
+  };
 
   // Sample data for demonstration
   const orderDetails = {
@@ -27,7 +34,15 @@ const OrderDetails = () => {
     <div className="flex flex-col lg:flex-row justify-center lg:justify-between gap-6 lg:gap-12 p-4 lg:p-8">
       {/* Left Side */}
       <div className="w-full lg:w-1/2">
-        <h2 className="text-2xl font-bold mb-4">Order Details - {orderId}</h2>
+      <div className="flex items-center mb-4">
+          {/* Back icon */}
+          <ChevronLeftIcon
+            className="h-6 w-6 text-gray-700 mr-2 cursor-pointer"
+            onClick={handleBack}
+          />
+          {/* Order details title */}
+          <h2 className="text-2xl font-bold">Order Details - {orderId}</h2>
+        </div>
         <div className="space-y-2">
           <div className="flex border-b-2 border-gray-300 py-2">
             <h3 className="font-semibold w-1/3 text-lg">Name:</h3>
