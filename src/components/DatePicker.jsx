@@ -25,8 +25,8 @@ function Datepickertofrom() {
         <div className="row fthight">
           <div className="col-sm-8 mt-3">
             <form>
-              <div className="form-group mb-4">
-                <div className="flex justify-between">
+              <div className="form-group mb-4 sm:flex sm:justify-start lg:justify-between xl:justify-start">
+                <div className="flex justify-between mr-3 ">
                   <label className="mr-2">Start Date<span className="astriccolor">*</span></label>
                   <input type="date" className="form-control border-rounded mb-3" name="startdate" placeholder="mm/dd/yyyy"   style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }} onChange={(e) => handleStartDate(e)} />
                 </div>

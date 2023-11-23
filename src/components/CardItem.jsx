@@ -85,7 +85,7 @@ export default function Example() {
     const customTextSizeClass = "text-size-2";
     
   return (
-    <Grid numItemsSm={2} numItemsLg={4} className="ml-3 gap-4">
+    <Grid numItemsSm={2} numItemsLg={3} className="ml-3 gap-4 xl:grid-cols-4">
       {categories.map((item) => (
         <Card key={item.title}>
           <Flex alignItems="start">

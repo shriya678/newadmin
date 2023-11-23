@@ -180,11 +180,11 @@ const BarChartComponent = () => {
     <>
       <Flex>
         <Card>
-          <Flex className="flex-col items-start sm:justify-between">
+          <Flex className="flex-col items-start sm:justify-between xl:flex-row">
             <Datepickertofrom />
             <SelectComponent BarDB={BarDB} />
           </Flex>
-          <div className="flex flex-col lg:flex-row gap-2 w-full">
+          <div className="flex flex-col gap-2 w-full">
             <Card className="mt-4 flex-1 dark:bg-tremor-background">
               <Flex justifyContent="between" alignItems="center">
                 <Title className="dark:text-slate-950">Revenue</Title>
@@ -205,7 +205,7 @@ const BarChartComponent = () => {
             </Card>
 
             {/* Second BarChart */}
-            <Card className="mt-4 lg:ml-4 flex-1 dark:bg-tremor-background">
+            <Card className="mt-4 flex-1 dark:bg-tremor-background">
               <Flex justifyContent="between" alignItems="center">
                 <Title className="dark:text-slate-950">Orders</Title>
                 <button onClick={() => handleExportClick('Orders', selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3)}>Export</button>

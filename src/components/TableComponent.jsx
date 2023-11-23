@@ -77,19 +77,21 @@ const TableComponent = () => {
   return (
     <Card className="mt-4 dark:bg-tremor-background">
 
-      <div className="sm:flex justify-between items-center">
+      <div className="sm:flex sm:flex-col sm:items-start justify-between items-center">
         <Title>Order List</Title>
-        <div className="py-2">
-          <div className="sm:flex justify-between items-center gap-4">
+        <div className="py-2 sm:w-full">
+          <div className="sm:flex sm:flex-col justify-between items-center gap-4 xl:flex-row">
             <Datepickertofrom />
-            <div className="mb-2">
-              <p className="ml-1 text-xs font-semibold text-gray-500">Status</p>
-              <SelectComponent roleDB={roleDB} />
-            </div>
+            <div className="flex flex-col sm:flex-row sm:justify-start sm:w-full lg:justify-between xl:justify-end">
+              <div className="mb-2 mr-2">
+                <p className="ml-1 text-xs font-semibold text-gray-500">Status</p>
+                <SelectComponent roleDB={roleDB} />
+              </div>
 
-            <div>
-              <p className="ml-1 text-xs font-semibold text-gray-500">Service Type</p>
-              <SelectComponent serviceTypeDB={serviceTypeDB} />
+              <div>
+                <p className="ml-1 text-xs font-semibold text-gray-500">Service Type</p>
+                <SelectComponent serviceTypeDB={serviceTypeDB} />
+              </div>
             </div>
           </div>
 

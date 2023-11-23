@@ -28,14 +28,14 @@ const Navbar = () => {
   return (
     <div
       id="top"
-      className="relative w-full flex py-[12.8px] sm:flex justify-between items-center p-2 bg-black"
+      className={`relative w-full ${window.innerWidth < 426 ? 'py-[12.8px]' : ''} flex sm:flex justify-between items-center p-2 bg-black`}
     >
       <h1 className="font-bold text-white">
         Hi, {profiledata ? profiledata.pdata.name : "Your Name"} !
       </h1>
       <div className="py-2">
         <UserCircleIcon
-        width={30}
+        width={(window.innerWidth < 425) ? 30 : 40}
         className="text-green-300"
         onClick={toggleDropdown}
         />
