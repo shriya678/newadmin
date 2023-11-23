@@ -67,6 +67,28 @@ function VehicleData(){
             alert('Please enter both brand name and logo URL.');
         }
     };
+
+    const submitDeleteBrand = async () => {
+        if (deleteBrandName) {
+            const brandId = (carBrandsWithLogos.find(car => car.name === deleteBrandName          
+                ) || {})._id;
+                if(brandId){
+            try {
+                const response1 = await axios.delete(
+                    `https://service-provider-apis.onrender.com/api/v1/brand/${brandId}`,
+                    {
+                        withCredentials: true,
+                    }
+                );
+            } catch (error) {
+                console.error("Error:", error.message);
+            }
+            closeDeletePopup();
+        }else {
+            alert('Please enter valid brand name');
+        }
+        } 
+    };
     
 
     const handleBrand = (brand) => {
@@ -94,7 +116,6 @@ function VehicleData(){
                     </div>
 
                     <div>
-                        {/* <label htmlFor="status">Status: </label> */}
                         <select
                             id="status"
                             className="border border-gray-300 rounded-md px-2 py-1"
@@ -136,7 +157,7 @@ function VehicleData(){
                                         className="border p-2 mb-4 w-full"
                                     />
 
-                                    <label htmlFor="newBrandLogo" className="block mb-2">
+                                    {/* <label htmlFor="newBrandLogo" className="block mb-2">
                                         Brand Logo URL:
                                     </label>
 
@@ -146,9 +167,10 @@ function VehicleData(){
                                         placeholder="Enter brand logo URL"
                                         onChange={(e) => setDeleteBrandLogo(e.target.value)}
                                         className="border p-2 mb-4 w-full"
-                                    />
+                                    /> */}
 
                                     <button
+                                        onClick={submitDeleteBrand}
                                         className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors duration-300"
                                     >
                                         Submit

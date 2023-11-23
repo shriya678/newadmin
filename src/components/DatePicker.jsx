@@ -32,7 +32,7 @@ function Datepickertofrom() {
                 </div>
                 <div className="flex justify-between">
                   <label className="mr-2">End Date<span className="astriccolor">*</span></label>
-                  <input type="date" className="form-control" name="enddate" placeholder="mm/dd/yyyy" disabled={!startdate}   style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }} onChange={(e) => handleEndDate(e)} />
+                  <input type="date" className="form-control border-rounded mb-3" name="enddate" placeholder="mm/dd/yyyy" disabled={!startdate}   style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }} onChange={(e) => handleEndDate(e)} />
                 </div>
               </div>
             </form>

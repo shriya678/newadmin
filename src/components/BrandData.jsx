@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import toast from "react-hot-toast";
 
 function BrandData(props){
 
@@ -21,6 +21,30 @@ function BrandData(props){
     const closePopup = () => {
         setPopupOpen(false);
     }
+
+    console.log(carBrands);
+     const submitDeleteModel = () =>{
+        if (deleteModelName && deleteModelFuelType){
+            const modelId = (carBrands.find(car =>
+                car.name === deleteModelName && car.fuelType === deleteModelFuelType          
+                ) || {})._id;
+            if(modelId){
+                axios.delete(`https://service-provider-apis.onrender.com/api/v1/model/${modelId}`, {
+                    withCredentials: true,
+                })
+                    .then(response => {
+                    console.log(response.data);
+                    })
+                    .catch(error => {
+                    console.error('Axios error:', error);
+                    }); 
+                closeDeletePopup();                 
+            }
+            else{
+                alert('Please enter valid model name and fuel type.');
+            }
+        }
+    };
 
     useEffect(() => {
         fetch(`https://service-provider-apis.onrender.com/api/v1/model/getAll`)
@@ -175,7 +199,7 @@ function BrandData(props){
                                 />
 
                                 <label htmlFor="newBrandLogo" className="block mb-2">
-                                    Add Fuel Types:
+                                    Add Fuel Type:
                                 </label>
 
                                 <input
@@ -188,6 +212,7 @@ function BrandData(props){
                                 />
 
                                 <button
+                                    onClick={submitDeleteModel}
                                     className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors duration-300"
                                     >
                                     Submit
