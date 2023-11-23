@@ -22,15 +22,15 @@ const Dashboard = () => {
 
   return (
     <SelectBoxContext.Provider value={{selectStatus,setSelectStatus,selectBar,setSelectBar,selectService,setSelectService}}>
-    <div className="grid grid-cols-1 w-full">
-    <div className="col-span-2">
-      <LeftColumn />
-    </div>
-    <div className="w-full">
-      <RightColumn />
-    </div>
-  </div>
-  </SelectBoxContext.Provider>
+      <div className="grid grid-cols-1 w-full">
+        <div className="col-span-2">
+          <LeftColumn />
+        </div>
+        <div className="w-full">
+          <RightColumn />
+        </div>
+      </div>
+    </SelectBoxContext.Provider>
   )
 }
 

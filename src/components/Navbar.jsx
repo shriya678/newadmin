@@ -28,27 +28,27 @@ const Navbar = () => {
   return (
     <div
       id="top"
-      className="relative w-full sm:flex justify-between items-center p-2 bg-black"
+      className="relative w-full flex py-[12.8px] sm:flex justify-between items-center p-2 bg-black"
     >
       <h1 className="font-bold text-white">
         Hi, {profiledata ? profiledata.pdata.name : "Your Name"} !
       </h1>
       <div className="py-2">
         <UserCircleIcon
-        width={40}
+        width={30}
         className="text-green-300"
         onClick={toggleDropdown}
         />
 
-      {isDropdownOpen && (
-        <div className="origin-top-right absolute right-0 top-12 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
-          <div className="py-1">
-            <Link to={'/'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</Link>
-            <Link to={'/'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</Link>
-            <div onClick={handleLogout} className="block px-4 py-2 cursor-pointer text-sm text-red-600 hover:bg-red-100">Sign Out</div>
+        {isDropdownOpen && (
+          <div className="origin-top-right absolute right-0 top-12 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+            <div className="py-1">
+              <Link to={'/'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</Link>
+              <Link to={'/'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</Link>
+              <div onClick={handleLogout} className="block px-4 py-2 cursor-pointer text-sm text-red-600 hover:bg-red-100">Sign Out</div>
+            </div>
           </div>
-        </div>
-      )}
+        )}
         {/* <Card className=" cursor-pointer" onClick={handleLogout}>
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -5,10 +5,13 @@ import axios from "axios";
 function BrandData(props){
 
     const [isPopupOpen, setPopupOpen] = useState(false);
+    const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
     const [newModelName, setNewModelName] = useState('');
     const [searchBrand, setSearchBrand] = useState('');
     const [newModelFuelType, setNewModelFuelType] = useState('');
     const [carBrands, setCarBrands] = useState([]);
+    const [deleteModelName, setDeleteModelName] = useState('');
+    const [deleteModelFuelType, setDeleteModelFuelType] = useState('');
     const {name, logo, _id} = props.currentBrand;
 
     const openPopup = () => {
@@ -59,6 +62,12 @@ function BrandData(props){
             alert('Please enter both model name and fuel type, and ensure brand ID is available.');
         }
     };
+
+    const closeDeletePopup = () => {
+        setDeletePopupOpen(false);
+        setDeleteModelName('');
+        setDeleteModelFuelType('');
+    }
     
 
     return (
@@ -99,7 +108,6 @@ function BrandData(props){
             <div className="flex justify-end">
                 <div className="flex">
                     <button className="px-2 py-1 cursor-pointer bg-emerald-300 mx-1 rounded hover:bg-emerald-500 transition-colors duration-300" onClick={openPopup}>Add</button>
-                    <button className="px-2 py-1 cursor-pointer bg-red-300 mx-1 rounded hover:bg-red-500 transition-colors duration-300">Delete</button>
                     {isPopupOpen && (
                         <div className="z-50 fixed top-0 left-[8%] w-full h-full flex items-center justify-center ">
                             <div className="bg-white p-8 rounded shadow-md">
@@ -140,6 +148,53 @@ function BrandData(props){
 
                                 <button
                                     onClick={closePopup}
+                                    className="ml-4 border p-2 rounded text-gray-600 hover:bg-gray-100"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                    <button onClick={() => setDeletePopupOpen(true)} className="px-2 py-1 cursor-pointer bg-red-300 mx-1 rounded hover:bg-red-500 transition-colors duration-300">Delete</button>
+                    {isDeletePopupOpen && (
+                        <div className="z-50 fixed top-0 left-[8%] w-full h-full flex items-center justify-center ">
+                            <div className="bg-white p-8 rounded shadow-md">
+                                <h2 className="text-2xl font-bold mb-4">Delete a Model</h2>
+
+                                <label htmlFor="newBrandName" className="block mb-2">
+                                    Enter Model Name:
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="newBrandName"
+                                    placeholder="Enter model name"
+                                    value={deleteModelName}
+                                    onChange={(e) => setDeleteModelName(e.target.value)}
+                                    className="border p-2 mb-4 w-full"
+                                />
+
+                                <label htmlFor="newBrandLogo" className="block mb-2">
+                                    Add Fuel Types:
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="newBrandLogo"
+                                    placeholder="Fuel type"
+                                    value={deleteModelFuelType}
+                                    onChange={(e) => setDeleteModelFuelType(e.target.value)}
+                                    className="border p-2 mb-4 w-full"
+                                />
+
+                                <button
+                                    className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors duration-300"
+                                    >
+                                    Submit
+                                </button>
+
+                                <button
+                                    onClick={closeDeletePopup}
                                     className="ml-4 border p-2 rounded text-gray-600 hover:bg-gray-100"
                                 >
                                     Close

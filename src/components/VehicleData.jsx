@@ -6,8 +6,11 @@ import axios from "axios";
 function VehicleData(){
 
     const [isPopupOpen, setPopupOpen] = useState(false);
+    const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
     const [newBrandName, setNewBrandName] = useState('');
     const [newBrandLogo, setNewBrandLogo] = useState('');
+    const [deleteBrandName, setDeleteBrandName] = useState('');
+    const [deleteBrandLogo, setDeleteBrandLogo] = useState('');
     const [searchBrand, setSearchBrand] = useState('');
     const [brandDetail, setBrandDetail] = useState(false);
     const [currentBrand, setCurrentBrand] = useState(null);
@@ -75,6 +78,12 @@ function VehicleData(){
         setBrandDetail(false);
     }
 
+    const closeDeletePopup = () => {
+        setDeletePopupOpen(false);
+        setDeleteBrandName('');
+        setDeleteBrandLogo('');
+    }
+
     return (
         <>
             {!brandDetail ? <div className="px-4 my-2 relative">
@@ -108,7 +117,52 @@ function VehicleData(){
 
                 <div className="flex justify-end">
                     <div className="flex">
-                        <button className="px-2 py-1 cursor-pointer bg-emerald-300 mx-1 rounded hover:bg-emerald-400 transition-colors duration-300">Bulk Import</button>
+                        <button onClick={() => setDeletePopupOpen(true)} className="px-2 py-1 cursor-pointer bg-emerald-300 mx-1 rounded hover:bg-emerald-400 transition-colors duration-300">Delete</button>
+                        {isDeletePopupOpen && (
+                            <div className="z-50 fixed top-0 left-[8%] w-full h-full flex items-center justify-center ">
+                                <div className="bg-white p-8 rounded shadow-md">
+                                    <h2 className="text-2xl font-bold mb-4">Delete a Brand</h2>
+
+                                    <label htmlFor="newBrandName" className="block mb-2">
+                                        Brand Name:
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="newBrandName"
+                                        placeholder="Enter brand name"
+                                        value={deleteBrandName}
+                                        onChange={(e) => setDeleteBrandName(e.target.value)}
+                                        className="border p-2 mb-4 w-full"
+                                    />
+
+                                    <label htmlFor="newBrandLogo" className="block mb-2">
+                                        Brand Logo URL:
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="newBrandLogo"
+                                        placeholder="Enter brand logo URL"
+                                        onChange={(e) => setDeleteBrandLogo(e.target.value)}
+                                        className="border p-2 mb-4 w-full"
+                                    />
+
+                                    <button
+                                        className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors duration-300"
+                                    >
+                                        Submit
+                                    </button>
+
+                                    <button
+                                        onClick={closeDeletePopup}
+                                        className="ml-4 border p-2 rounded text-gray-600 hover:bg-gray-100"
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                         <button className="px-2 py-1 cursor-pointer bg-emerald-300 mx-1 rounded hover:bg-emerald-400 transition-colors duration-300" onClick={openPopup}>Add Brand</button>
                         {isPopupOpen && (
                             <div className="z-50 fixed top-0 left-[8%] w-full h-full flex items-center justify-center ">

@@ -180,50 +180,50 @@ const BarChartComponent = () => {
     <>
       <Flex>
         <Card>
-          <Flex className="justify-between">
+          <Flex className="flex-col items-start sm:justify-between">
             <Datepickertofrom />
             <SelectComponent BarDB={BarDB} />
           </Flex>
           <div className="flex flex-col lg:flex-row gap-2 w-full">
-          <Card className="mt-4 flex-1 dark:bg-tremor-background">
-        <Flex justifyContent="between" alignItems="center">
-          <Title className="dark:text-slate-950">Revenue</Title>
-          <button onClick={() => handleExportClick('Revenue', selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3)}>Export</button>
-        </Flex>
-        <Flex>
-          <BarChart
-            id="Revenue"
-            className="dark:bg-tremor-background h-72 mt-4 rounded-tremor-default"
-            data={selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3}
-            index="date"
-            categories={["running"]}
-            colors={["green"]}
-            yAxisWidth={30}
-            customTooltip={customTooltip}
-          />
-        </Flex>
-      </Card>
+            <Card className="mt-4 flex-1 dark:bg-tremor-background">
+              <Flex justifyContent="between" alignItems="center">
+                <Title className="dark:text-slate-950">Revenue</Title>
+                <button onClick={() => handleExportClick('Revenue', selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3)}>Export</button>
+              </Flex>
+              <Flex>
+                <BarChart
+                  id="Revenue"
+                  className="dark:bg-tremor-background h-72 mt-4 rounded-tremor-default"
+                  data={selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3}
+                  index="date"
+                  categories={["running"]}
+                  colors={["green"]}
+                  yAxisWidth={30}
+                  customTooltip={customTooltip}
+                />
+              </Flex>
+            </Card>
 
-      {/* Second BarChart */}
-      <Card className="mt-4 ml-4 flex-1 dark:bg-tremor-background">
-        <Flex justifyContent="between" alignItems="center">
-          <Title className="dark:text-slate-950">Orders</Title>
-          <button onClick={() => handleExportClick('Orders', selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3)}>Export</button>
-        </Flex>
-        <Flex>
-          <BarChart
-            id="Orders"
-            className="dark:bg-tremor-background h-72 mt-4 rounded-tremor-default"
-            data={selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3}
-            index="date"
-            categories={["running"]}
-            colors={["emerald"]}
-            yAxisWidth={30}
-            customTooltip={customTooltip}
-          />
-        </Flex>
-      </Card>
-        </div>
+            {/* Second BarChart */}
+            <Card className="mt-4 lg:ml-4 flex-1 dark:bg-tremor-background">
+              <Flex justifyContent="between" alignItems="center">
+                <Title className="dark:text-slate-950">Orders</Title>
+                <button onClick={() => handleExportClick('Orders', selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3)}>Export</button>
+              </Flex>
+              <Flex>
+                <BarChart
+                  id="Orders"
+                  className="dark:bg-tremor-background h-72 mt-4 rounded-tremor-default"
+                  data={selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3}
+                  index="date"
+                  categories={["running"]}
+                  colors={["emerald"]}
+                  yAxisWidth={30}
+                  customTooltip={customTooltip}
+                />
+              </Flex>
+            </Card>
+          </div>
         </Card>
       </Flex>
     </>

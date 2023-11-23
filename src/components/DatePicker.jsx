@@ -21,15 +21,19 @@ function Datepickertofrom() {
 
   return (
     <React.Fragment>
-      <Container>
+      <Container className="w-full">
         <div className="row fthight">
           <div className="col-sm-8 mt-3">
             <form>
               <div className="form-group mb-4">
-                <label className="mr-2">Start Date<span className="astriccolor">*</span></label>
-                <input type="date" className="form-control mr-12 border-rounded " name="startdate" placeholder="mm/dd/yyyy"   style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }} onChange={(e) => handleStartDate(e)} />
-                <label className="mr-2">End Date<span className="astriccolor">*</span></label>
-                <input type="date" className="form-control" name="enddate" placeholder="mm/dd/yyyy" disabled={!startdate}   style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }} onChange={(e) => handleEndDate(e)} />
+                <div className="flex justify-between">
+                  <label className="mr-2">Start Date<span className="astriccolor">*</span></label>
+                  <input type="date" className="form-control border-rounded mb-3" name="startdate" placeholder="mm/dd/yyyy"   style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }} onChange={(e) => handleStartDate(e)} />
+                </div>
+                <div className="flex justify-between">
+                  <label className="mr-2">End Date<span className="astriccolor">*</span></label>
+                  <input type="date" className="form-control" name="enddate" placeholder="mm/dd/yyyy" disabled={!startdate}   style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }} onChange={(e) => handleEndDate(e)} />
+                </div>
               </div>
             </form>
           </div>
