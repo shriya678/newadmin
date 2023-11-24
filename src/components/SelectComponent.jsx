@@ -3,22 +3,18 @@ import { CalculatorIcon } from "@heroicons/react/outline";
 import { useContext, useState } from "react";
 import { SelectBoxContext } from "../pages/Dashboard";
 
-export function SelectComponent({ roleDB, BarDB }) {
+export function SelectComponent({ roleDB, BarDB, serviceTypeDB }) {
 
   
-  const { setSelectRole, setSelectBar } =
+  const { setSelectStatus, setSelectBar, setSelectService } =
     useContext(SelectBoxContext);
 
-  // const roleDB = ['driver','cleaner','mechanic'];
-
-  // const [value, setValue] = useState("");
-
   return (
-    <div className="max-w-sm space-y-6 dark:bg-tremor-background">
+    <div className="max-w-sm space-y-6 w-full dark:bg-tremor-background">
       <Select
         className="dark:bg-tremor-background"
         // value={roleDB ? selectRole : selectBar}
-        onValueChange={roleDB ? setSelectRole : BarDB ? setSelectBar:""}
+        onValueChange={roleDB ? setSelectStatus : BarDB ? setSelectBar: serviceTypeDB ? setSelectService:""}
       >
         {roleDB
           ? roleDB.map((role, index) => {
@@ -37,8 +33,16 @@ export function SelectComponent({ roleDB, BarDB }) {
               );
             })
             :
+            serviceTypeDB ? serviceTypeDB.map((service, index) => {
+              return (
+                <SelectItem key={index} value={service} icon={CalculatorIcon}>
+                  {service}
+                </SelectItem>
+              );
+            })
+            :
             ""
-            }
+        }
 
         {/* <SelectItem value="1" icon={CalculatorIcon}>
           Yearly

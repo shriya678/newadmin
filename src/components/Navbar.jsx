@@ -1,13 +1,15 @@
-import { SearchIcon } from "@heroicons/react/solid";
+import { SearchIcon, UserCircleIcon } from "@heroicons/react/solid";
 import { Card, TextInput } from "@tremor/react";
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { RecoveryContext } from "../App";
 import { LogoutIcon } from "@heroicons/react/outline";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Navbar = () => {
   const { profiledata } = useContext(RecoveryContext);
   const navigate = useNavigate();
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
 
   const handleLogout = ()=>{
     localStorage.removeItem("profile");
@@ -16,16 +18,38 @@ const Navbar = () => {
     location.reload();
   }
 
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+    if(menu){
+      setMenu(!menu);
+    }
+  };
+
   return (
     <div
       id="top"
-      className="relative w-full sm:flex justify-between items-center p-2"
+      className={`relative w-full ${window.innerWidth < 426 ? 'py-[12.8px]' : ''} flex sm:flex justify-between items-center p-2 bg-black`}
     >
-      <h1 className="font-bold text-black-300">
-        Hi,{profiledata ? profiledata.pdata.name : "Your Name"}
+      <h1 className="font-bold text-white">
+        Hi, {profiledata ? profiledata.pdata.name : "Your Name"} !
       </h1>
       <div className="py-2">
-        <Card className=" cursor-pointer" onClick={handleLogout}>
+        <UserCircleIcon
+        width={(window.innerWidth < 425) ? 30 : 40}
+        className="text-green-300"
+        onClick={toggleDropdown}
+        />
+
+        {isDropdownOpen && (
+          <div className="origin-top-right absolute right-0 top-12 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+            <div className="py-1">
+              <Link to={'/'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</Link>
+              <Link to={'/'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</Link>
+              <div onClick={handleLogout} className="block px-4 py-2 cursor-pointer text-sm text-red-600 hover:bg-red-100">Sign Out</div>
+            </div>
+          </div>
+        )}
+        {/* <Card className=" cursor-pointer" onClick={handleLogout}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -39,7 +63,7 @@ const Navbar = () => {
           />
         </svg>
 
-        </Card>
+        </Card> */}
 
         {/* <TextInput className="dark:bg-tremor-background" icon={SearchIcon} placeholder="Search..." /> */}
       </div>
