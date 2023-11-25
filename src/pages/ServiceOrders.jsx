@@ -74,8 +74,6 @@ const ServiceOrders = () => {
 
     const closePopup = () => {
         setPopupOpen(false);
-        // setNewBrandName('');
-        // setNewBrandLogo('');
     };
 
   return (

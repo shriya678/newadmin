@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ChevronLeftIcon } from '@heroicons/react/solid';
+import {
+  Card,
+  Table,
+  TableHead,
+  TableRow,
+  TableHeaderCell,
+  TableBody,
+  TableCell,
+  Text,
+  Title,
+  Badge,
+  Flex,
+  TextInput,
+} from "@tremor/react";
 
 const OrderDetails = () => {
-  // Access the orderId from the URL params using useParams hook
   const { orderId } = useParams();
-  console.log(orderId);
+  const [isPopupOpen, setPopupOpen] = useState(false);
 
   const handleBack = () => {
-    // Go back to the previous page when the "Back" button is clicked
   };
 
   const [isClosed, setIsClosed] = useState();
@@ -20,9 +32,49 @@ const OrderDetails = () => {
     brand: 'Brand X',
     model: 'Model Y',
     fuelType: 'Petrol',
-    status: 'closed',
+    status: 'pending',
     servicesRequested: ['Service A'],
+    provider: 'James'
   };
+  const result = [
+    {
+      providername:'Jhon Doe',
+      designation:'Mechanic',
+      ontime:'2',
+      schedule:'4',
+      contact:'9876543210'
+    }, {
+      providername:'James',
+      designation:'Driver',
+      ontime:'4',
+      schedule:'6',
+      contact:'9988776655'
+    },{
+      providername:'James',
+      designation:'Driver',
+      ontime:'4',
+      schedule:'6',
+      contact:'9988776655'
+    },{
+      providername:'James',
+      designation:'Driver',
+      ontime:'4',
+      schedule:'6',
+      contact:'9988776655'
+    },{
+      providername:'Jhon Doe',
+      designation:'Mechanic',
+      ontime:'2',
+      schedule:'4',
+      contact:'9876543210'
+    },{
+      providername:'Jhon Doe',
+      designation:'Mechanic',
+      ontime:'2',
+      schedule:'4',
+      contact:'9876543210'
+    },
+  ];
 
   useEffect(() => {
     if (orderDetails.status === 'closed'){
@@ -32,11 +84,20 @@ const OrderDetails = () => {
     }
   })
 
-  // Function to handle assigning a service provider
+  const [serviceProvider, setServiceProvider] = useState(orderDetails.provider);
+
+  const closePopup = () => {
+    setPopupOpen(false);
+};
+
   const assignProvider = () => {
-    // Logic to assign a service provider
+    setPopupOpen(true);
   };
 
+  const changeServiceProvider = (newProviderName) => {
+    setServiceProvider(newProviderName);
+    setPopupOpen(false);
+  };
   return (
     <div className="flex flex-col lg:flex-row justify-center bg-white rounded m-4 lg:justify-between gap-6 lg:gap-12 p-4 lg:p-8">
       {/* Left Side */}
@@ -138,12 +199,68 @@ const OrderDetails = () => {
           </div>
           <div className="flex border-b-2 border-black py-2">
             <h3 className="ml-2 font-semibold w-1/3 text-lg">Service Provider:</h3>
-            <p className="w-2/3">{/* Add service provider details */}</p>
+            <p className="w-2/3">{serviceProvider}</p>
           </div>
           {!isClosed && (
           <div className="flex border-b-2 border-black py-2">
             <h3 className="ml-2 font-semibold w-1/3 text-lg">Assigned:</h3>
-            <p className="w-2/3 mb-24">{/* Add assigned details */}</p>
+            <p className="w-2/3 mb-24">{serviceProvider ? 'Yes' : 'No'}</p>
+          </div>
+          )}
+           {isPopupOpen && (
+            <div className="z-50 fixed top-4 left-[8%] w-full h-full flex items-center justify-center">
+            <div className="bg-white p-8 w-[800px] rounded shadow-md">
+              <h2 className="text-2xl font-bold mb-4">Service Providers</h2>
+
+      <Table className="mt-5 dark:bg-tremor-background h-[300px]">
+        <TableHead>
+          <TableRow>
+            <TableHeaderCell>S No</TableHeaderCell>
+            <TableHeaderCell>Service Providers Name</TableHeaderCell>
+            <TableHeaderCell>Designation</TableHeaderCell>
+            <TableHeaderCell>On-Time Requests</TableHeaderCell>
+            <TableHeaderCell>Schedule Requests</TableHeaderCell>
+            <TableHeaderCell>Contact Number</TableHeaderCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+        {result.map((item, index) => (
+    <TableRow key={index}>
+      <TableCell>
+        <Text>{index+1}</Text>
+      </TableCell>
+      <TableCell onDoubleClick={() => changeServiceProvider(item.providername)}>
+        <Text>
+          {item.providername}
+        </Text>
+      </TableCell>
+      <TableCell>
+        <Text>{item.designation}</Text>
+      </TableCell>
+      <TableCell>
+        <Text>{item.ontime}</Text>
+      </TableCell>
+      <TableCell>
+        <Text>{item.schedule}</Text>
+      </TableCell>
+      <TableCell>
+        <Text>{item.contact}</Text>
+      </TableCell>
+    </TableRow>
+  ))}
+
+        </TableBody>
+      </Table>
+        
+              <div className="flex justify-between">
+              <button
+                  onClick={closePopup}
+                  className="ml-4 border py-2 px-4 rounded text-gray-600 hover:bg-gray-100"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
           </div>
           )}
           {isClosed && (
