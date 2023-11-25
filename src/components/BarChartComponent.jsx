@@ -1,6 +1,6 @@
-import { Card, Title, BarChart, Flex } from "@tremor/react";
+import { Card, Title, BarChart, Flex, DateRangePicker } from "@tremor/react";
 import { SelectComponent } from "./SelectComponent";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { SelectBoxContext } from "../pages/Dashboard";
 import Datepickertofrom from "./DatePicker";
 import { saveAs } from 'file-saver';
@@ -11,6 +11,7 @@ const chartdata1 = [
     date: "2015",
     running: 167,
   },
+  // ...
   {
     date: "2016",
     running: 140,
@@ -101,53 +102,34 @@ const chartdata2 = [
   
 ];
 
-const chartdata31 = [
+const chartdata3 = [
   {
-    date: "2023-11-14",
+    date: "Sun",
     running: 167,
   },
+  // ...
   {
-    date: "2023-11-15",
-    running: 167,
-  },
-  {
-    date: "2023-11-16",
-    running: 167,
-  },
-  {
-    date: "2023-11-17",
+    date: "Monday",
     running: 140,
   },
   {
-    date: "2023-11-18",
+    date: "Tue",
     running: 100,
   },
   {
-    date: "2023-11-19",
+    date: "Wed",
     running: 120,
   },
   {
-    date: "2023-11-20",
+    date: "Thu",
     running: 120,
   },
   {
-    date: "2023-11-21",
+    date: "Fri",
     running: 120,
   },
   {
-    date: "2023-11-22",
-    running: 120,
-  },
-  {
-    date: "2023-11-23",
-    running: 120,
-  },
-  {
-    date: "2023-11-24",
-    running: 120,
-  },
-  {
-    date: "2023-11-25",
+    date: "Sat",
     running: 120,
   },
 ];
@@ -193,46 +175,26 @@ const BarChartComponent = () => {
     saveAs(blob, `exported_data_${id}.csv`);
   };
 
-  const [selectedDates, setSelectedDates] = useState({ startdate: '2023-11-15', enddate: '2023-11-25' });
-  
-  const handleDatesSelected = (dates) => {
-    setSelectedDates(dates);
-  };
-  console.log(selectedDates);
-  
-  const chartdata3 = chartdata31.filter((data) => {
-    if (selectedDates){
-      return data.date >= selectedDates.startdate && data.date <= selectedDates.enddate;
-    }
-    return true;
-  });
-  
-  const chartdata4 = chartdata31.filter((data) => {
-    const last7Days = new Date();
-      last7Days.setDate(last7Days.getDate() - 7);
-      const formattedLast7Days = last7Days.toISOString().split('T')[0];
-      return data.date >= formattedLast7Days && data.date < new Date().toISOString().split('T')[0];
-    });
 
   return (
     <>
       <Flex>
         <Card>
           <Flex className="flex-col items-start sm:justify-between xl:flex-row">
-          <Datepickertofrom onDatesSelected={handleDatesSelected} />
+            <Datepickertofrom />
             <SelectComponent BarDB={BarDB} />
           </Flex>
           <div className="flex flex-col gap-2 w-full">
             <Card className="mt-4 flex-1 dark:bg-tremor-background">
               <Flex justifyContent="between" alignItems="center">
                 <Title className="dark:text-slate-950">Revenue</Title>
-                <button onClick={() => handleExportClick('Revenue', selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : selectBar ==="Weekly" ? chartdata4 : chartdata3)}>Export</button>
+                <button onClick={() => handleExportClick('Revenue', selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3)}>Export</button>
               </Flex>
               <Flex>
                 <BarChart
                   id="Revenue"
                   className="dark:bg-tremor-background h-72 mt-4 rounded-tremor-default"
-                  data={selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : selectBar ==="Weekly" ? chartdata4 : chartdata3}
+                  data={selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3}
                   index="date"
                   categories={["running"]}
                   colors={["green"]}
@@ -246,13 +208,13 @@ const BarChartComponent = () => {
             <Card className="mt-4 flex-1 dark:bg-tremor-background">
               <Flex justifyContent="between" alignItems="center">
                 <Title className="dark:text-slate-950">Orders</Title>
-                <button onClick={() => handleExportClick('Orders', selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : selectBar ==="Weekly" ? chartdata4 : chartdata3)}>Export</button>
+                <button onClick={() => handleExportClick('Orders', selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3)}>Export</button>
               </Flex>
               <Flex>
                 <BarChart
                   id="Orders"
                   className="dark:bg-tremor-background h-72 mt-4 rounded-tremor-default"
-                  data={selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : selectBar ==="Weekly" ? chartdata4 : chartdata3}
+                  data={selectBar === "Yearly" ? chartdata1 : selectBar === "Monthly" ? chartdata2 : chartdata3}
                   index="date"
                   categories={["running"]}
                   colors={["emerald"]}
