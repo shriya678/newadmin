@@ -14,7 +14,7 @@ const Navbar = () => {
   const handleLogout = ()=>{
     localStorage.removeItem("profile");
     localStorage.removeItem("login")
-    navigate('../auth');
+    navigate('../');
     location.reload();
   }
 
