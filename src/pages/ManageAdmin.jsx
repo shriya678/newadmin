@@ -6,9 +6,9 @@ const ManageAdmin = () =>
 
    return  (
     <div className="grid grid-cols-1 w-full">
-    <div className="col-span-2 p-4">
+    {/* <div className="col-span-2 p-4">
       <SignUp/>
-    </div>
+    </div> */}
 
     <div className="w-full p-4">
       <AdminTableComponent/>

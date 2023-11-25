@@ -207,9 +207,66 @@ const OrderDetails = () => {
                 <p className="w-2/3 mb-24">{serviceProvider ? 'Yes' : 'No'}</p>
               </div>
             )}
+            {/* {isPopupOpen && (
+  <div className="z-50 fixed top-0 left-0 w-full h-full flex items-center justify-center">
+    <div className="bg-white p-8 w-full max-w-xl rounded shadow-md">
+      <h2 className="text-2xl font-bold mb-4">Service Providers</h2>
+
+      <Table className="mt-5 dark:bg-tremor-background h-[300px]">
+        <TableHead>
+          <TableRow>
+            <TableHeaderCell>S No</TableHeaderCell>
+            <TableHeaderCell>Service Providers Name</TableHeaderCell>
+            <TableHeaderCell>Designation</TableHeaderCell>
+            <TableHeaderCell>On-Time Requests</TableHeaderCell>
+            <TableHeaderCell>Schedule Requests</TableHeaderCell>
+            <TableHeaderCell>Contact No</TableHeaderCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {result.map((item, index) => (
+            <TableRow key={index}>
+              <TableCell>
+                <Text>{index + 1}</Text>
+              </TableCell>
+              <TableCell className='cursor-pointer' onDoubleClick={() => changeServiceProvider(item.providername)}>
+                <Text>
+                  {item.providername}
+                </Text>
+              </TableCell>
+              <TableCell>
+                <Text>{item.designation}</Text>
+              </TableCell>
+              <TableCell>
+                <Text>{item.ontime}</Text>
+              </TableCell>
+              <TableCell>
+                <Text>{item.schedule}</Text>
+              </TableCell>
+              <TableCell>
+                <Text>{item.contact}</Text>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+
+      <div className="flex justify-center mt-4">
+        <button
+          onClick={closePopup}
+          className="border py-2 px-4 rounded text-gray-600 hover:bg-gray-100"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)} */}
+
+
             {isPopupOpen && (
               <div className="z-50 fixed top-4 left-[8%] w-full h-full flex items-center justify-center">
-                <div className="bg-white p-8 w-[800px] rounded shadow-md">
+                <div className="bg-white p-8 w-[870px] md:w-2/3 sm:w-2/5 rounded shadow-md">
                   <h2 className="text-2xl font-bold mb-4">Service Providers</h2>
 
                   <Table className="mt-5 dark:bg-tremor-background h-[300px]">
@@ -220,7 +277,7 @@ const OrderDetails = () => {
                         <TableHeaderCell>Designation</TableHeaderCell>
                         <TableHeaderCell>On-Time Requests</TableHeaderCell>
                         <TableHeaderCell>Schedule Requests</TableHeaderCell>
-                        <TableHeaderCell>Contact Number</TableHeaderCell>
+                        <TableHeaderCell>Contact No</TableHeaderCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -229,7 +286,7 @@ const OrderDetails = () => {
                           <TableCell>
                             <Text>{index + 1}</Text>
                           </TableCell>
-                          <TableCell onDoubleClick={() => changeServiceProvider(item.providername)}>
+                          <TableCell className='cursor-pointer' onDoubleClick={() => changeServiceProvider(item.providername)}>
                             <Text>
                               {item.providername}
                             </Text>
