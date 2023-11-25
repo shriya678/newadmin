@@ -5,6 +5,7 @@ import { RecoveryContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast'
 import '../loading.css'
+import Logo from '../asset/Logo.png';
 
 export default function Login() {
   const { setUser, setSuperAdmin } = useContext(RecoveryContext);
@@ -111,7 +112,7 @@ export default function Login() {
             
             <div className=" h-96 w-auto overflow-hidden">
               <img
-                src='../../public/Logo.png'
+                src={Logo}
                 className="w-full h-full object-cover"
                 alt="Sample image"
               />
