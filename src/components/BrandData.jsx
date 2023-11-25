@@ -20,6 +20,8 @@ function BrandData(props){
 
     const closePopup = () => {
         setPopupOpen(false);
+        setNewModelName('');
+        setNewModelFuelType('');
     }
 
     console.log(carBrands);
@@ -65,7 +67,7 @@ function BrandData(props){
         if (newModelName && newModelFuelType && _id) {
             try {
                 const response1 = await axios.post(
-                    "https://service-provider-apis.onrender.com/api/v1/model/create",  // Adjust the endpoint accordingly
+                    "https://service-provider-apis.onrender.com/api/v1/model/create", 
                     {
                         name: newModelName,
                         fuelType: newModelFuelType,
