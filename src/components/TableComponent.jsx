@@ -47,14 +47,21 @@ const TableComponent = () => {
     return true;
   });
 
+  const [selectedDates, setSelectedDates] = useState({ startdate: '', enddate: '' });
+
+  const handleDatesSelected = (dates) => {
+    setSelectedDates(dates);
+  };
+  console.log(selectedDates);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.post(
-          "https://service-provider-apis.onrender.com/api/v1/admin/getAllOrders/?status=&page=1&limit=20",
+          "https://service-provider-apis.onrender.com/api/v1/admin/getAllOrders/?status=&page=1&limit=50",
           {
-            startDate: "2023-11-15",
-            endDate: "2023-11-20",
+            startDate: selectedDates.startdate,
+            endDate: selectedDates.enddate
           },
           {
             withCredentials: true,
@@ -72,7 +79,7 @@ const TableComponent = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [selectedDates]);
 
   return (
     <Card className="mt-4 dark:bg-tremor-background">
@@ -81,7 +88,7 @@ const TableComponent = () => {
         <Title>Order List</Title>
         <div className="py-2 sm:w-full">
           <div className="sm:flex sm:flex-col justify-between items-center gap-4 xl:flex-row">
-            <Datepickertofrom />
+          <Datepickertofrom onDatesSelected={handleDatesSelected} />
             <div className="flex flex-col sm:flex-row sm:justify-start sm:w-full lg:justify-between xl:justify-end">
               <div className="mb-2 mr-2">
                 <p className="ml-1 text-xs font-semibold text-gray-500">Status</p>
