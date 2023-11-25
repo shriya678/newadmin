@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import BrandData from "./BrandData";
+import axios from "axios";
 
 
 function VehicleData(){
 
     const [isPopupOpen, setPopupOpen] = useState(false);
+    const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
     const [newBrandName, setNewBrandName] = useState('');
     const [newBrandLogo, setNewBrandLogo] = useState('');
+    const [deleteBrandName, setDeleteBrandName] = useState('');
+    const [deleteBrandLogo, setDeleteBrandLogo] = useState('');
     const [searchBrand, setSearchBrand] = useState('');
     const [brandDetail, setBrandDetail] = useState(false);
     const [currentBrand, setCurrentBrand] = useState(null);
@@ -28,28 +32,7 @@ function VehicleData(){
       }, []);
 
 
-    const [carBrandsWithLogos, setCarBrandsWithLogos] = useState([
-        // { name: 'Toyota', logo: 'https://www.carlogos.org/car-logos/toyota-logo-2020-europe-640.png' },
-        // { name: 'Ford', logo: 'https://www.carlogos.org/car-logos/ford-logo-2017-640.png' },
-        // { name: 'Chevrolet', logo: 'https://www.carlogos.org/car-logos/chevrolet-logo.png' },
-        // { name: 'Honda', logo: 'https://www.carlogos.org/car-logos/honda-logo.png' },
-        // { name: 'BMW', logo: 'https://www.carlogos.org/car-logos/bmw-logo.png' },
-        // { name: 'Mercedes-Benz', logo: 'https://www.carlogos.org/car-logos/mercedes-benz-logo.png' },
-        // { name: 'Volkswagen', logo: 'https://www.carlogos.org/car-logos/volkswagen-logo.png' },
-        // { name: 'Audi', logo: 'https://www.carlogos.org/car-logos/audi-logo.png' },
-        // { name: 'Nissan', logo: 'https://www.carlogos.org/car-logos/nissan-logo.png' },
-        // { name: 'Hyundai', logo: 'https://www.carlogos.org/car-logos/hyundai-logo.png' },
-        // { name: 'Kia', logo: 'https://www.carlogos.org/car-logos/kia-logo.png' },
-        // { name: 'Mazda', logo: 'https://www.carlogos.org/car-logos/mazda-logo.png' },
-        // { name: 'Subaru', logo: 'https://www.carlogos.org/car-logos/subaru-logo.png' },
-        // { name: 'Tesla', logo: 'https://www.carlogos.org/car-logos/tesla-logo.png' },
-        // { name: 'Lexus', logo: 'https://www.carlogos.org/car-logos/lexus-logo.png' },
-        // { name: 'Lamborghini', logo: 'https://www.carlogos.org/car-logos/lamborghini-logo.png' },
-        // { name: 'Ferrari', logo: 'https://www.carlogos.org/car-logos/ferrari-logo.png' },
-        // { name: 'Porsche', logo: 'https://www.carlogos.org/car-logos/porsche-logo.png' },
-        // { name: 'Jaguar', logo: 'https://www.carlogos.org/car-logos/jaguar-logo.png' },
-        // { name: 'Land Rover', logo: 'https://www.carlogos.org/car-logos/land-rover-logo.png' },
-    ]);
+    const [carBrandsWithLogos, setCarBrandsWithLogos] = useState([]);
 
     const openPopup = () => {
         setPopupOpen(true);
@@ -61,18 +44,52 @@ function VehicleData(){
         setNewBrandLogo('');
     };
 
-    const submitNewBrand = () => {
+    const submitNewBrand = async () => {
         if (newBrandName && newBrandLogo) {
-            setCarBrandsWithLogos((prevBrands) => [
-                ...prevBrands,
-                { name: newBrandName, logo: newBrandLogo },
-            ]);
+            try {
+                const response1 = await axios.post(
+                    "https://service-provider-apis.onrender.com/api/v1/brand/create",
+                    {
+                        name: newBrandName,
+                        logo: newBrandLogo,
+                        companyName: "Tata Motors"
+                    },
+                    {
+                        withCredentials: true,
+                    }
+                );
+                console.log(response1.data);
+            } catch (error) {
+                console.error("Error:", error.message);
+            }
             closePopup();
-        } 
-        else {
+        } else {
             alert('Please enter both brand name and logo URL.');
         }
     };
+
+    const submitDeleteBrand = async () => {
+        if (deleteBrandName) {
+            const brandId = (carBrandsWithLogos.find(car => car.name === deleteBrandName          
+                ) || {})._id;
+                if(brandId){
+            try {
+                const response1 = await axios.delete(
+                    `https://service-provider-apis.onrender.com/api/v1/brand/${brandId}`,
+                    {
+                        withCredentials: true,
+                    }
+                );
+            } catch (error) {
+                console.error("Error:", error.message);
+            }
+            closeDeletePopup();
+        }else {
+            alert('Please enter valid brand name');
+        }
+        } 
+    };
+    
 
     const handleBrand = (brand) => {
         setBrandDetail(true);
@@ -83,9 +100,15 @@ function VehicleData(){
         setBrandDetail(false);
     }
 
+    const closeDeletePopup = () => {
+        setDeletePopupOpen(false);
+        setDeleteBrandName('');
+        setDeleteBrandLogo('');
+    }
+
     return (
         <>
-            {!brandDetail ? <div className="px-4 relative">
+            {!brandDetail ? <div className="px-4 my-2 relative">
 
                 <div className="flex justify-between">
                     <div>
@@ -93,7 +116,6 @@ function VehicleData(){
                     </div>
 
                     <div>
-                        {/* <label htmlFor="status">Status: </label> */}
                         <select
                             id="status"
                             className="border border-gray-300 rounded-md px-2 py-1"
@@ -116,8 +138,54 @@ function VehicleData(){
 
                 <div className="flex justify-end">
                     <div className="flex">
-                        <p className="pr-2">Bulk Import</p>
-                        <p className="cursor-pointer" onClick={openPopup}>Add a new Brand</p>
+                        <button onClick={() => setDeletePopupOpen(true)} className="px-2 py-1 cursor-pointer bg-emerald-300 mx-1 rounded hover:bg-emerald-400 transition-colors duration-300">Delete</button>
+                        {isDeletePopupOpen && (
+                            <div className="z-50 fixed top-0 left-[8%] w-full h-full flex items-center justify-center ">
+                                <div className="bg-white p-8 rounded shadow-md">
+                                    <h2 className="text-2xl font-bold mb-4">Delete a Brand</h2>
+
+                                    <label htmlFor="newBrandName" className="block mb-2">
+                                        Brand Name:
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="newBrandName"
+                                        placeholder="Enter brand name"
+                                        value={deleteBrandName}
+                                        onChange={(e) => setDeleteBrandName(e.target.value)}
+                                        className="border p-2 mb-4 w-full"
+                                    />
+
+                                    {/* <label htmlFor="newBrandLogo" className="block mb-2">
+                                        Brand Logo URL:
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="newBrandLogo"
+                                        placeholder="Enter brand logo URL"
+                                        onChange={(e) => setDeleteBrandLogo(e.target.value)}
+                                        className="border p-2 mb-4 w-full"
+                                    /> */}
+
+                                    <button
+                                        onClick={submitDeleteBrand}
+                                        className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors duration-300"
+                                    >
+                                        Submit
+                                    </button>
+
+                                    <button
+                                        onClick={closeDeletePopup}
+                                        className="ml-4 border p-2 rounded text-gray-600 hover:bg-gray-100"
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                        <button className="px-2 py-1 cursor-pointer bg-emerald-300 mx-1 rounded hover:bg-emerald-400 transition-colors duration-300" onClick={openPopup}>Add Brand</button>
                         {isPopupOpen && (
                             <div className="z-50 fixed top-0 left-[8%] w-full h-full flex items-center justify-center ">
                                 <div className="bg-white p-8 rounded shadow-md">
@@ -151,7 +219,7 @@ function VehicleData(){
 
                                     <button
                                         onClick={submitNewBrand}
-                                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                                        className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors duration-300"
                                     >
                                         Submit
                                     </button>
@@ -174,7 +242,7 @@ function VehicleData(){
                             return searchBrand.toLowerCase() === '' ? Brand : Brand.name.toLowerCase().includes(searchBrand)
                         }).map((brand, index) => (
                             <div key={index} className='text-center m-5 w-[15%] cursor-pointer hover:border-2 hover:scale-110 transform transition duration-300 ease-in-out hover:bg-indigo-100 rounded-md' onClick={() => handleBrand(brand)}>
-                                <img src="https://www.carlogos.org/car-logos/toyota-logo-2020-europe-640.png" alt="Random image" />
+                                <img src={brand.logo} alt="Random image" />
                                 <h3>{brand.name}</h3>
                             </div>
                         ))}

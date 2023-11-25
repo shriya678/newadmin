@@ -10,7 +10,7 @@ export function SelectComponent({ roleDB, BarDB, serviceTypeDB }) {
     useContext(SelectBoxContext);
 
   return (
-    <div className="max-w-sm space-y-6 dark:bg-tremor-background">
+    <div className="max-w-sm space-y-6 w-full dark:bg-tremor-background">
       <Select
         className="dark:bg-tremor-background"
         // value={roleDB ? selectRole : selectBar}
@@ -42,7 +42,7 @@ export function SelectComponent({ roleDB, BarDB, serviceTypeDB }) {
             })
             :
             ""
-            }
+        }
 
         {/* <SelectItem value="1" icon={CalculatorIcon}>
           Yearly

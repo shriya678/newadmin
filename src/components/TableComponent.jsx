@@ -47,14 +47,21 @@ const TableComponent = () => {
     return true;
   });
 
+  const [selectedDates, setSelectedDates] = useState({ startdate: '2023-11-15', enddate: '2023-11-25' });
+
+  const handleDatesSelected = (dates) => {
+    setSelectedDates(dates);
+  };
+  console.log(selectedDates);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.post(
-          "https://service-provider-apis.onrender.com/api/v1/admin/getAllOrders/?status=&page=1&limit=20",
+          "https://service-provider-apis.onrender.com/api/v1/admin/getAllOrders/?status=&page=1&limit=30",
           {
-            startDate: "2023-11-15",
-            endDate: "2023-11-20",
+            startDate: selectedDates.startdate,
+            endDate: selectedDates.enddate
           },
           {
             withCredentials: true,
@@ -72,70 +79,72 @@ const TableComponent = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [selectedDates]);
 
   return (
     <Card className="mt-4 dark:bg-tremor-background">
 
-    <div className="sm:flex justify-between items-center">
-    <Title>Order List</Title>
-    <div className="py-2">
-    <div className="sm:flex justify-between items-center gap-4">
-      <Datepickertofrom/>
-  <div>
-    <SelectComponent roleDB={roleDB} />
-    <p className="ml-1 text-xs font-semibold text-gray-500">Status</p>
-  </div>
+      <div className="sm:flex sm:flex-col sm:items-start justify-between items-center">
+        <Title>Order List</Title>
+        <div className="py-2 sm:w-full">
+          <div className="sm:flex sm:flex-col justify-between items-center gap-4 xl:flex-row">
+          <Datepickertofrom onDatesSelected={handleDatesSelected} />
+            <div className="flex flex-col sm:flex-row sm:justify-start sm:w-full lg:justify-between xl:justify-end">
+              <div className="mb-2 mr-2">
+                <p className="ml-1 text-xs font-semibold text-gray-500">Status</p>
+                <SelectComponent roleDB={roleDB} />
+              </div>
 
-  <div>
-    <SelectComponent serviceTypeDB={serviceTypeDB} />
-    <p className="ml-1 text-xs font-semibold text-gray-500">Service Type</p>
-  </div>
-</div>
-
-      </div>
-    </div>
-
-
-    <Table className="mt-5 dark:bg-tremor-background">
-      <TableHead>
-        <TableRow>
-          <TableHeaderCell>Name</TableHeaderCell>
-          <TableHeaderCell>Type of Service</TableHeaderCell>
-          <TableHeaderCell>Status</TableHeaderCell>
-          <TableHeaderCell>Date of issue</TableHeaderCell>
-          <TableHeaderCell>Completion Date</TableHeaderCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {result.map((item) =>{
-
-          return (
-          <TableRow key={item.name}>
-
-          <div className="flex justify-start items-center">
-            <TableCell>{item.customer_name}</TableCell>
+              <div>
+                <p className="ml-1 text-xs font-semibold text-gray-500">Service Type</p>
+                <SelectComponent serviceTypeDB={serviceTypeDB} />
+              </div>
+            </div>
           </div>
-           
-            <TableCell>
-              <Text>{item.scheduleOfService}</Text>
-            </TableCell>
-            <TableCell>
-              <Text>{item.status}</Text>
-            </TableCell>
-            <TableCell>
-              <Text>{item.createdAt.slice(0,10)}</Text>
-            </TableCell>
-            <TableCell>
-              <Text>{item.updatedAt.slice(0,10)}</Text>
-            </TableCell>
+
+        </div>
+      </div>
+
+
+      <Table className="mt-5 dark:bg-tremor-background">
+        <TableHead>
+          <TableRow>
+            <TableHeaderCell>Name</TableHeaderCell>
+            <TableHeaderCell>Type of Service</TableHeaderCell>
+            <TableHeaderCell>Status</TableHeaderCell>
+            <TableHeaderCell>Date of issue</TableHeaderCell>
+            <TableHeaderCell>Completion Date</TableHeaderCell>
           </TableRow>
-        )
-        }
-        )}
-      </TableBody>
-    </Table>
-  </Card>
+        </TableHead>
+        <TableBody>
+          {result.map((item) => {
+
+            return (
+              <TableRow key={item.name}>
+
+                <div className="flex justify-start items-center">
+                  <TableCell>{item.customer_name}</TableCell>
+                </div>
+
+                <TableCell>
+                  <Text>{item.scheduleOfService}</Text>
+                </TableCell>
+                <TableCell>
+                  <Text>{item.status}</Text>
+                </TableCell>
+                <TableCell>
+                  <Text>{item.createdAt.slice(0, 10)}</Text>
+                </TableCell>
+                <TableCell>
+                  <Text>{item.updatedAt.slice(0, 10)}</Text>
+                </TableCell>
+              </TableRow>
+            )
+          }
+          )}
+        </TableBody>
+      </Table>
+    </Card>
   )
   
 };

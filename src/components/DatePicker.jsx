@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 
-function Datepickertofrom() {
+function Datepickertofrom({ onDatesSelected }) {
   const [startdate, setStartDate] = useState('');
   const [enddate, setEndDate] = useState('');
 
@@ -19,19 +19,33 @@ function Datepickertofrom() {
     setEndDate(getEndDateValue);
   };
 
+  // Function to be called when dates are selected
+  const handleDatesSelected = () => {
+    // You can perform any additional logic here before passing the dates
+    onDatesSelected({
+      startdate,
+      enddate,
+    });
+  };
+
   return (
     <React.Fragment>
-      <Container>
+      <Container className="w-full">
         <div className="row fthight">
-          <div className="col-sm-8 mt-3">
+          <div className="col-sm-12 mt-3 justify-between">
             <form>
-              <div className="form-group mb-4">
-                <label className="mr-2">Start Date<span className="astriccolor">*</span></label>
-                <input type="date" className="form-control mr-12 border-rounded " name="startdate" placeholder="mm/dd/yyyy"   style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }} onChange={(e) => handleStartDate(e)} />
-                <label className="mr-2">End Date<span className="astriccolor">*</span></label>
-                <input type="date" className="form-control" name="enddate" placeholder="mm/dd/yyyy" disabled={!startdate}   style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }} onChange={(e) => handleEndDate(e)} />
+              <div className="form-group mb-1 sm:flex sm:justify-start lg:justify-between xl:justify-start">
+                <div className="flex justify-between mr-3 ">
+                  <label className="mr-2">Start Date<span className="astriccolor">*</span></label>
+                  <input type="date" className="form-control border-rounded mb-1" name="startdate" placeholder="mm/dd/yyyy" style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }} onChange={(e) => handleStartDate(e)} />
+                </div>
+                <div className="flex justify-between">
+                  <label className="mr-2">End Date<span className="astriccolor">*</span></label>
+                  <input type="date" className="form-control border-rounded mb-1" name="enddate" placeholder="mm/dd/yyyy" disabled={!startdate} style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }} onChange={(e) => handleEndDate(e)} />
+                </div>
               </div>
             </form>
+            <button className="flex bg-green-400 rounded p-1" onClick={handleDatesSelected}>Select Dates</button>
           </div>
         </div>
       </Container>
@@ -40,4 +54,3 @@ function Datepickertofrom() {
 }
 
 export default Datepickertofrom;
-

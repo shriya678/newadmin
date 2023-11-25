@@ -16,7 +16,7 @@ import OTPValidation from "./pages/OTPValidation";
 import axios from "axios";
 import VehicleData from "./components/VehicleData";
 import AdminManagement from "./components/AdminManagement";
-
+import OrderDetails from './components/OrderDetails';
 
 export const RecoveryContext = createContext();
 
@@ -68,8 +68,10 @@ function App() {
     <BrowserRouter>
 
       <RecoveryContext.Provider value={{user,setUser,isSuperAdmin,setSuperAdmin,profiledata}}>
-      <main className="flex">
-          {showSidebar && <Sidebar />} {/* Show Sidebar based on condition */}
+      <main className="flex w-[98.5vw]">
+          <div className="relative">
+            {showSidebar && <Sidebar />} {/* Show Sidebar based on condition */}
+          </div>
           <div className="flex flex-col flex-1 relative">
             {showNavbar && <Navbar />} {/* Show Navbar based on condition */}
 
@@ -84,6 +86,9 @@ function App() {
               <Route path="/vehicleData" element={<VehicleData />} />
               <Route path="/adminManagement" element={<AdminManagement />} />
               <Route path="/ServiceOrders" element={<ServiceOrders />} />
+              <Route path="/order/:orderId" element={<OrderDetails/>} />
+              
+              
             </Routes>
 
           </div>

@@ -67,7 +67,7 @@ const OTPValidation = () => {
                     }}
                   >
                     <img
-                      src="../../public/companyLogo.jpeg"
+                      src="../../public/Logo.png"
                       alt=""
                       style={{
                         width: "100%",

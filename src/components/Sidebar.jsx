@@ -63,8 +63,8 @@ const Sidebar = () => {
     };
 
   return (
-    <div className={`bg-white w-${isCollapsed ? '14' : '60'} h-screen transition-all duration-300 ease-in-out`}>
-      <div className={`fixed left bg-emerald-400 h-17 ${isCollapsed ? 'w-14' : 'w-60'} transition-all duration-300 ease-in-out`} onClick={toggleCollapse}>
+    <div className={`sticky top-0 bg-white w-${isCollapsed ? '14' : '60'} h-screen transition-all duration-300 ease-in-out`}>
+      <div className={` bg-emerald-400 h-17 py-[0.1px] ${isCollapsed ? 'w-14' : 'w-60'} transition-all duration-300 ease-in-out`} onClick={toggleCollapse}>
         <div className="items-center justify-start flex m-4 gap-1 cursor-pointer">
         {isCollapsed && (<MenuIcon className="w-6 h-10 text-white" />)}
           <img src={Logo} alt='logo' className={`w-[40px] h-[40px] object-contain ${isCollapsed ? 'hidden' : 'block'}`} />
@@ -75,7 +75,7 @@ const Sidebar = () => {
 
 
 
-      <div className={`fixed  bg-white ${isCollapsed ? 'pr-4' : 'pr-7'} top-[74px] h-full ${isCollapsed ? 'bg-white pr-0' : ''}`}>
+      <div className={`  bg-white ${isCollapsed ? 'pr-4' : 'pr-7'} top-[74px] h-full ${isCollapsed ? 'bg-white pr-0' : ''}`}>
 
         <NavLink to="/" className="items-center justify-start flex cursor-pointer">
         <TableIcon
