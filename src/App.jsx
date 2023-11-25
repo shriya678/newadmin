@@ -17,6 +17,9 @@ import axios from "axios";
 import VehicleData from "./components/VehicleData";
 import AdminManagement from "./components/AdminManagement";
 import OrderDetails from './components/OrderDetails';
+import MarketingBanner from "./components/MarketingBanner";
+import PushNotifications from "./components/PushNotifications";
+import PromoCode from "./components/PromoCode";
 
 export const RecoveryContext = createContext();
 
@@ -87,6 +90,9 @@ function App() {
               <Route path="/adminManagement" element={<AdminManagement />} />
               <Route path="/ServiceOrders" element={<ServiceOrders />} />
               <Route path="/order/:orderId" element={<OrderDetails/>} />
+              <Route path="/MarketingBanner" element={<MarketingBanner />} />
+              <Route path="/Notifications" element={<PushNotifications />} />
+              <Route path="/PromoCode" element={<PromoCode />} />
               
               
             </Routes>
