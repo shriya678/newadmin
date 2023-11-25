@@ -47,7 +47,7 @@ const TableComponent = () => {
     return true;
   });
 
-  const [selectedDates, setSelectedDates] = useState({ startdate: '', enddate: '' });
+  const [selectedDates, setSelectedDates] = useState({ startdate: '2023-11-15', enddate: '2023-11-25' });
 
   const handleDatesSelected = (dates) => {
     setSelectedDates(dates);
@@ -58,7 +58,7 @@ const TableComponent = () => {
     const fetchData = async () => {
       try {
         const response = await axios.post(
-          "https://service-provider-apis.onrender.com/api/v1/admin/getAllOrders/?status=&page=1&limit=50",
+          "https://service-provider-apis.onrender.com/api/v1/admin/getAllOrders/?status=&page=1&limit=30",
           {
             startDate: selectedDates.startdate,
             endDate: selectedDates.enddate
