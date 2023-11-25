@@ -33,15 +33,15 @@ import { NavLink } from "react-router-dom";
 const MarketingDropdown = () => {
   return (
     <div className = "bg-white">
-        <NavLink to="/" className="items-center flex cursor-pointer ml-10 w-100">
+        <NavLink to="/MarketingBanner" className="items-center flex cursor-pointer ml-10 w-100">
         <h1 className="text-black mb-1">Banners</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center flex cursor-pointer ml-10" activeClassName= "bg-gray-50">
+        <NavLink to="/Notifications" className="items-center flex cursor-pointer ml-10" activeClassName= "bg-gray-50">
         <h1 className="text-black mb-1">Push Notifications</h1>
         </NavLink>
         
-        <NavLink to="/" className="items-center flex cursor-pointer ml-10" activeClassName= "bg-gray-50">
+        <NavLink to="/PromoCode" className="items-center flex cursor-pointer ml-10" activeClassName= "bg-gray-50">
         <h1 className="text-black mb-1">PromoCode</h1>
         </NavLink>
     </div>
@@ -59,6 +59,9 @@ const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
   
     const toggleCollapse = () => {
+      if(window.innerWidth < 450){
+        return;
+      }
       setIsCollapsed(!isCollapsed);
     };
 

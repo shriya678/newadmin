@@ -1,4 +1,3 @@
-import { SearchIcon } from "@heroicons/react/solid";
 import {
   Card,
   Table,
@@ -11,29 +10,18 @@ import {
   Title,
   TextInput,
   Button,
+  Select,
+  SelectItem,
 } from "@tremor/react";
-import { SelectComponent } from "./SelectComponent";
+
+import { Switch } from "@headlessui/react";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { CalculatorIcon } from "@heroicons/react/solid";
+import PermissionComponent from "./PermissionComponent";
+import AddAdminPage from "./AddAdminPage";
 
-// const data = [
-//   {
-//     name: "Abstract 3D",
-//     stock: "32 in stock",
-//     Avatar:<HomeIcon width={40}/>,
-//     price: "$ 45.99",
-//     status: "active",
-//   },
-//   {
-//     name: "Iphone 9",
-//     stock: "45 in stock",
-//     Avatar:<SearchIcon width={40}/>,
-//     price: "$ 45.99",
-//     status: "active",
-//   },
-
-
-// ];
 
 const AdminTableComponent = () => {
   const [data, setData] = useState([]);
@@ -41,12 +29,25 @@ const AdminTableComponent = () => {
   const [email, setEmail] = useState("");
   const [phoneNo, setPhone] = useState("");
   const [role, setRole] = useState("");
-  const [editId, setEditID] = useState(-1);
-  // const [deleteId,setDeleteId] = useState(-1);
+  const [editId, setEditID] = useState(null);
 
-  const [sucess, setSucess] = useState();
-  const [loginError, setLoginError] = useState();
-  const [loading, setLoading] = useState();
+  // const [sucess, setSucess] = useState();
+  // const [loginError, setLoginError] = useState();
+  // const [loading, setLoading] = useState();
+
+  // const [enabled, setEnabled] = useState(false);
+
+  const [permissionData,setPermissionData] = useState();
+
+  const [addAdmin,setAddAdmin] = useState(false);
+
+  const [isDeleteCheck,setIsDeleteCheck] = useState([]);
+
+  const [modifyClick,setModifyClick] = useState(false);
+
+  const [updateId,setUpdateId] = useState(null);
+
+  
 
   // for fetching all
   useEffect(() => {
@@ -57,7 +58,7 @@ const AdminTableComponent = () => {
 
     API.get("/api/v1/superadmin/")
       .then((res) => {
-        console.log("res:", res.data.admins);
+        console.log("res:", res.data);
         setData(res.data.admins);
       })
       .catch((error) => console.log(error));
@@ -72,7 +73,9 @@ const AdminTableComponent = () => {
     API.get(`/api/v1/superadmin/` + id)
       .then((res) => {
         console.log(res);
-        setName(res.data.admin.name);
+        setPermissionData(res.data.admin);
+
+        // setName(res.data.admin.name);
         setEmail(res.data.admin.email);
         setPhone(res.data.admin.phoneNo);
         setRole(res.data.admin.role);
@@ -81,10 +84,26 @@ const AdminTableComponent = () => {
     setEditID(id);
   };
 
+
+  //  Delete Functionality
+  const handleCheckbox = (e)=>{
+    const{value,checked} = e.target;
+    console.log("Deletevalue: ",value);
+    if(checked){
+      setIsDeleteCheck([...isDeleteCheck,value])
+    }
+    else{
+      setIsDeleteCheck(isDeleteCheck.filter((deleteItem)=>deleteItem!==value))
+    }
+  }
+
+  console.log("Delete: ",JSON.stringify(isDeleteCheck));
+
+
+
+//this is not parmanent
   const handleDelete = (id) => {
-    setLoading(true);
-    setSucess(false);
-    setLoginError(false);
+    
 
     const API = axios.create({
       baseURL: `${import.meta.env.VITE_BASE_URL}`,
@@ -93,93 +112,187 @@ const AdminTableComponent = () => {
 
     API.delete(`/api/v1/superadmin/` + id)
       .then((res) => {
-        setSucess(true);
-        setLoading(false);
-        setLoginError(false);
-
         console.log(res);
         location.reload();
       })
       .catch((error) => {
-        setSucess(false);
-        setLoading(false);
-        setLoginError(true);
-
+      
         console.log("eror: ", error);
         // setEditID(false)
       });
   };
 
-  const handleUpdate = () => {
-    setLoading(true);
-    setSucess(false);
-    setLoginError(false);
+  // const handleUpdate = () => {
+  //   setLoading(true);
+  //   setSucess(false);
+  //   setLoginError(false);
 
+  //   const API = axios.create({
+  //     baseURL: `${import.meta.env.VITE_BASE_URL}`,
+  //     withCredentials: true,
+  //   });
+
+  //   API.put(`/api/v1/superadmin/` + editId, {
+  //     _id: editId,
+  //     name,
+  //     email,
+  //     phoneNo,
+  //     role,
+  //   })
+  //     .then((res) => {
+  //       setSucess(true);
+  //       setLoading(false);
+  //       setLoginError(false);
+
+  //       console.log(res);
+  //       setEditID(false);
+  //       location.reload();
+  //     })
+  //     .catch((error) => {
+  //       setSucess(false);
+  //       setLoading(false);
+  //       setLoginError(true);
+
+  //       console.log("eror: ", error);
+  //       setEditID(false);
+  //     });
+  // };
+
+
+  const handleRadio = (id)=>{
     const API = axios.create({
       baseURL: `${import.meta.env.VITE_BASE_URL}`,
       withCredentials: true,
     });
 
-    API.put(`/api/v1/superadmin/` + editId, {
-      _id: editId,
-      name,
-      email,
-      phoneNo,
-      role,
-    })
+    API.get(`/api/v1/superadmin/` + id)
       .then((res) => {
-        setSucess(true);
-        setLoading(false);
-        setLoginError(false);
-
         console.log(res);
-        setEditID(false);
-        location.reload();
-      })
-      .catch((error) => {
-        setSucess(false);
-        setLoading(false);
-        setLoginError(true);
+        // setPermissionData(res.data.admin);
 
-        console.log("eror: ", error);
-        setEditID(false);
-      });
-  };
+        setName(res.data.admin.name);
+        setEmail(res.data.admin.email);
+        setPhone(res.data.admin.phoneNo);
+        setRole(res.data.admin.role);
+      })
+      .catch((error) => console.log(error));
+    setUpdateId(id);
+  }
+
+  console.log("Role: ",role);
+
+  const updateRecord = ()=>{
+
+    const API = axios.create({
+          baseURL: `${import.meta.env.VITE_BASE_URL}`,
+          withCredentials: true,
+        });
+    
+        API.put(`/api/v1/superadmin/` + updateId, {
+          _id: updateId,
+          name,
+          email,
+          phoneNo,
+          role,
+        })
+          .then((res) => {
+            console.log("Update Rec: ",res);
+            setUpdateId(false);
+            location.reload();
+          })
+          .catch((error) => {
+            console.log("eror: ", error);
+            setUpdateId(false);
+          });
+
+  }
+
+
+  
 
   return (
+  
     <Card className="mt-4 dark:bg-tremor-background">
-      <div className="sm:flex justify-between items-center">
-        <Title>All Admins</Title>
+
+    {addAdmin ? null :  <div className="sm:flex justify-between items-center">
+        <Title>Admin Management</Title>
         <div className="py-2">
           <div className="sm:flex justify-between items-center">
-            <TextInput
-              className="dark:bg-tremor-background mr-4 mb-2"
-              icon={SearchIcon}
-              placeholder="Search..."
-            />
-            {/* <SelectComponent/> */}
+          {updateId? <Button className="mr-4 mb-2" color="green" disabled>
+              Add
+            </Button>:
+            <Button className="mr-4 mb-2" color="green" onClick={()=>setAddAdmin(true)}>
+              Add
+            </Button>}
+
+            {updateId ? 
+              <Button className="mr-4 mb-2" color="green" onClick={()=>updateRecord()}>
+              Update
+            </Button>
+            :
+            <Button className="mr-4 mb-2" color="green" onClick={()=>setModifyClick(true)}>
+              Modify
+            </Button>}
+
+
+            <Button className="mr-4 mb-2" color="green" onClick={()=>handleDelete(updateId)}>
+              Delete
+            </Button>
+
+
+          {/* {updateId?  <Button className="mr-4 mb-2" color="green" disabled>
+              Delete
+            </Button>
+            :
+            <Button className="mr-4 mb-2" color="green" onClick={handleDelete}>
+              Delete
+            </Button>} */}
+           
           </div>
         </div>
+
       </div>
 
-      <Table className="mt-5 dark:bg-tremor-background">
-        <TableHead>
-          <TableRow>
-            <TableHeaderCell>Name</TableHeaderCell>
-            <TableHeaderCell>Email</TableHeaderCell>
-            <TableHeaderCell>Phone No</TableHeaderCell>
-            <TableHeaderCell>Role</TableHeaderCell>
-            <TableHeaderCell>Update</TableHeaderCell>
-            <TableHeaderCell>Delete</TableHeaderCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((user, index) =>
-            user._id === editId ? (
-              <TableRow key={index}>
-                <TableCell>
-                  {/* <input type="text"  value={name} onChange={e=>setName(e.target.value)} /> */}
+    }
 
+
+      {editId ? 
+
+        permissionData? (<PermissionComponent permissionData={permissionData} editId={editId} handleEdit={()=>setEditID(null)}/>)  : <h1>Loading</h1>      
+
+       :
+
+      addAdmin ? (<AddAdminPage setAddAdmin={()=>setAddAdmin(false)}/>): 
+       (
+        <Table className="mt-5 dark:bg-tremor-background">
+          <TableHead>
+            <TableRow>
+            {modifyClick?<TableHeaderCell>Choose Update</TableHeaderCell>:
+            <TableHeaderCell>
+             SelectDelete 
+            </TableHeaderCell>
+            }
+              <TableHeaderCell>Name</TableHeaderCell>
+              <TableHeaderCell>Email</TableHeaderCell>
+              <TableHeaderCell>Phone No</TableHeaderCell>
+              <TableHeaderCell>Role</TableHeaderCell>
+              <TableHeaderCell>Permission</TableHeaderCell>
+              <TableHeaderCell>Status</TableHeaderCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((user, index) => 
+
+              user._id === updateId ? 
+
+              (
+                <TableRow key={index}>
+
+                <TableCell>
+                <input type="radio" checked={true} />
+                </TableCell>
+
+                <TableCell>
                   <TextInput
                     type="text"
                     value={name}
@@ -204,82 +317,129 @@ const AdminTableComponent = () => {
                 </TableCell>
 
                 <TableCell>
-                  <TextInput
+
+                <Select
+                    value={role}
+                    onValueChange={setRole}
+                    placeholder={role}
+                  >
+                    <SelectItem value="admin" icon={CalculatorIcon}>
+                      Admin
+                    </SelectItem>
+                    <SelectItem value="superAdmin" icon={CalculatorIcon}>
+                      SuperAdmin
+                    </SelectItem>
+                  </Select>
+
+
+                  {/* <TextInput
                     type="text"
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
-                  />
-                </TableCell>
+                  /> */}
 
-                <TableCell>
-                  <Button style={{ color: "#ffffff" }} onClick={handleUpdate}>
-                    Update
-                  </Button>
                 </TableCell>
 
                 <TableCell>
                   <Button style={{ color: "#ffffff" }} disabled>
-                    Delete
+                    Permission
                   </Button>
                 </TableCell>
-              </TableRow>
-            ) : (
-              <TableRow key={index}>
-                {/* <div className="flex justify-start items-center"> */}
+
                 <TableCell>
-                  {/* {user.Avatar} */}
-                  {user.name}
+                  <div className="sm:flex justify-between items-center">
+                    <Switch
+                      className={`${
+                        user.permissionCheck ? "bg-blue-600" : "bg-gray-200"
+                      } relative inline-flex h-6 w-11 items-center rounded-full`}
+                    >
+                      <span
+                        className={`${
+                          user.permissionCheck ? "translate-x-6" : "translate-x-1"
+                        } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                      />
+                    </Switch>
+                  </div>
                 </TableCell>
-                {/* </div> */}
+
+
+              </TableRow>
+              )
+  
+              :
+
+            (  <TableRow key={index}>
+
+              <TableCell>
+
+              {modifyClick?
+
+                <input type="radio" onClick={()=>handleRadio(user._id)}/>:
+
+                <input type="checkbox" value={user._id} checked={user.isDeleteCheck} onChange={(e)=>handleCheckbox(e)} />
+
+              }
+              </TableCell>
+
+                <TableCell>
+                  <Text> {user.name} </Text>
+                </TableCell>
 
                 <TableCell>
                   <Text>{user.email}</Text>
                 </TableCell>
+
                 <TableCell>
                   <Text>{user.phoneNo}</Text>
                 </TableCell>
+
                 <TableCell>
                   <Text>{user.role}</Text>
                 </TableCell>
+
                 <TableCell>
                   <Button
-                    style={{ color: "#ffffff" }}
-                    onClick={() => handleEdit(user._id)}
+                    className="mr-1 mb-2"
+                    color="green"
+                    onClick={() => {
+                      handleEdit(user._id);
+                    }}
                   >
-                    Update Admin
+                    Permission
                   </Button>
                 </TableCell>
+
                 <TableCell>
-                  <Button
-                    style={{ color: "#ffffff" }}
-                    onClick={() => handleDelete(user._id)}
-                  >
-                    Delete Admin
-                  </Button>
+                  <div className="sm:flex justify-between items-center">
+                    <Switch
+                      className={`${
+                        user.permissionCheck ? " bg-green-500" : "bg-gray-200"
+                      } relative inline-flex h-6 w-11 items-center rounded-full`}
+                    >
+                      <span
+                        className={`${
+                          user.permissionCheck ? "translate-x-6" : "translate-x-1"
+                        } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                      />
+                    </Switch>
+                  </div>
                 </TableCell>
+
+
               </TableRow>
             )
-          )}
-        </TableBody>
-      </Table>
 
-      {loading ? (
-        <div>
-          <h1>Loading...</h1>
-        </div>
-      ) : sucess ? (
-        <div>
-          <h1>Sucess</h1>
-        </div>
-      ) : loginError ? (
-        <div>
-          <h1>Something Went Wrong !</h1>
-        </div>
-      ) : (
-        ""
-      )}
+
+            )}
+          </TableBody>
+        </Table>
+      )
+      }
     </Card>
-  );
+
+  )
+  
 };
+
 
 export default AdminTableComponent;

@@ -20,10 +20,6 @@ export default function ResetPassword() {
   function changePassword() {
 
     if (password && confirmPassword) {
-        // const OTP = Math.floor(Math.random() * 9000 + 1000);
-        // console.log(OTP);
-        // setOTP(OTP);
-
         const API = axios.create({
           baseURL:`${import.meta.env.VITE_BASE_URL}`,
            withCredentials: true,
