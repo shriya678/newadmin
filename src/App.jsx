@@ -20,6 +20,7 @@ import OrderDetails from './components/OrderDetails';
 import MarketingBanner from "./components/MarketingBanner";
 import PushNotifications from "./components/PushNotifications";
 import PromoCode from "./components/PromoCode";
+import SubscriptionPlan from "./pages/SubscriptionPlan";
 
 export const RecoveryContext = createContext();
 
@@ -93,8 +94,7 @@ function App() {
               <Route path="/MarketingBanner" element={<MarketingBanner />} />
               <Route path="/Notifications" element={<PushNotifications />} />
               <Route path="/PromoCode" element={<PromoCode />} />
-              
-              
+              <Route path="/SubscriptionPlan" element={<SubscriptionPlan/>}/>
             </Routes>
 
           </div>

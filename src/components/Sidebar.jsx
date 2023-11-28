@@ -143,7 +143,7 @@ const Sidebar = () => {
         <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Service Management</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer">
+        <NavLink to="/SubscriptionPlan" className="items-center justify-start flex cursor-pointer">
         <TableIcon
           width={40}
           className="p-2 mb-1 text-black"
