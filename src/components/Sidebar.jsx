@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../asset/Logo.png';
 import {
   ArrowUpIcon,
@@ -63,13 +63,14 @@ const Sidebar = () => {
         return;
       }
       setIsCollapsed(!isCollapsed);
+      setMarketingDropdownOpen(false);
     };
 
   return (
     <div className={`sticky top-0 bg-white w-${isCollapsed ? '14' : '60'} h-screen transition-all duration-300 ease-in-out`}>
       <div className={` bg-emerald-400 h-17 py-[0.1px] ${isCollapsed ? 'w-14' : 'w-60'} transition-all duration-300 ease-in-out`} onClick={toggleCollapse}>
         <div className="items-center justify-start flex m-4 gap-1 cursor-pointer">
-        {isCollapsed && (<MenuIcon className="w-6 h-10 text-white" />)}
+          {isCollapsed && (<MenuIcon className="w-6 h-10 text-white" />)}
           <img src={Logo} alt='logo' className={`w-[40px] h-[40px] object-contain ${isCollapsed ? 'hidden' : 'block'}`} />
           <h1 className={`text-black-300 text-base ml-1 mb-1 text-xl items-center font-bold ${isCollapsed ? 'hidden' : 'block'} `}>Helpy Moto</h1>
           <MenuIcon className={`ml-3 w-6 h-6 text-white ${isCollapsed ? 'hidden' : 'block'}`}/>
