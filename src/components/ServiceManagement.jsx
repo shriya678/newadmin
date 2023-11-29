@@ -46,7 +46,7 @@ function ServiceManagement(){
                             <TableHeaderCell>Select Service</TableHeaderCell>
                             <TableHeaderCell>Service Name</TableHeaderCell>
                             <TableHeaderCell>Price</TableHeaderCell>
-                            <TableHeaderCell>T&C No</TableHeaderCell>
+                            <TableHeaderCell>T&C</TableHeaderCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
