@@ -44,7 +44,7 @@ const Navbar = () => {
           <div className="origin-top-right absolute right-0 top-12 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
             <div className="py-1">
               <Link to={'/'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</Link>
-              <Link to={'/'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</Link>
+              <Link to={'/setting'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</Link>
               <div onClick={handleLogout} className="block px-4 py-2 cursor-pointer text-sm text-red-600 hover:bg-red-100">Sign Out</div>
             </div>
           </div>

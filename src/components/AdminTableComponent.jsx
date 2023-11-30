@@ -16,12 +16,13 @@ import {
 
 import { Switch } from "@headlessui/react";
 
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { CalculatorIcon } from "@heroicons/react/solid";
 import PermissionComponent from "./PermissionComponent";
 import AddAdminPage from "./AddAdminPage";
 
+export const PermissionContext = createContext();
 
 const AdminTableComponent = () => {
   const [data, setData] = useState([]);
@@ -31,7 +32,7 @@ const AdminTableComponent = () => {
   const [role, setRole] = useState("");
   const [editId, setEditID] = useState(null);
 
-  // const [sucess, setSucess] = useState();
+  // const [sucess, setSucess] = useState(null);
   // const [loginError, setLoginError] = useState();
   // const [loading, setLoading] = useState();
 
@@ -97,30 +98,13 @@ const AdminTableComponent = () => {
     }
   }
 
-  console.log("Delete: ",JSON.stringify(isDeleteCheck));
+  // console.log("Delete: ",JSON.stringify(isDeleteCheck));
+  console.log("Delete: ",isDeleteCheck);
 
 
 
 //this is not parmanent
-  const handleDelete = (id) => {
-    
-
-    const API = axios.create({
-      baseURL: `${import.meta.env.VITE_BASE_URL}`,
-      withCredentials: true,
-    });
-
-    API.delete(`/api/v1/superadmin/` + id)
-      .then((res) => {
-        console.log(res);
-        location.reload();
-      })
-      .catch((error) => {
-      
-        console.log("eror: ", error);
-        // setEditID(false)
-      });
-  };
+ 
 
   // const handleUpdate = () => {
   //   setLoading(true);
@@ -198,6 +182,7 @@ const AdminTableComponent = () => {
           .then((res) => {
             console.log("Update Rec: ",res);
             setUpdateId(false);
+            // setSucess(true);
             location.reload();
           })
           .catch((error) => {
@@ -208,11 +193,45 @@ const AdminTableComponent = () => {
   }
 
 
+  const handleDelete = (isDeleteCheck) => {
+
+   
+    
+    const API = axios.create({
+      baseURL: `${import.meta.env.VITE_BASE_URL}`,
+      withCredentials: true,
+    });
+
+    // console.log("Delete Id: ",id);
+
+    console.log("Is Delete: ",JSON.stringify(isDeleteCheck));
+
+    // API.delete(`/api/v1/superadmin/deleteBulkAdmins/` +id)
+    API.post(`/api/v1/superadmin/deleteBulkAdmins/`,{
+      array:isDeleteCheck
+    })
+
+
+      .then((res) => {
+        console.log(res);
+        // location.reload();
+      })
+      .catch((error) => {
+      
+        console.log("eror: ", error);
+        // setEditID(false)
+      });
+  };
+
+
+  console.log("EdittId: ",editId);
   
 
   return (
   
-    <Card className="mt-4 dark:bg-tremor-background">
+    <PermissionContext.Provider value={{editId,setEditID}}>
+
+    <Card className={addAdmin? `mt-4 dark:bg-tremor-background  h-[180vh]`: `mt-4 dark:bg-tremor-background`}>
 
     {addAdmin ? null :  <div className="sm:flex justify-between items-center">
         <Title>Admin Management</Title>
@@ -235,7 +254,7 @@ const AdminTableComponent = () => {
             </Button>}
 
 
-            <Button className="mr-4 mb-2" color="green" onClick={()=>handleDelete(updateId)}>
+            <Button className="mr-4 mb-2" color="green" onClick={()=>handleDelete(isDeleteCheck)}>
               Delete
             </Button>
 
@@ -257,11 +276,8 @@ const AdminTableComponent = () => {
 
 
       {editId ? 
-
-        permissionData? (<PermissionComponent permissionData={permissionData} editId={editId} handleEdit={()=>setEditID(null)}/>)  : <h1>Loading</h1>      
-
+         (<PermissionComponent editId={editId}/>)       
        :
-
       addAdmin ? (<AddAdminPage setAddAdmin={()=>setAddAdmin(false)}/>): 
        (
         <Table className="mt-5 dark:bg-tremor-background">
@@ -330,13 +346,6 @@ const AdminTableComponent = () => {
                       SuperAdmin
                     </SelectItem>
                   </Select>
-
-
-                  {/* <TextInput
-                    type="text"
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                  /> */}
 
                 </TableCell>
 
@@ -424,19 +433,15 @@ const AdminTableComponent = () => {
                     </Switch>
                   </div>
                 </TableCell>
-
-
               </TableRow>
             )
-
-
             )}
           </TableBody>
         </Table>
       )
       }
     </Card>
-
+   </PermissionContext.Provider>
   )
   
 };

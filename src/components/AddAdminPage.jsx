@@ -138,7 +138,7 @@ const AddAdminPage = ({ admin, setAddAdmin }) => {
   }
 
   return (
-    <div>
+    <div className="w-full p-4 dark:bg-tremor-background h-auto">
       <section className="h-screen">
         <div className="px-6 h-full text-gray-800">
           <div className="flex justify-end items-end">
@@ -251,7 +251,7 @@ const AddAdminPage = ({ admin, setAddAdmin }) => {
                 <div className="mt-5 flex justify-evenly items-center">
                   {/* first card for permission */}
 
-                  <Card className=" ml-2 bg-transparent border rounded border-yellow-500 py-2">
+                  <Card className=" ml-2 bg-transparent border rounded border-green-500 py-2">
                     <div className="flex justify-center items-center px-2">
                       <div className="flex justify-between align-middle">
                         <h1 className="mr-4">Customer</h1>
@@ -333,7 +333,7 @@ const AddAdminPage = ({ admin, setAddAdmin }) => {
                   </Card>
 
                   {/* Second Card for permission */}
-                  <Card className=" bg-transparent border rounded border-yellow-500 py-2">
+                  <Card className=" bg-transparent border rounded border-green-500 py-2">
                     <div className="flex justify-center items-center ">
                       <div className="flex justify-evenly align-middle">
                         <h1 className="mr-4">Service Provider</h1>
@@ -416,7 +416,7 @@ const AddAdminPage = ({ admin, setAddAdmin }) => {
                   </Card>
 
                   {/* Third Card for permission */}
-                  <Card className=" bg-transparent border rounded border-yellow-500 py-2 ">
+                  <Card className=" bg-transparent border rounded border-green-500 py-2 ">
                     <div className="flex justify-center items-center">
                       <div className="flex justify-between align-middle">
                         <h1 className="mr-4">Service Order</h1>
@@ -501,10 +501,10 @@ const AddAdminPage = ({ admin, setAddAdmin }) => {
               ) : null}
             </div>
 
-            <div className="text-center lg:text-left">
+            <div className="text-center lg:text-left mt-10">
               <button
                 type="button"
-                className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                className="inline-block px-7 py-3 bg-green-400 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
                   onClick={handleSignUp}
               >
                 Create Admin
