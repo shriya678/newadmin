@@ -17,8 +17,11 @@ import axios from "axios";
 import VehicleData from "./components/VehicleData";
 import AdminManagement from "./components/AdminManagement";
 import OrderDetails from './components/OrderDetails';
-import Customers from "./pages/Customers";
-import Setting from "./pages/Setting";
+import MarketingBanner from "./components/MarketingBanner";
+import PushNotifications from "./components/PushNotifications";
+import PromoCode from "./components/PromoCode";
+import SubscriptionPlan from "./pages/SubscriptionPlan";
+import ServiceManagement from "./components/ServiceManagement";
 
 export const RecoveryContext = createContext();
 
@@ -91,8 +94,11 @@ function App() {
               <Route path="/adminManagement" element={<AdminManagement />} />
               <Route path="/ServiceOrders" element={<ServiceOrders />} />
               <Route path="/order/:orderId" element={<OrderDetails/>} />
-              
-              
+              <Route path="/MarketingBanner" element={<MarketingBanner />} />
+              <Route path="/Notifications" element={<PushNotifications />} />
+              <Route path="/PromoCode" element={<PromoCode />} />
+              <Route path="/SubscriptionPlan" element={<SubscriptionPlan/>}/>
+              <Route path="ServiceManagement" element={<ServiceManagement /> } />
             </Routes>
 
           </div>

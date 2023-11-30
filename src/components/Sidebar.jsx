@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../asset/Logo.png';
 import {
   ArrowUpIcon,
@@ -33,15 +33,15 @@ import { NavLink } from "react-router-dom";
 const MarketingDropdown = () => {
   return (
     <div className = "bg-white">
-        <NavLink to="/" className="items-center flex cursor-pointer ml-10 w-100">
+        <NavLink to="/MarketingBanner" className="items-center flex cursor-pointer ml-10 w-100">
         <h1 className="text-black mb-1">Banners</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center flex cursor-pointer ml-10" activeClassName= "bg-gray-50">
+        <NavLink to="/Notifications" className="items-center flex cursor-pointer ml-10" activeClassName= "bg-gray-50">
         <h1 className="text-black mb-1">Push Notifications</h1>
         </NavLink>
         
-        <NavLink to="/" className="items-center flex cursor-pointer ml-10" activeClassName= "bg-gray-50">
+        <NavLink to="/PromoCode" className="items-center flex cursor-pointer ml-10" activeClassName= "bg-gray-50">
         <h1 className="text-black mb-1">PromoCode</h1>
         </NavLink>
     </div>
@@ -59,14 +59,18 @@ const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
   
     const toggleCollapse = () => {
+      if(window.innerWidth < 450){
+        return;
+      }
       setIsCollapsed(!isCollapsed);
+      setMarketingDropdownOpen(false);
     };
 
   return (
     <div className={`sticky top-0 bg-white w-${isCollapsed ? '14' : '60'} h-screen transition-all duration-300 ease-in-out`}>
       <div className={` bg-emerald-400 h-17 py-[0.1px] ${isCollapsed ? 'w-14' : 'w-60'} transition-all duration-300 ease-in-out`} onClick={toggleCollapse}>
         <div className="items-center justify-start flex m-4 gap-1 cursor-pointer">
-        {isCollapsed && (<MenuIcon className="w-6 h-10 text-white" />)}
+          {isCollapsed && (<MenuIcon className="w-6 h-10 text-white" />)}
           <img src={Logo} alt='logo' className={`w-[40px] h-[40px] object-contain ${isCollapsed ? 'hidden' : 'block'}`} />
           <h1 className={`text-black-300 text-base ml-1 mb-1 text-xl items-center font-bold ${isCollapsed ? 'hidden' : 'block'} `}>Helpy Moto</h1>
           <MenuIcon className={`ml-3 w-6 h-6 text-white ${isCollapsed ? 'hidden' : 'block'}`}/>
@@ -132,7 +136,7 @@ const Sidebar = () => {
         <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Customer Support LO</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer">
+        <NavLink to="/ServiceManagement" className="items-center justify-start flex cursor-pointer">
         <TableIcon
           width={40}
           className="p-2 mb-1 text-black"
@@ -140,7 +144,7 @@ const Sidebar = () => {
         <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Service Management</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer">
+        <NavLink to="/SubscriptionPlan" className="items-center justify-start flex cursor-pointer">
         <TableIcon
           width={40}
           className="p-2 mb-1 text-black"

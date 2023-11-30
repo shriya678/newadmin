@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import Logo from "../asset/Logo.png";
 
 const OTPValidation = () => {
 
@@ -67,7 +68,7 @@ const OTPValidation = () => {
                     }}
                   >
                     <img
-                      src="../../public/Logo.png"
+                      src={Logo}
                       alt=""
                       style={{
                         width: "100%",

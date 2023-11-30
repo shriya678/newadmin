@@ -19,9 +19,7 @@ function Datepickertofrom({ onDatesSelected }) {
     setEndDate(getEndDateValue);
   };
 
-  // Function to be called when dates are selected
   const handleDatesSelected = () => {
-    // You can perform any additional logic here before passing the dates
     onDatesSelected({
       startdate,
       enddate,
