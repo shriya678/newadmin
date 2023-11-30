@@ -22,6 +22,8 @@ import PushNotifications from "./components/PushNotifications";
 import PromoCode from "./components/PromoCode";
 import SubscriptionPlan from "./pages/SubscriptionPlan";
 import ServiceManagement from "./components/ServiceManagement";
+import Customers from "./pages/Customers";
+import Setting from "./pages/Setting";
 
 export const RecoveryContext = createContext();
 
