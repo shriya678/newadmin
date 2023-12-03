@@ -86,6 +86,8 @@ function App() {
               <Route path="/auth" element={profiledata ? <Navigate to='../home/'/>:<Login/>}/>
               <Route path="/kyc" element={profiledata ? <KYC/>:<Navigate to="../auth"/>}/>
               <Route path="/manageAdmin" element={profiledata ? <ManageAdmin/>:<Navigate to="../auth"/>}/>
+              <Route path="/customers" element={profiledata ? <Customers/>:<Navigate to="../auth"/>}/>
+              <Route path="/setting" element={profiledata ? <Setting/>:<Navigate to="../auth"/>}/>
               <Route path='/reset' element={isSuperAdmin? <ResetPassword/> : ''} />
               <Route path='/otp' element={isSuperAdmin? <OTPValidation/> : ''} />
               <Route path="/vehicleData" element={<VehicleData />} />
