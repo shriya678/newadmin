@@ -22,6 +22,9 @@ import { CalculatorIcon } from "@heroicons/react/solid";
 import PermissionComponent from "./PermissionComponent";
 import AddAdminPage from "./AddAdminPage";
 
+import CardLoader from '../components/CardLoader'
+
+
 export const PermissionContext = createContext();
 
 const AdminTableComponent = () => {
@@ -32,9 +35,9 @@ const AdminTableComponent = () => {
   const [role, setRole] = useState("");
   const [editId, setEditID] = useState(null);
 
-  // const [sucess, setSucess] = useState(null);
-  // const [loginError, setLoginError] = useState();
-  // const [loading, setLoading] = useState();
+  const [sucess, setSucess] = useState(null);
+  // const [Error, setError] = useState();
+  const [loading, setLoading] = useState(true);
 
   // const [enabled, setEnabled] = useState(false);
 
@@ -61,9 +64,27 @@ const AdminTableComponent = () => {
       .then((res) => {
         console.log("res:", res.data);
         setData(res.data.admins);
+        setLoading(false);
       })
       .catch((error) => console.log(error));
   }, []);
+
+
+   // for fetching all
+   useEffect(() => {
+    const API = axios.create({
+      baseURL: `${import.meta.env.VITE_BASE_URL}`,
+      withCredentials: true,
+    });
+
+    API.get("/api/v1/superadmin/")
+      .then((res) => {
+        console.log("res:", res.data);
+        setData(res.data.admins);
+      })
+      .catch((error) => console.log(error));
+  }, [sucess])
+
 
   const handleEdit = (id) => {
     const API = axios.create({
@@ -182,8 +203,8 @@ const AdminTableComponent = () => {
           .then((res) => {
             console.log("Update Rec: ",res);
             setUpdateId(false);
-            // setSucess(true);
-            location.reload();
+            setSucess(true);
+            // location.reload();
           })
           .catch((error) => {
             console.log("eror: ", error);
@@ -214,14 +235,22 @@ const AdminTableComponent = () => {
 
       .then((res) => {
         console.log(res);
-        // location.reload();
+        setIsDeleteCheck(null);
+        setSucess(true);
       })
       .catch((error) => {
       
         console.log("eror: ", error);
-        // setEditID(false)
+        // setEditID(false);
+        setIsDeleteCheck(null);
       });
   };
+
+  const handleDiscard = ()=>{
+    setModifyClick(false);
+    setUpdateId(false);
+    isDeleteCheck(null);
+  }
 
 
   console.log("EdittId: ",editId);
@@ -229,43 +258,52 @@ const AdminTableComponent = () => {
 
   return (
   
-    <PermissionContext.Provider value={{editId,setEditID}}>
+    <PermissionContext.Provider value={{editId,setEditID,sucess,setSucess}}>
 
+    <div>
+
+    {!loading ? 
+  
     <Card className={addAdmin? `mt-4 dark:bg-tremor-background  h-[180vh]`: `mt-4 dark:bg-tremor-background`}>
 
     {addAdmin ? null :  <div className="sm:flex justify-between items-center">
         <Title>Admin Management</Title>
+
+        {updateId &&  <Button className="mr-4 mb-2" color="emerald" onClick={handleDiscard}>
+              Discard Changes
+            </Button> }
+
         <div className="py-2">
           <div className="sm:flex justify-between items-center">
-          {updateId? <Button className="mr-4 mb-2" color="green" disabled>
+          {updateId? <Button className="mr-4 mb-2" color="emerald" disabled>
               Add
             </Button>:
-            <Button className="mr-4 mb-2" color="green" onClick={()=>setAddAdmin(true)}>
+            <Button className="mr-4 mb-2" color="emerald"  onClick={()=>setAddAdmin(true)}>
               Add
             </Button>}
 
             {updateId ? 
-              <Button className="mr-4 mb-2" color="green" onClick={()=>updateRecord()}>
+              <Button className="mr-4 mb-2" color="emerald" onClick={()=>updateRecord()}>
               Update
             </Button>
             :
-            <Button className="mr-4 mb-2" color="green" onClick={()=>setModifyClick(true)}>
+            <Button className="mr-4 mb-2" color="emerald" onClick={()=>setModifyClick(true)}>
               Modify
             </Button>}
 
 
-            <Button className="mr-4 mb-2" color="green" onClick={()=>handleDelete(isDeleteCheck)}>
+            {/* <Button className="mr-4 mb-2" color="emerald" onClick={()=>handleDelete(isDeleteCheck)}>
               Delete
-            </Button>
+            </Button> */}
 
 
-          {/* {updateId?  <Button className="mr-4 mb-2" color="green" disabled>
+          {updateId?  <Button className="mr-4 mb-2" color="emerald" disabled>
               Delete
             </Button>
             :
-            <Button className="mr-4 mb-2" color="green" onClick={handleDelete}>
+            <Button className="mr-4 mb-2" color="emerald" onClick={()=>handleDelete(isDeleteCheck)}>
               Delete
-            </Button>} */}
+            </Button>}
            
           </div>
         </div>
@@ -350,7 +388,7 @@ const AdminTableComponent = () => {
                 </TableCell>
 
                 <TableCell>
-                  <Button style={{ color: "#ffffff" }} disabled>
+                  <Button color="emerald" style={{ color: "#ffffff" }} disabled>
                     Permission
                   </Button>
                 </TableCell>
@@ -358,8 +396,9 @@ const AdminTableComponent = () => {
                 <TableCell>
                   <div className="sm:flex justify-between items-center">
                     <Switch
+                    disabled
                       className={`${
-                        user.permissionCheck ? "bg-blue-600" : "bg-gray-200"
+                        user.permissionCheck ? " bg-emerald-400" : "bg-gray-200"
                       } relative inline-flex h-6 w-11 items-center rounded-full`}
                     >
                       <span
@@ -383,9 +422,9 @@ const AdminTableComponent = () => {
 
               {modifyClick?
 
-                <input type="radio" onClick={()=>handleRadio(user._id)}/>:
+                <input type="radio" checked={false} onClick={()=>handleRadio(user._id)}/>:
 
-                <input type="checkbox" value={user._id} checked={user.isDeleteCheck} onChange={(e)=>handleCheckbox(e)} />
+                <input type="checkbox" value={user._id}  checked={user.isDeleteCheck} onChange={(e)=>handleCheckbox(e)} />
 
               }
               </TableCell>
@@ -409,7 +448,7 @@ const AdminTableComponent = () => {
                 <TableCell>
                   <Button
                     className="mr-1 mb-2"
-                    color="green"
+                    color="emerald"
                     onClick={() => {
                       handleEdit(user._id);
                     }}
@@ -422,7 +461,7 @@ const AdminTableComponent = () => {
                   <div className="sm:flex justify-between items-center">
                     <Switch
                       className={`${
-                        user.permissionCheck ? " bg-green-500" : "bg-gray-200"
+                        user.permissionCheck ? " bg-emerald-400" : "bg-gray-200"
                       } relative inline-flex h-6 w-11 items-center rounded-full`}
                     >
                       <span
@@ -441,6 +480,15 @@ const AdminTableComponent = () => {
       )
       }
     </Card>
+
+    :
+
+    <CardLoader/>
+    }
+
+    </div> 
+
+
    </PermissionContext.Provider>
   )
   

@@ -14,14 +14,12 @@ import {
     SelectItem,
   } from "@tremor/react";
   
-  import { Switch } from "@headlessui/react";
+  
   
   import { useEffect, useState } from "react";
   import axios from "axios";
-  import { CalculatorIcon } from "@heroicons/react/solid";
   import PermissionComponent from "../components/PermissionComponent";
-  import AddAdminPage from "../components/AddAdminPage";
-import AddCustomerPage from "../components/AddCustomerPage";
+  import AddCustomerPage from "../components/AddCustomerPage";
   
   
   const Customers = () => {
@@ -37,6 +35,14 @@ import AddCustomerPage from "../components/AddCustomerPage";
     // const [loading, setLoading] = useState();
   
     // const [enabled, setEnabled] = useState(false);
+
+    const [userData,setUserData] = useState([
+      {id:1,name:'Aman',email:'aman@gmail.com',address:"hazrat ganj lucknow uttarPradesh India",phoneNo:657573718,rating:3.5},
+      {id:2,name:'Sita',email:'sita@gmail.com',address:"awad ayodya lucknow uttarPradesh India",phoneNo:865737373,rating:5},
+      {id:3,name:'Raghav',email:'raghav@gmail.com',address:"Mayur Vihar colony Jhansi uttarPradesh India",phoneNo:657573718,rating:3.5},
+      {id:4,name:'Aman',email:'aman@gmail.com',address:"hazrat ganj lucknow uttarPradesh India",phoneNo:657573718,rating:3.5},
+      {id:5,name:'Aman',email:'aman@gmail.com',address:"hazrat ganj lucknow uttarPradesh India",phoneNo:657573718,rating:3.5},
+    ])
   
     const [permissionData,setPermissionData] = useState();
   
@@ -47,23 +53,42 @@ import AddCustomerPage from "../components/AddCustomerPage";
     const [modifyClick,setModifyClick] = useState(false);
   
     const [updateId,setUpdateId] = useState(null);
-  
-    
+
+    // this is demo for checking Allusers
+      useEffect(() => {
+        const API = axios.create({
+          baseURL: `${import.meta.env.VITE_BASE_URL}`,
+          withCredentials: true,
+        });
+        API.get("/api/v1/admin/getAllOrdersOfUser")
+        .then((res) => {
+          console.log("Customer Res:", res.data);
+          setData(res.data.users);
+          
+        })
+        .catch((error)=>{
+          console.log("Error: ",error);
+        })
+
+    },[])
+
+
+
   
     // for fetching all
-    useEffect(() => {
-      const API = axios.create({
-        baseURL: `${import.meta.env.VITE_BASE_URL}`,
-        withCredentials: true,
-      });
+    // useEffect(() => {
+    //   const API = axios.create({
+    //     baseURL: `${import.meta.env.VITE_BASE_URL}`,
+    //     withCredentials: true,
+    //   });
   
-      API.get("/api/v1/superadmin/")
-        .then((res) => {
-          console.log("res:", res.data);
-          setData(res.data.admins);
-        })
-        .catch((error) => console.log(error));
-    }, []);
+    //   API.get("/api/v1/superadmin/")
+    //     .then((res) => {
+    //       console.log("res:", res.data);
+    //       setData(res.data.admins);
+    //     })
+    //     .catch((error) => console.log(error));
+    // }, []);
   
     const handleEdit = (id) => {
       const API = axios.create({
@@ -233,9 +258,7 @@ import AddCustomerPage from "../components/AddCustomerPage";
 
 
     {editId ? 
-
       permissionData? (<PermissionComponent permissionData={permissionData} editId={editId} handleEdit={()=>setEditID(null)}/>)  : <h1>Loading</h1>      
-
      :
 
     addCustomer ? (<AddCustomerPage setAddCustomer={()=>setAddCustomer(false)}/>) : 
@@ -249,15 +272,49 @@ import AddCustomerPage from "../components/AddCustomerPage";
           </TableHeaderCell>
           }
             <TableHeaderCell>CustomerName</TableHeaderCell>
+            <TableHeaderCell>Email</TableHeaderCell>
             <TableHeaderCell>PhoneNo</TableHeaderCell>
-            <TableHeaderCell>Address</TableHeaderCell>
+            <TableHeaderCell >Address</TableHeaderCell>
             <TableHeaderCell>Rating</TableHeaderCell>
             <TableHeaderCell>Total Orders</TableHeaderCell>
             <TableHeaderCell>Cancelled Orders</TableHeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {/* {data.map((user, index) => 
+
+        {data.map((user,index)=>
+            <TableRow key={index}>
+            <TableCell>
+              <input type="checkbox" />
+            </TableCell>
+              <TableCell>
+                <Text>{user.firstName+" "+ user.lastName}</Text>
+              </TableCell>
+              <TableCell>
+                <Text>{user.email}</Text>
+              </TableCell>
+              <TableCell>
+                <Text>{user.phoneNo}</Text>
+              </TableCell>
+              <TableCell>
+              <div className="w-32">
+                <Text className="w-full h-full overflow-auto">{user.address}</Text>
+                </div>
+              </TableCell>
+              <TableCell>
+                <Text>{user.avgRating}</Text>
+              </TableCell>
+              <TableCell>
+                <Text>{user.totalOrders}</Text>
+              </TableCell>
+              <TableCell>
+                <Text>{user.cancelledOrders}</Text>
+              </TableCell>
+            </TableRow>            
+          )}
+
+
+            {/* {data.map((user, index) => 
 
             user._id === updateId ? 
 
@@ -400,6 +457,11 @@ import AddCustomerPage from "../components/AddCustomerPage";
 
 
           )} */}
+
+         
+
+
+
         </TableBody>
       </Table>
     )
