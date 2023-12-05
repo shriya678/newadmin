@@ -4,8 +4,15 @@ import { Select, SelectItem } from "@tremor/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { Card } from "react-bootstrap";
+import { PermissionContext } from "./AdminTableComponent";
+import { useContext } from "react";
 
 const AddAdminPage = ({ admin, setAddAdmin }) => {
+
+  const {setSucess} = useContext(PermissionContext);
+
+  const [message,setMessage] = useState();
+
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [name, setName] = useState();
@@ -82,9 +89,7 @@ const AddAdminPage = ({ admin, setAddAdmin }) => {
     });
   };
 
-  // console.log("CustomerPermission: ", customerPermission);
-  // console.log("ServicePermission: ", serviceProviderPermission);
-  // console.log("ServiceOrderPermission: ", serviceOrderPermission);
+  
 
   function handleSignUp() {
     if (email && password) {
@@ -127,10 +132,17 @@ const AddAdminPage = ({ admin, setAddAdmin }) => {
       })
         .then((res) => {
           console.log(res.data);
+          setSucess(true);
+          setMessage(
+            <div className='text-center text-lg text-green-500'> Admin Created Sucessfully</div>
+          )
           // location.reload();
         })
         .catch((error) => {
           console.log(error);
+          setMessage(
+            <div className='text-center text-lg text-red-500'>Something Went Wrong Admin Not Created!</div>
+          )
         });
       return;
     }
@@ -138,7 +150,7 @@ const AddAdminPage = ({ admin, setAddAdmin }) => {
   }
 
   return (
-    <div>
+    <div className="w-full p-4 dark:bg-tremor-background h-auto">
       <section className="h-screen">
         <div className="px-6 h-full text-gray-800">
           <div className="flex justify-end items-end">
@@ -146,7 +158,9 @@ const AddAdminPage = ({ admin, setAddAdmin }) => {
               className=" cursor-pointer"
               width={35}
               color="#00FF00"
-              onClick={() => setAddAdmin(false)}
+              onClick={() => {
+              setAddAdmin(false)
+              setSucess(false)}}
             />
           </div>
 
@@ -157,8 +171,20 @@ const AddAdminPage = ({ admin, setAddAdmin }) => {
           </div>
 
           {/* <form> */}
-            <div className="grid grid-cols-2">
+            <div className=" grid lg:grid-cols-2 sm:grid-cols-1">
               {/* grid fist column */}
+
+              <div className=" h-80 w-full overflow-hidden">
+                <img
+                  src="../../public/companyLogo.jpeg"
+                  className="w-full h-full object-fit"
+                  alt="Sample image"
+                />
+              </div>
+
+
+              {/* grid second column */}
+
               <div>
                 <div className="mb-6">
                   <input
@@ -217,20 +243,12 @@ const AddAdminPage = ({ admin, setAddAdmin }) => {
                 {/*  */}
               </div>
 
-              {/* grid second column */}
 
-              <div className=" h-80 w-full overflow-hidden">
-                <img
-                  src="../../public/companyLogo.jpeg"
-                  className="w-full h-full object-fit"
-                  alt="Sample image"
-                />
-              </div>
             </div>
 
             <div>
               <div className="flex justify-evenly flex-row items-center ">
-                <h1 className=" text-2xl font-medium mr-[-100px]">
+                <h1 className=" lg:text-2xl font-medium lg:mr-[-100px] sm:text-xl sm:mr-[-50px]">
                   Permission
                 </h1>
                 <Switch
@@ -248,10 +266,10 @@ const AddAdminPage = ({ admin, setAddAdmin }) => {
               </div>
 
               {toggleCheck ? (
-                <div className="mt-5 flex justify-evenly items-center">
+                <div className="mt-5 grid lg:grid-cols-3 sm:grid-cols-2 gap-2">
                   {/* first card for permission */}
 
-                  <Card className=" ml-2 bg-transparent border rounded border-yellow-500 py-2">
+                  <Card className="bg-transparent border rounded border-green-500 py-2 w-52">
                     <div className="flex justify-center items-center px-2">
                       <div className="flex justify-between align-middle">
                         <h1 className="mr-4">Customer</h1>
@@ -333,7 +351,7 @@ const AddAdminPage = ({ admin, setAddAdmin }) => {
                   </Card>
 
                   {/* Second Card for permission */}
-                  <Card className=" bg-transparent border rounded border-yellow-500 py-2">
+                  <Card className=" bg-transparent border rounded border-green-500 py-2 w-52">
                     <div className="flex justify-center items-center ">
                       <div className="flex justify-evenly align-middle">
                         <h1 className="mr-4">Service Provider</h1>
@@ -416,7 +434,7 @@ const AddAdminPage = ({ admin, setAddAdmin }) => {
                   </Card>
 
                   {/* Third Card for permission */}
-                  <Card className=" bg-transparent border rounded border-yellow-500 py-2 ">
+                  <Card className=" bg-transparent border rounded border-green-500 py-2 w-52">
                     <div className="flex justify-center items-center">
                       <div className="flex justify-between align-middle">
                         <h1 className="mr-4">Service Order</h1>
@@ -501,15 +519,18 @@ const AddAdminPage = ({ admin, setAddAdmin }) => {
               ) : null}
             </div>
 
-            <div className="text-center lg:text-left">
+            <div className="text-center lg:text-left mt-10">
               <button
                 type="button"
-                className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                className="inline-block px-7 py-3 bg-green-400 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
                   onClick={handleSignUp}
               >
                 Create Admin
               </button>
             </div>
+
+            {/* for displaying message sucess or error */}
+            {message}
           {/* </form> */}
         </div>
       </section>

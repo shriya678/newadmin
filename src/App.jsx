@@ -20,6 +20,10 @@ import OrderDetails from './components/OrderDetails';
 import MarketingBanner from "./components/MarketingBanner";
 import PushNotifications from "./components/PushNotifications";
 import PromoCode from "./components/PromoCode";
+import SubscriptionPlan from "./pages/SubscriptionPlan";
+import ServiceManagement from "./components/ServiceManagement";
+import Customers from "./pages/Customers";
+import Setting from "./pages/Setting";
 
 export const RecoveryContext = createContext();
 
@@ -84,6 +88,8 @@ function App() {
               <Route path="/auth" element={profiledata ? <Navigate to='../home/'/>:<Login/>}/>
               <Route path="/kyc" element={profiledata ? <KYC/>:<Navigate to="../auth"/>}/>
               <Route path="/manageAdmin" element={profiledata ? <ManageAdmin/>:<Navigate to="../auth"/>}/>
+              <Route path="/customers" element={profiledata ? <Customers/>:<Navigate to="../auth"/>}/>
+              <Route path="/setting" element={profiledata ? <Setting/>:<Navigate to="../auth"/>}/>
               <Route path='/reset' element={isSuperAdmin? <ResetPassword/> : ''} />
               <Route path='/otp' element={isSuperAdmin? <OTPValidation/> : ''} />
               <Route path="/vehicleData" element={<VehicleData />} />
@@ -93,8 +99,8 @@ function App() {
               <Route path="/MarketingBanner" element={<MarketingBanner />} />
               <Route path="/Notifications" element={<PushNotifications />} />
               <Route path="/PromoCode" element={<PromoCode />} />
-              
-              
+              <Route path="/SubscriptionPlan" element={<SubscriptionPlan/>}/>
+              <Route path="ServiceManagement" element={<ServiceManagement /> } />
             </Routes>
 
           </div>

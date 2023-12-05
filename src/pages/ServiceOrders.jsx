@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const sampleData = [
   {
@@ -18,7 +19,6 @@ const sampleData = [
     serviceCategory: 'cleaner',
     status: 'inProgress',
   },
-  // Add more sample data entries as needed
 ];
 
 const result1 = [
@@ -29,7 +29,7 @@ const result1 = [
     orderType: 'schedule',
     serviceCategory: 'cleaner',
     status: 'closed',
-  },{
+  }, {
     id: 2,
     orderId: 'ORD004',
     shortDescription: 'Sample Description 2',
@@ -48,36 +48,30 @@ const ServiceOrders = () => {
   const [orderType, setOrderType] = useState();
   const [serviceCategory, setServiceCategory] = useState();
   const [status, setStatus] = useState();
+  const [mechanicData, setMechanicData] = useState();
+  const [driverData, setDriverData] = useState();
+  const [cleanerData, setCleanerData] = useState();
+  const [ongoingData, setOngoingData] = useState();
+  const [closedData, setClosedData] = useState();
 
-  console.log(orderType);
-
-  const result = sampleData.filter((sampleData) => {
-    // Check if both status and service type are selected
+  const result = ongoingData ? ongoingData.filter((data) => {
     if (status && orderType && serviceCategory) {
-      return sampleData.status === status && sampleData.serviceCategory === serviceCategory && sampleData.orderType === orderType;
-    }
-    // Check if only status is selected
-    else if (status && orderType) {
-      return sampleData.status === status && sampleData.orderType === orderType;
-    }
-    // Check if only service type is selected
-    else if (status && serviceCategory) {
-      return sampleData.status === status && sampleData.serviceCategory === serviceCategory;
-    }
-    else if (orderType && serviceCategory) {
-      return sampleData.orderType === orderType && sampleData.serviceCategory === serviceCategory;
-    }
-    else if (status) {
-      return sampleData.status === status;
-    }
-    else if (serviceCategory) {
-      return sampleData.serviceCategory === serviceCategory;
-    }
-    else if (orderType) {
-      return sampleData.orderType === orderType;
+      return data.status === status && data.category === serviceCategory && data.scheduleOfService === orderType;
+    } else if (status && orderType) {
+      return data.status === status && data.scheduleOfService === orderType;
+    } else if (status && serviceCategory) {
+      return data.status === status && data.category === serviceCategory;
+    } else if (orderType && serviceCategory) {
+      return data.scheduleOfService === orderType && data.category === serviceCategory;
+    } else if (status) {
+      return data.status === status;
+    } else if (serviceCategory) {
+      return data.category === serviceCategory;
+    } else if (orderType) {
+      return data.scheduleOfService === orderType;
     }
     return true;
-  });
+  }) : [];
 
   useEffect(() => {
     if (serviceType === 'schedule') {
@@ -86,6 +80,39 @@ const ServiceOrders = () => {
       setScheduleOpen(false);
     }
   })
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://service-provider-apis.onrender.com/api/v1/admin/getAllServiceOrders',
+          {
+            withCredentials: true,
+          }
+        );
+        const mechanicOrders = response.data.orders.mechanicTickets.orders.map(order => ({ ...order, category: 'mechanic' }));
+        const driverOrders = response.data.orders.driverTickets.orders.map(order => ({ ...order, category: 'driver' }));
+        const cleanerOrders = response.data.orders.cleanerTickets.orders.map(order => ({ ...order, category: 'cleaner' }));
+
+        const ongoingMechanicOrders = mechanicOrders.filter(order => order.status !== 'completed' && order.status !== 'rejected');
+        const ongoingDriverOrders = driverOrders.filter(order => order.status !== 'completed' && order.status !== 'rejected');
+        const ongoingCleanerOrders = cleanerOrders.filter(order => order.status !== 'completed' && order.status !== 'rejected');
+
+        const ongoingOrders = [...ongoingMechanicOrders, ...ongoingDriverOrders, ...ongoingCleanerOrders];
+        setOngoingData(ongoingOrders);
+
+        const closedMechanicOrders = mechanicOrders.filter(order => order.status === 'completed');
+        const closedDriverOrders = driverOrders.filter(order => order.status === 'completed');
+        const closedCleanerOrders = cleanerOrders.filter(order => order.status === 'completed');
+
+        const closedOrders = [...closedMechanicOrders, ...closedDriverOrders, ...closedCleanerOrders];
+        setClosedData(closedOrders);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const openPopup = () => {
     setPopupOpen(true);
@@ -252,9 +279,9 @@ const ServiceOrders = () => {
       </div>
 
       <h2 style={{ marginLeft: '20px' }}>Ongoing Orders</h2>
-      <div style={{ margin: '8px 20px 20px 20px', maxWidth: '100%', overflowX: 'auto', backgroundColor: '#ffffff', boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)' }}>
+      <div style={{ margin: '8px 20px 20px 20px', maxHeight: '400px', overflowY: 'auto', maxWidth: '100%', overflowX: 'auto', backgroundColor: '#ffffff', boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #ddd' }}>
-          <thead>
+          <thead style={{ position: 'sticky' }}>
             <tr style={tableHeaderStyle}>
               <th style={headerCellStyle}>Sr No</th>
               <th style={headerCellStyle}>Order ID</th>
@@ -286,22 +313,23 @@ const ServiceOrders = () => {
                   onChange={(e) => setStatus(e.target.value)}
                   style={dropdownStyle}>
                   <option value="">Status</option>
-                  <option value="inProgress">In Progress</option>
-                  <option value="open">Open</option>
+                  <option value="inProcess">inProcess</option>
+                  <option value="pending">pending</option>
+                  <option value="accepted">accepted</option>
                 </select>
               </th>
             </tr>
           </thead>
           <tbody>
-            {result.map((data, index) => (
+            {result && result.map((data, index) => (
               <tr key={index}>
                 <td style={headerCellStyle}>{index + 1}</td>
                 <td style={headerCellStyle}>
-                  <Link to={`/order/${data.orderId}`}>{data.orderId}</Link>
+                  <Link to={`/order/${data._id}`}>{data._id}</Link>
                 </td>
-                <td style={headerCellStyle}>{data.shortDescription}</td>
-                <td style={headerCellStyle}>{data.orderType}</td>
-                <td style={headerCellStyle}>{data.serviceCategory}</td>
+                <td style={headerCellStyle}>{data.description}</td>
+                <td style={headerCellStyle}>{data.scheduleOfService}</td>
+                <td style={headerCellStyle}>{data.category}</td>
                 <td style={headerCellStyle}>{data.status}</td>
               </tr>
             ))}
@@ -310,7 +338,7 @@ const ServiceOrders = () => {
       </div>
 
       <h2 style={{ marginLeft: '20px' }}>Order History</h2>
-      <div style={{ margin: '8px 20px 20px 20px', maxWidth: '100%', overflowX: 'auto', backgroundColor: '#ffffff', boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)' }}>
+      <div style={{ margin: '8px 20px 20px 20px', maxHeight: '400px', overflowY: 'auto', maxWidth: '100%', overflowX: 'auto', backgroundColor: '#ffffff', boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #ddd' }}>
           <thead>
             <tr style={tableHeaderStyle}>
@@ -323,15 +351,15 @@ const ServiceOrders = () => {
             </tr>
           </thead>
           <tbody>
-            {result1.map((data, index) => (
+            {closedData && closedData.map((data, index) => (
               <tr key={index}>
                 <td style={headerCellStyle}>{index + 1}</td>
                 <td style={headerCellStyle}>
-                  <Link to={`/order/${data.orderId}`}>{data.orderId}</Link>
+                  <Link to={`/order/${data._id}`}>{data._id}</Link>
                 </td>
-                <td style={headerCellStyle}>{data.shortDescription}</td>
-                <td style={headerCellStyle}>{data.orderType}</td>
-                <td style={headerCellStyle}>{data.serviceCategory}</td>
+                <td style={headerCellStyle}>{data.description}</td>
+                <td style={headerCellStyle}>{data.scheduleOfService}</td>
+                <td style={headerCellStyle}>{data.category}</td>
                 <td style={headerCellStyle}>{data.status}</td>
               </tr>
             ))}
@@ -343,6 +371,7 @@ const ServiceOrders = () => {
 };
 
 const tableHeaderStyle = {
+  position: 'sticky',
   backgroundColor: '#ffffff',
   border: '1px solid #ddd',
 };

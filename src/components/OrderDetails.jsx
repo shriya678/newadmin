@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ChevronLeftIcon } from '@heroicons/react/solid';
+import axios from 'axios';
 import {
   Card,
   Table,
@@ -24,18 +25,8 @@ const OrderDetails = () => {
   };
 
   const [isClosed, setIsClosed] = useState();
+  const [orderDetails, setOrderDetails] = useState();
 
-  const orderDetails = {
-    name: 'John Doe',
-    contact: 'john@example.com',
-    location: 'Some Location',
-    brand: 'Brand X',
-    model: 'Model Y',
-    fuelType: 'Petrol',
-    status: 'pending',
-    servicesRequested: ['Service A'],
-    provider: 'James'
-  };
   const result = [
     {
       providername: 'Jhon Doe',
@@ -77,14 +68,33 @@ const OrderDetails = () => {
   ];
 
   useEffect(() => {
-    if (orderDetails.status === 'closed') {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`https://service-provider-apis.onrender.com/api/v1/admin/getSingleOrder/${orderId}`,
+          {
+            withCredentials: true,
+          }
+        );
+        const details = response.data.order;
+        setOrderDetails(details);
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (orderDetails && orderDetails.status === 'completed') {
       setIsClosed(true);
     } else {
       setIsClosed(false);
     }
   })
 
-  const [serviceProvider, setServiceProvider] = useState(orderDetails.provider);
+  const [serviceProvider, setServiceProvider] = useState(orderDetails && orderDetails.provider);
 
   const closePopup = () => {
     setPopupOpen(false);
@@ -115,44 +125,44 @@ const OrderDetails = () => {
           <div className="space-y-2 border-2 border-black rounded">
             <div className="flex border-b-2 border-black py-2">
               <h3 className="ml-2 font-semibold w-1/3 text-lg">Name:</h3>
-              <p className="w-2/3 text-lg">{orderDetails.name}</p>
+              <p className="w-2/3 text-lg">{orderDetails && orderDetails.name}</p>
             </div>
             <div className="flex border-b-2 border-black py-2">
               <h3 className="ml-2 font-semibold w-1/3 text-lg">Contact:</h3>
-              <p className="w-2/3 text-lg">{orderDetails.contact}</p>
+              <p className="w-2/3 text-lg">{orderDetails && orderDetails.contact}</p>
             </div>
             <div className="flex border-b-2 border-black py-2">
               <h3 className="ml-2 font-semibold w-1/3 text-lg">Location:</h3>
-              <p className="w-2/3 text-lg">{orderDetails.location}</p>
+              <p className="w-2/3 text-lg">{orderDetails && orderDetails.location}</p>
             </div>
             <div className="flex border-b-2 border-black py-2">
               <h3 className="ml-2 font-semibold w-1/3 text-lg">Brand:</h3>
-              <p className="w-2/3 text-lg">{orderDetails.brand}</p>
+              <p className="w-2/3 text-lg">{orderDetails && orderDetails.vehicleData ? orderDetails.vehicleData.vehicleBrand : ''}</p>
             </div>
             <div className="flex border-b-2 border-black py-2">
               <h3 className="ml-2 font-semibold w-1/3 text-lg">Model:</h3>
-              <p className="w-2/3 text-lg">{orderDetails.model}</p>
+              <p className="w-2/3 text-lg">{orderDetails && orderDetails.vehicleData ? orderDetails.vehicleData.vehicleModel : ''}</p>
             </div>
             <div className="flex border-b-2 border-black py-2">
               <h3 className="ml-2 font-semibold w-1/3 text-lg">Fuel Type:</h3>
-              <p className="w-2/3 text-lg">{orderDetails.fuelType}</p>
+              <p className="w-2/3 text-lg">{orderDetails && orderDetails.vehicleData ? orderDetails.vehicleData.vehicleFuel : ''}</p>
             </div>
             <div className="flex border-b-2 border-black py-2">
               <h3 className="ml-2 font-semibold w-1/3 text-lg">Status:</h3>
-              <p className="w-2/3 text-lg">{orderDetails.status}</p>
+              <p className="w-2/3 text-lg">{orderDetails ? orderDetails.status : ''}</p>
             </div>
             {isClosed && (
               <>
                 <div className="flex border-b-2 border-black py-2">
                   <h3 className="ml-2 font-semibold w-1/3 text-lg">Amount:</h3>
-                  <p className="w-2/3 text-lg"></p>
+                  <p className="w-2/3 text-lg">{ }</p>
                 </div>
                 <div className="flex border-b-2 border-black py-2">
                   <h3 className="ml-2 font-semibold w-1/3 text-lg">Payment Type:</h3>
-                  <p className="w-2/3 text-lg"></p>
+                  <p className="w-2/3 text-lg">{orderDetails && orderDetails.paymentMode}</p>
                 </div><div className="flex border-b-2 border-black py-2">
                   <h3 className="ml-2 font-semibold w-1/3 text-lg">Payment Status:</h3>
-                  <p className="w-2/3 text-lg"></p>
+                  <p className="w-2/3 text-lg">{orderDetails && orderDetails.paymentStatus}</p>
                 </div>
               </>
             )}
@@ -184,9 +194,9 @@ const OrderDetails = () => {
             <div className="flex border-b-2 border-black py-2">
               <h3 className="ml-2 font-semibold w-1/3 text-lg">Services Requested:</h3>
               <div className="w-2/3">
-                {orderDetails.servicesRequested.map((service, index) => (
+                {/* {orderDetails.servicesRequested.map((service, index) => (
                   <p key={index}>{service}</p>
-                ))}
+                ))} */}
               </div>
             </div>
             <div className="flex border-b-2 border-black py-2">
@@ -195,7 +205,7 @@ const OrderDetails = () => {
             </div>
             <div className="flex border-b-2 border-black py-2">
               <h3 className="ml-2 font-semibold w-1/3 text-lg">Service Type:</h3>
-              <p className="w-2/3">{/* Add service type details */}</p>
+              <p className="w-2/3 text-lg">{orderDetails ? orderDetails.scheduleOfService : ''}</p>
             </div>
             <div className="flex border-b-2 border-black py-2">
               <h3 className="ml-2 font-semibold w-1/3 text-lg">Service Provider:</h3>
@@ -207,62 +217,6 @@ const OrderDetails = () => {
                 <p className="w-2/3 mb-24">{serviceProvider ? 'Yes' : 'No'}</p>
               </div>
             )}
-            {/* {isPopupOpen && (
-  <div className="z-50 fixed top-0 left-0 w-full h-full flex items-center justify-center">
-    <div className="bg-white p-8 w-full max-w-xl rounded shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Service Providers</h2>
-
-      <Table className="mt-5 dark:bg-tremor-background h-[300px]">
-        <TableHead>
-          <TableRow>
-            <TableHeaderCell>S No</TableHeaderCell>
-            <TableHeaderCell>Service Providers Name</TableHeaderCell>
-            <TableHeaderCell>Designation</TableHeaderCell>
-            <TableHeaderCell>On-Time Requests</TableHeaderCell>
-            <TableHeaderCell>Schedule Requests</TableHeaderCell>
-            <TableHeaderCell>Contact No</TableHeaderCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {result.map((item, index) => (
-            <TableRow key={index}>
-              <TableCell>
-                <Text>{index + 1}</Text>
-              </TableCell>
-              <TableCell className='cursor-pointer' onDoubleClick={() => changeServiceProvider(item.providername)}>
-                <Text>
-                  {item.providername}
-                </Text>
-              </TableCell>
-              <TableCell>
-                <Text>{item.designation}</Text>
-              </TableCell>
-              <TableCell>
-                <Text>{item.ontime}</Text>
-              </TableCell>
-              <TableCell>
-                <Text>{item.schedule}</Text>
-              </TableCell>
-              <TableCell>
-                <Text>{item.contact}</Text>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-
-      <div className="flex justify-center mt-4">
-        <button
-          onClick={closePopup}
-          className="border py-2 px-4 rounded text-gray-600 hover:bg-gray-100"
-        >
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
-)} */}
-
 
             {isPopupOpen && (
               <div className="z-50 fixed top-4 left-[8%] w-full h-full flex items-center justify-center">

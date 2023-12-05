@@ -16,12 +16,16 @@ import {
 
 import { Switch } from "@headlessui/react";
 
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { CalculatorIcon } from "@heroicons/react/solid";
 import PermissionComponent from "./PermissionComponent";
 import AddAdminPage from "./AddAdminPage";
 
+import CardLoader from '../components/CardLoader'
+
+
+export const PermissionContext = createContext();
 
 const AdminTableComponent = () => {
   const [data, setData] = useState([]);
@@ -31,9 +35,9 @@ const AdminTableComponent = () => {
   const [role, setRole] = useState("");
   const [editId, setEditID] = useState(null);
 
-  // const [sucess, setSucess] = useState();
-  // const [loginError, setLoginError] = useState();
-  // const [loading, setLoading] = useState();
+  const [sucess, setSucess] = useState(null);
+  // const [Error, setError] = useState();
+  const [loading, setLoading] = useState(true);
 
   // const [enabled, setEnabled] = useState(false);
 
@@ -60,9 +64,27 @@ const AdminTableComponent = () => {
       .then((res) => {
         console.log("res:", res.data);
         setData(res.data.admins);
+        setLoading(false);
       })
       .catch((error) => console.log(error));
   }, []);
+
+
+   // for fetching all
+   useEffect(() => {
+    const API = axios.create({
+      baseURL: `${import.meta.env.VITE_BASE_URL}`,
+      withCredentials: true,
+    });
+
+    API.get("/api/v1/superadmin/")
+      .then((res) => {
+        console.log("res:", res.data);
+        setData(res.data.admins);
+      })
+      .catch((error) => console.log(error));
+  }, [sucess])
+
 
   const handleEdit = (id) => {
     const API = axios.create({
@@ -97,30 +119,13 @@ const AdminTableComponent = () => {
     }
   }
 
-  console.log("Delete: ",JSON.stringify(isDeleteCheck));
+  // console.log("Delete: ",JSON.stringify(isDeleteCheck));
+  console.log("Delete: ",isDeleteCheck);
 
 
 
 //this is not parmanent
-  const handleDelete = (id) => {
-    
-
-    const API = axios.create({
-      baseURL: `${import.meta.env.VITE_BASE_URL}`,
-      withCredentials: true,
-    });
-
-    API.delete(`/api/v1/superadmin/` + id)
-      .then((res) => {
-        console.log(res);
-        location.reload();
-      })
-      .catch((error) => {
-      
-        console.log("eror: ", error);
-        // setEditID(false)
-      });
-  };
+ 
 
   // const handleUpdate = () => {
   //   setLoading(true);
@@ -198,7 +203,8 @@ const AdminTableComponent = () => {
           .then((res) => {
             console.log("Update Rec: ",res);
             setUpdateId(false);
-            location.reload();
+            setSucess(true);
+            // location.reload();
           })
           .catch((error) => {
             console.log("eror: ", error);
@@ -208,45 +214,96 @@ const AdminTableComponent = () => {
   }
 
 
+  const handleDelete = (isDeleteCheck) => {
+
+   
+    
+    const API = axios.create({
+      baseURL: `${import.meta.env.VITE_BASE_URL}`,
+      withCredentials: true,
+    });
+
+    // console.log("Delete Id: ",id);
+
+    console.log("Is Delete: ",JSON.stringify(isDeleteCheck));
+
+    // API.delete(`/api/v1/superadmin/deleteBulkAdmins/` +id)
+    API.post(`/api/v1/superadmin/deleteBulkAdmins/`,{
+      array:isDeleteCheck
+    })
+
+
+      .then((res) => {
+        console.log(res);
+        setIsDeleteCheck(null);
+        setSucess(true);
+      })
+      .catch((error) => {
+      
+        console.log("eror: ", error);
+        // setEditID(false);
+        setIsDeleteCheck(null);
+      });
+  };
+
+  const handleDiscard = ()=>{
+    setModifyClick(false);
+    setUpdateId(false);
+    isDeleteCheck(null);
+  }
+
+
+  console.log("EdittId: ",editId);
   
 
   return (
   
-    <Card className="mt-4 dark:bg-tremor-background">
+    <PermissionContext.Provider value={{editId,setEditID,sucess,setSucess}}>
+
+    <div>
+
+    {!loading ? 
+  
+    <Card className={addAdmin? `mt-4 dark:bg-tremor-background  h-[180vh]`: `mt-4 dark:bg-tremor-background`}>
 
     {addAdmin ? null :  <div className="sm:flex justify-between items-center">
         <Title>Admin Management</Title>
+
+        {updateId &&  <Button className="mr-4 mb-2" color="emerald" onClick={handleDiscard}>
+              Discard Changes
+            </Button> }
+
         <div className="py-2">
           <div className="sm:flex justify-between items-center">
-          {updateId? <Button className="mr-4 mb-2" color="green" disabled>
+          {updateId? <Button className="mr-4 mb-2" color="emerald" disabled>
               Add
             </Button>:
-            <Button className="mr-4 mb-2" color="green" onClick={()=>setAddAdmin(true)}>
+            <Button className="mr-4 mb-2" color="emerald"  onClick={()=>setAddAdmin(true)}>
               Add
             </Button>}
 
             {updateId ? 
-              <Button className="mr-4 mb-2" color="green" onClick={()=>updateRecord()}>
+              <Button className="mr-4 mb-2" color="emerald" onClick={()=>updateRecord()}>
               Update
             </Button>
             :
-            <Button className="mr-4 mb-2" color="green" onClick={()=>setModifyClick(true)}>
+            <Button className="mr-4 mb-2" color="emerald" onClick={()=>setModifyClick(true)}>
               Modify
             </Button>}
 
 
-            <Button className="mr-4 mb-2" color="green" onClick={()=>handleDelete(updateId)}>
+            {/* <Button className="mr-4 mb-2" color="emerald" onClick={()=>handleDelete(isDeleteCheck)}>
               Delete
-            </Button>
+            </Button> */}
 
 
-          {/* {updateId?  <Button className="mr-4 mb-2" color="green" disabled>
+          {updateId?  <Button className="mr-4 mb-2" color="emerald" disabled>
               Delete
             </Button>
             :
-            <Button className="mr-4 mb-2" color="green" onClick={handleDelete}>
+            <Button className="mr-4 mb-2" color="emerald" onClick={()=>handleDelete(isDeleteCheck)}>
               Delete
-            </Button>} */}
+            </Button>}
            
           </div>
         </div>
@@ -257,11 +314,8 @@ const AdminTableComponent = () => {
 
 
       {editId ? 
-
-        permissionData? (<PermissionComponent permissionData={permissionData} editId={editId} handleEdit={()=>setEditID(null)}/>)  : <h1>Loading</h1>      
-
+         (<PermissionComponent editId={editId}/>)       
        :
-
       addAdmin ? (<AddAdminPage setAddAdmin={()=>setAddAdmin(false)}/>): 
        (
         <Table className="mt-5 dark:bg-tremor-background">
@@ -331,17 +385,10 @@ const AdminTableComponent = () => {
                     </SelectItem>
                   </Select>
 
-
-                  {/* <TextInput
-                    type="text"
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                  /> */}
-
                 </TableCell>
 
                 <TableCell>
-                  <Button style={{ color: "#ffffff" }} disabled>
+                  <Button color="emerald" style={{ color: "#ffffff" }} disabled>
                     Permission
                   </Button>
                 </TableCell>
@@ -349,8 +396,9 @@ const AdminTableComponent = () => {
                 <TableCell>
                   <div className="sm:flex justify-between items-center">
                     <Switch
+                    disabled
                       className={`${
-                        user.permissionCheck ? "bg-blue-600" : "bg-gray-200"
+                        user.permissionCheck ? " bg-emerald-400" : "bg-gray-200"
                       } relative inline-flex h-6 w-11 items-center rounded-full`}
                     >
                       <span
@@ -374,9 +422,9 @@ const AdminTableComponent = () => {
 
               {modifyClick?
 
-                <input type="radio" onClick={()=>handleRadio(user._id)}/>:
+                <input type="radio" checked={false} onClick={()=>handleRadio(user._id)}/>:
 
-                <input type="checkbox" value={user._id} checked={user.isDeleteCheck} onChange={(e)=>handleCheckbox(e)} />
+                <input type="checkbox" value={user._id}  checked={user.isDeleteCheck} onChange={(e)=>handleCheckbox(e)} />
 
               }
               </TableCell>
@@ -400,7 +448,7 @@ const AdminTableComponent = () => {
                 <TableCell>
                   <Button
                     className="mr-1 mb-2"
-                    color="green"
+                    color="emerald"
                     onClick={() => {
                       handleEdit(user._id);
                     }}
@@ -413,7 +461,7 @@ const AdminTableComponent = () => {
                   <div className="sm:flex justify-between items-center">
                     <Switch
                       className={`${
-                        user.permissionCheck ? " bg-green-500" : "bg-gray-200"
+                        user.permissionCheck ? " bg-emerald-400" : "bg-gray-200"
                       } relative inline-flex h-6 w-11 items-center rounded-full`}
                     >
                       <span
@@ -424,12 +472,8 @@ const AdminTableComponent = () => {
                     </Switch>
                   </div>
                 </TableCell>
-
-
               </TableRow>
             )
-
-
             )}
           </TableBody>
         </Table>
@@ -437,6 +481,15 @@ const AdminTableComponent = () => {
       }
     </Card>
 
+    :
+
+    <CardLoader/>
+    }
+
+    </div> 
+
+
+   </PermissionContext.Provider>
   )
   
 };
