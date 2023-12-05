@@ -9,11 +9,9 @@ import Loader from './Loader';
 
 const PermissionComponent = ({editId}) => {
 
-  const { setEditID } = useContext(PermissionContext);
+  const { setEditID,setSucess } = useContext(PermissionContext);
   
-    const[sucess,setSucess] = useState(false);
-    const[error,setError] = useState(false);
-
+    const[message,setMessage] = useState();
     const [name,setName] = useState();
     const [permissionCheck,setPermissionCheck] = useState();
     const [customerCheck,setCustomerCheck] = useState();
@@ -137,9 +135,6 @@ const PermissionComponent = ({editId}) => {
 
 
      const handleUpdate = () => {
-    
-      setSucess(false);
-      setError(false);
 
     const API = axios.create({
       baseURL: `${import.meta.env.VITE_BASE_URL}`,
@@ -163,12 +158,16 @@ const PermissionComponent = ({editId}) => {
        console.log("ResPermission: ",res); 
         // setEditID(false);
         setSucess(true);
-        location.reload();
+        setMessage(
+          <div className='text-center text-lg text-green-500'> Permission Changes Sucessfully</div>
+        )
+      
       })
       .catch((error) => {
-        setError(true);
         console.log("eror: ", error);
-        // setEditID(false);
+        setMessage(
+          <div className='text-center text-lg text-red-500'> Something went wrong</div>
+        )
       });
   };
 
@@ -185,19 +184,20 @@ const PermissionComponent = ({editId}) => {
           setServiceProviderCheck(null);
           setServiceOrderCheck(null);
           setEditID(null);
+          setSucess(false);
           }} />
       </div>
 
       <div className="  mt-5 border border-gray-300 rounded-lg block w-full p-2.5">
-        <h1 className=" text-center text-green-400 text-2xl font-medium">
+        <h1 className=" text-center text-emerald-400 text-2xl font-medium">
           {/* Abhishek Singh */}
           {name}
         </h1>
       </div>
 
 
-      <div className="flex justify-evenly flex-row items-center ">
-                <h1 className=" text-green-400 text-2xl font-medium mr-[-100px]">
+      <div className="flex justify-evenly flex-row items-center mt-10">
+                <h1 className=" text-emerald-400 text-2xl font-medium ">
                   Permission
                 </h1>
                 <Switch
@@ -206,7 +206,7 @@ const PermissionComponent = ({editId}) => {
                     setPermissionCheck(()=>!permissionCheck)
                  }}
                   className={`${
-                    permissionCheck ? " bg-green-500" : "bg-gray-200"
+                    permissionCheck ? " bg-emerald-400" : "bg-gray-200"
                   } relative inline-flex h-6 w-11 items-center rounded-full`}
                 >
                   <span
@@ -223,7 +223,7 @@ const PermissionComponent = ({editId}) => {
       {/* first card of permission for customer */}
 
       <Card 
-       className={`${customerCheck ? "shadow-[inset_-5px_-5px_9px_rgba(255,255,255,0.45),inset_5px_5px_9px_rgba(94,104,121,0.3)]":""}`}
+       style={customerCheck? {boxShadow:"inset -5px -5px 9px rgba(255,255,255,0.45),inset 5px 5px 9px rgba(94,104,121,0.3)"}:{boxShadow:"none"}}   
       >
           <div className="flex justify-center items-center">
             <div className="flex justify-between align-middle">
@@ -232,7 +232,7 @@ const PermissionComponent = ({editId}) => {
               // style={{boxShadow: 'inset -5px -5px 9px rgba(255,255,255,0.45), inset 5px 5px 9px rgba(94,104,121,0.3)'}}
               onChange={setCustomerCheck}
                 className={`${
-                  customerCheck ? " bg-green-500 shadow-[inset_-5px_-5px_9px_rgba(255,255,255,0.45),inset_5px_5px_9px_rgba(94,104,121,0.3)] " 
+                  customerCheck ? " bg-emerald-400 shadow-[inset_-5px_-5px_9px_rgba(255,255,255,0.45),inset_5px_5px_9px_rgba(94,104,121,0.3)] " 
                   : "bg-gray-200"
                 } relative inline-flex h-6 w-11 items-center rounded-full`}
               >
@@ -278,8 +278,7 @@ const PermissionComponent = ({editId}) => {
 
         {/* Second Card of permission for service provider */}
         <Card 
-        className={`${serviceProviderCheck ? "shadow-[inset_-5px_-5px_9px_rgba(255,255,255,0.45),inset_5px_5px_9px_rgba(94,104,121,0.3)]":""}`}
-        // style={{boxShadow:' -5px -5px 9px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3)'}}
+         style={serviceProviderCheck? {boxShadow:"inset -5px -5px 9px rgba(255,255,255,0.45),inset 5px 5px 9px rgba(94,104,121,0.3)"}:{boxShadow:"none"}} 
          >
           <div className="flex justify-center items-center">
             <div className="flex justify-between align-middle">
@@ -287,7 +286,7 @@ const PermissionComponent = ({editId}) => {
               <Switch
                 onChange={setServiceProviderCheck}
                 className={`${
-                  serviceProviderCheck ? " bg-green-500 shadow-[inset_-5px_-5px_9px_rgba(255,255,255,0.45),inset_5px_5px_9px_rgba(94,104,121,0.3)]"
+                  serviceProviderCheck ? " bg-emerald-400 shadow-[inset_-5px_-5px_9px_rgba(255,255,255,0.45),inset_5px_5px_9px_rgba(94,104,121,0.3)]"
                    : "bg-gray-200"
                 } relative inline-flex h-6 w-11 items-center rounded-full`}
               >
@@ -328,7 +327,7 @@ const PermissionComponent = ({editId}) => {
 
         {/* Third Card for permission */}
         <Card
-         className={`${serviceOrderCheck ? "shadow-[inset_-5px_-5px_9px_rgba(255,255,255,0.45),inset_5px_5px_9px_rgba(94,104,121,0.3)]":""}`}
+         style={serviceOrderCheck? {boxShadow:"inset -5px -5px 9px rgba(255,255,255,0.45),inset 5px 5px 9px rgba(94,104,121,0.3)"}:{boxShadow:"none"}}  
         >
           <div className="flex justify-center items-center">
             <div className="flex justify-between align-middle">
@@ -336,7 +335,7 @@ const PermissionComponent = ({editId}) => {
               <Switch
                 onChange={setServiceOrderCheck}
                 className={`${
-                  serviceOrderCheck ? " bg-green-500 shadow-[inset_-5px_-5px_9px_rgba(255,255,255,0.45),inset_5px_5px_9px_rgba(94,104,121,0.3)]" : "bg-gray-200"
+                  serviceOrderCheck ? " bg-emerald-400 shadow-[inset_-5px_-5px_9px_rgba(255,255,255,0.45),inset_5px_5px_9px_rgba(94,104,121,0.3)]" : "bg-gray-200"
                 } relative inline-flex h-6 w-11 items-center rounded-full`}
               >
                 <span
@@ -379,17 +378,8 @@ const PermissionComponent = ({editId}) => {
       <Button className="mr-4 mb-2" color="green" onClick={handleUpdate}>Update Permission</Button>
       </div>
 
-      {sucess ? <div>
-        <h1 className=' text-center text-lg text-green-500'>Permission Changes Sucessfully</h1>
-      </div>
-      :
-      error ?
-      <div>
-        <h1 className=' text-center text-lg text-red-500'>Something Went Wrong </h1>
-      </div>
-      :
-      ""
-      }
+      {/* for display message error or sucess */}
+      {message}
     </Card>
     :<Loader/>
    }

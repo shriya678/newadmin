@@ -157,8 +157,20 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
           </div>
 
           {/* <form> */}
-            <div className="grid grid-cols-2">
+            <div className=" grid lg:grid-cols-2 sm:grid-cols-1">
               {/* grid fist column */}
+
+              <div className=" h-80 w-full overflow-hidden">
+                <img
+                  src="../../public/companyLogo.jpeg"
+                  className="w-full h-full object-fit"
+                  alt="Sample image"
+                />
+              </div>
+
+
+              {/* grid second column */}
+
               <div>
                 <div className="mb-6">
                   <input
@@ -222,16 +234,8 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                 
               </div>
 
-              {/* grid second column */}
-
-              <div className=" h-80 w-full overflow-hidden">
-                <img
-                  src="../../public/companyLogo.jpeg"
-                  className="w-full h-full object-fit"
-                  alt="Sample image"
-                />
               </div>
-            </div>
+             
 
            
 
