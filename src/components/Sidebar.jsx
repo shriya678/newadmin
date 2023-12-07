@@ -160,7 +160,7 @@ const Sidebar = () => {
         <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Admin Management</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer">
+        <NavLink to="/ServerManagement" className="items-center justify-start flex cursor-pointer">
         <TableIcon width={40} className="p-2 mb-1 text-black"/>
         <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Server Monitoring</h1>
         </NavLink>

@@ -22,6 +22,7 @@ import PushNotifications from "./components/PushNotifications";
 import PromoCode from "./components/PromoCode";
 import SubscriptionPlan from "./pages/SubscriptionPlan";
 import ServiceManagement from "./components/ServiceManagement";
+import ServerManagement from "./components/ServerManagement";
 
 export const RecoveryContext = createContext();
 
@@ -96,7 +97,8 @@ function App() {
               <Route path="/Notifications" element={<PushNotifications />} />
               <Route path="/PromoCode" element={<PromoCode />} />
               <Route path="/SubscriptionPlan" element={<SubscriptionPlan/>}/>
-              <Route path="ServiceManagement" element={<ServiceManagement /> } />
+              <Route path="/ServiceManagement" element={<ServiceManagement /> } />
+              <Route path="/ServerManagement" element={<ServerManagement />} />
             </Routes>
 
           </div>
