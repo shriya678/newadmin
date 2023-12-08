@@ -228,15 +228,15 @@ import {
           </Button>} */}
 
 
-          <Button className="mr-4 mb-2" color="green" onClick={()=>handleDelete(updateId)}>
+          <Button className="mr-4 mb-2" color="red" onClick={()=>handleDelete(updateId)}>
             Delete
           </Button>
 
-          <Button className="mr-4 mb-2" color="green" onClick={()=>handleDelete(updateId)}>
+          <Button className="mr-4 mb-2" color="blue" onClick={()=>handleDelete(updateId)}>
             Import
           </Button>
 
-          <Button className="mr-4 mb-2" color="green" onClick={()=>handleDelete(updateId)}>
+          <Button className="mr-4 mb-2" color="orange" onClick={()=>handleDelete(updateId)}>
             Export
           </Button>
 
