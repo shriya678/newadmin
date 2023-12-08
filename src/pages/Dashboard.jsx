@@ -16,10 +16,6 @@ const Dashboard = () => {
 
   const [selectService, setSelectService] = useState();
 
-  console.log("select Role: ",selectStatus);
-  console.log("select Service: ",selectService);
-  console.log("Select Bar: ",selectBar);
-
   return (
     <SelectBoxContext.Provider value={{selectStatus,setSelectStatus,selectBar,setSelectBar,selectService,setSelectService}}>
       <div className="grid grid-cols-1 w-full">

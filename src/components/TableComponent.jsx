@@ -1,5 +1,5 @@
 // import { BellIcon, ChartBarIcon, ExternalLinkIcon, MailIcon, StatusOnlineIcon } from "@heroicons/react/outline";
-import { HomeIcon, SearchIcon,ChartBarIcon,BellIcon,ExternalLinkIcon,MailIcon,StatusOnlineIcon, StatusOfflineIcon } from "@heroicons/react/solid";
+import { HomeIcon, SearchIcon, ChartBarIcon, BellIcon, ExternalLinkIcon, MailIcon, StatusOnlineIcon, StatusOfflineIcon } from "@heroicons/react/solid";
 import {
   Card,
   Table,
@@ -23,9 +23,9 @@ import axios from "axios";
 
 const TableComponent = () => {
 
-  const roleDB = ['completed','pending','accepted'];
+  const roleDB = ['completed', 'pending', 'accepted'];
 
-  const serviceTypeDB = ['onTime','Schedule']
+  const serviceTypeDB = ['onTime', 'Schedule']
 
   const { selectService, selectStatus } = useContext(SelectBoxContext);
 
@@ -52,7 +52,6 @@ const TableComponent = () => {
   const handleDatesSelected = (dates) => {
     setSelectedDates(dates);
   };
-  console.log(selectedDates);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,9 +70,8 @@ const TableComponent = () => {
         let driverTickets = response.data?.orders.driverTickets;
         let cleanerTickets = response.data?.orders.cleanerTickets;
         let allTickets = [...mechanicTickets, ...driverTickets, ...cleanerTickets];
-        console.log(allTickets);
+
         setUserData(allTickets);
-        console.log(userData);
       } catch (error) {
         console.error("Error:", error.message);
       }
@@ -88,7 +86,7 @@ const TableComponent = () => {
         <Title>Order List</Title>
         <div className="py-2 sm:w-full">
           <div className="sm:flex sm:flex-col justify-between items-center gap-4 xl:flex-row">
-          <Datepickertofrom onDatesSelected={handleDatesSelected} />
+            <Datepickertofrom onDatesSelected={handleDatesSelected} />
             <div className="flex flex-col sm:flex-row sm:justify-start sm:w-full lg:justify-between xl:justify-end">
               <div className="mb-2 mr-2">
                 <p className="ml-1 text-xs font-semibold text-gray-500">Status</p>
@@ -146,7 +144,7 @@ const TableComponent = () => {
       </Table>
     </Card>
   )
-  
+
 };
 
 export default TableComponent;
