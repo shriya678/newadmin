@@ -198,7 +198,6 @@ const BarChartComponent = () => {
   const handleDatesSelected = (dates) => {
     setSelectedDates(dates);
   };
-  console.log(selectedDates);
   
   const chartdata3 = chartdata31.filter((data) => {
     if (selectedDates){

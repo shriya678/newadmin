@@ -58,7 +58,6 @@ function VehicleData(){
                         withCredentials: true,
                     }
                 );
-                console.log(response1.data);
             } catch (error) {
                 console.error("Error:", error.message);
             }

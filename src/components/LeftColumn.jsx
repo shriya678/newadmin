@@ -14,7 +14,6 @@ const LeftColumn = () => {
             withCredentials: true,
           }
         );
-        console.log(response1.data);
         setServices(response1.data?.services);
       } catch (error) {
         console.error("Error:", error.message);
@@ -23,7 +22,7 @@ const LeftColumn = () => {
 
     fetchData();
   }, []);
-  console.log(services);
+
   return (
     <div className="w-full flex flex-col justify-between p-2">
       <div className="flex flex-col lg:flex-row gap-2 w-full">

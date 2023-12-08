@@ -24,7 +24,6 @@ function BrandData(props){
         setNewModelFuelType('');
     }
 
-    console.log(carBrands);
      const submitDeleteModel = () =>{
         if (deleteModelName && deleteModelFuelType){
             const modelId = (carBrands.find(car =>
@@ -79,7 +78,6 @@ function BrandData(props){
                         withCredentials: true,
                     }
                 );
-                console.log(response1.data);
             } catch (error) {
                 console.error("Error:", error);
             }

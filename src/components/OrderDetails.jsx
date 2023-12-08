@@ -26,6 +26,7 @@ const OrderDetails = () => {
 
   const [isClosed, setIsClosed] = useState();
   const [orderDetails, setOrderDetails] = useState();
+  const [providerDetails, setProviderDetails] = useState();
 
   const result = [
     {
@@ -77,6 +78,29 @@ const OrderDetails = () => {
         );
         const details = response.data.order;
         setOrderDetails(details);
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://service-provider-apis.onrender.com/api/v1/admin/getProviders',
+          {
+            withCredentials: true,
+          }
+        );
+        const mechanicProviders = response.data.providers.mechanic.providers;
+        const cleanerProviders = response.data.providers.cleaner.providers;
+        const driverProviders = response.data.providers.driver.providers;
+
+        const providers = [...mechanicProviders, ...cleanerProviders, ...driverProviders];
+        setProviderDetails(providers);
 
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -235,27 +259,27 @@ const OrderDetails = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {result.map((item, index) => (
+                      {providerDetails.map((item, index) => (
                         <TableRow key={index}>
                           <TableCell>
                             <Text>{index + 1}</Text>
                           </TableCell>
-                          <TableCell className='cursor-pointer' onDoubleClick={() => changeServiceProvider(item.providername)}>
+                          <TableCell className='cursor-pointer' onDoubleClick={() => changeServiceProvider(item.generalDetails.fullName)}>
                             <Text>
-                              {item.providername}
+                              {item.generalDetails.fullName}
                             </Text>
                           </TableCell>
                           <TableCell>
-                            <Text>{item.designation}</Text>
+                            <Text>{item.role}</Text>
                           </TableCell>
                           <TableCell>
-                            <Text>{item.ontime}</Text>
+                            <Text>5</Text>
                           </TableCell>
                           <TableCell>
-                            <Text>{item.schedule}</Text>
+                            <Text>3</Text>
                           </TableCell>
                           <TableCell>
-                            <Text>{item.contact}</Text>
+                            <Text>{item.generalDetails.phoneNo}</Text>
                           </TableCell>
                         </TableRow>
                       ))}
