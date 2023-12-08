@@ -24,6 +24,7 @@ import SubscriptionPlan from "./pages/SubscriptionPlan";
 import ServiceManagement from "./components/ServiceManagement";
 import Customers from "./pages/Customers";
 import Setting from "./pages/Setting";
+import ServerManagement from "./components/ServerManagement";
 
 export const RecoveryContext = createContext();
 
