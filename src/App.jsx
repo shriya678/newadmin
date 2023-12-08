@@ -100,7 +100,8 @@ function App() {
               <Route path="/Notifications" element={<PushNotifications />} />
               <Route path="/PromoCode" element={<PromoCode />} />
               <Route path="/SubscriptionPlan" element={<SubscriptionPlan/>}/>
-              <Route path="ServiceManagement" element={<ServiceManagement /> } />
+              <Route path="/ServiceManagement" element={<ServiceManagement /> } />
+              <Route path="/ServerManagement" element={<ServerManagement />} />
             </Routes>
 
           </div>
