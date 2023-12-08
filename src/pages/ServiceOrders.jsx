@@ -125,8 +125,8 @@ const ServiceOrders = () => {
   return (
     <div className='relative'>
       <div className='flex justify-between'>
-        <div style={{ fontWeight: 'bold', fontSize: '1.2rem', display: 'flex', padding: '4px 20px', marginBottom: '20px' }}>Service Orders</div>
-        <div style={{ display: 'flex', alignItems: 'center', padding: '4px 20px', marginBottom: '20px' }}>
+        <div style={{ fontWeight: 'bold', fontSize: '1.2rem', display: 'flex', padding: '4px 20px', marginBottom: '5px' }}>Service Orders</div>
+        <div style={{ display: 'flex', alignItems: 'center', padding: '4px 20px', marginBottom: '5px' }}>
           <button className="border border-gray-300 rounded-md px-2 py-1 mr-1 bg-white cursor-pointer" onClick={openPopup}>Create New Order</button>
           <select
             id="status"
@@ -279,7 +279,7 @@ const ServiceOrders = () => {
       </div>
 
       <h2 style={{ marginLeft: '20px' }}>Ongoing Orders</h2>
-      <div style={{ margin: '8px 20px 20px 20px', maxHeight: '400px', overflowY: 'auto', maxWidth: '100%', overflowX: 'auto', backgroundColor: '#ffffff', boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)' }}>
+      <div style={{ margin: '8px 20px 20px 20px', maxHeight: '270px', overflowY: 'auto', maxWidth: '100%', overflowX: 'auto', backgroundColor: '#ffffff', boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #ddd' }}>
           <thead style={{ position: 'sticky' }}>
             <tr style={tableHeaderStyle}>
@@ -338,7 +338,7 @@ const ServiceOrders = () => {
       </div>
 
       <h2 style={{ marginLeft: '20px' }}>Order History</h2>
-      <div style={{ margin: '8px 20px 20px 20px', maxHeight: '400px', overflowY: 'auto', maxWidth: '100%', overflowX: 'auto', backgroundColor: '#ffffff', boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)' }}>
+      <div style={{ margin: '8px 20px 20px 20px', maxHeight: '250px', overflowY: 'auto', maxWidth: '100%', overflowX: 'auto', backgroundColor: '#ffffff', boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #ddd' }}>
           <thead>
             <tr style={tableHeaderStyle}>
