@@ -157,21 +157,21 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
           </div>
 
           {/* <form> */}
-            <div className=" grid lg:grid-cols-2 sm:grid-cols-1">
+            <div className="flex items-center flex-col">
               {/* grid fist column */}
 
-              <div className=" h-80 w-full overflow-hidden">
+              {/* <div className=" h-80 w-full overflow-hidden">
                 <img
                   src="../../public/companyLogo.jpeg"
                   className="w-full h-full object-fit"
                   alt="Sample image"
                 />
-              </div>
+              </div> */}
 
 
               {/* grid second column */}
 
-              <div>
+              <div className="w-1/2">
                 <div className="mb-6">
                   <input
                     onChange={(e) => seFirsttName(e.target.value)}
@@ -202,7 +202,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                   />
                 </div>
 
-                <div className="mb-6">
+                {/* <div className="mb-6">
                   <input
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
@@ -210,7 +210,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                     id="exampleFormControlInput2"
                     placeholder="Password"
                   />
-                </div>
+                </div> */}
 
                 <div className="mb-6">
                   <input
@@ -234,12 +234,22 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                 
               </div>
 
+              <div className="text-center lg:text-left mt-10">
+                <button
+                  type="button"
+                  className="inline-block px-7 py-3 bg-green-400 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
+                    onClick={handleSignUp}
+                >
+                  Create Customer
+                </button>
               </div>
+
+            </div>
              
 
            
 
-            <div className="text-center lg:text-left mt-10">
+            {/* <div className="text-center lg:text-left mt-10">
               <button
                 type="button"
                 className="inline-block px-7 py-3 bg-green-400 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
@@ -247,7 +257,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
               >
                 Create Customer
               </button>
-            </div>
+            </div> */}
           {/* </form> */}
         </div>
       </section>

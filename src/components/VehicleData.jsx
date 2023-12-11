@@ -83,8 +83,7 @@ function VehicleData(){
             alert('Please enter valid brand name');
         }
         } 
-    };
-    
+    };    
 
     const handleBrand = (brand) => {
         setBrandDetail(true);
@@ -100,6 +99,7 @@ function VehicleData(){
         setDeleteBrandName('');
         setDeleteBrandLogo('');
     }
+    
 
     return (
         <>
@@ -126,7 +126,7 @@ function VehicleData(){
                 <div className="flex justify-around">
                     <input
                         onChange={(e) => setSearchBrand(e.target.value)}
-                        placeholder="Search by name"
+                        placeholder="Search by brand name"
                         className="max-w-xs block w-full rounded-md border-2 pl-2 py-1.5 outline-violet-700 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     />
                 </div>
@@ -222,7 +222,8 @@ function VehicleData(){
                 <div>
                     <div className='flex flex-wrap gap-6'>
                         {carBrandsWithLogos.filter((Brand) => {
-                            return searchBrand.toLowerCase() === '' ? Brand : Brand.name.toLowerCase().includes(searchBrand)
+                            const lowercaseSearchBrand = searchBrand.toLowerCase();
+                            return lowercaseSearchBrand === '' ? Brand : Brand.name.toLowerCase().includes(lowercaseSearchBrand)
                         }).map((brand, index) => (
                             <div key={index} className='text-center m-5 w-[15%] cursor-pointer hover:border-2 hover:scale-110 transform transition duration-300 ease-in-out hover:bg-indigo-100 rounded-md' onClick={() => handleBrand(brand)}>
                                 <img src={brand.logo} alt="Random image" />

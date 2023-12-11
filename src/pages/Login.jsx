@@ -172,10 +172,11 @@ export default function Login() {
                 <div className="text-center lg:text-left">
                   <button
                     type="button"
-                   className=" w-full text-[28px] mt-6 rounded-full bg-green-300 font-medium text-white
-                   hover:bg-emerald-600 py-2 transition-colors duration-300 hover:text-white"
+                    className="flex justify-center items-center w-full text-[28px] mt-6 rounded-full bg-green-300 font-medium text-white
+                    hover:bg-emerald-600 py-2 transition-colors duration-300 hover:text-white"
                     onClick={handleLogin}
-                  >
+                    >
+                    {loading ? <div className="loader flex items-center mr-2"></div> : null}
                     Login
                   </button>
 
@@ -184,8 +185,7 @@ export default function Login() {
                 
                
 
-                {loading ? <div className="loader flex items-center mt-10 ml-52"></div> 
-                 : sucess ? <div className="mt-4 text-lg text-center text-gray-700"><h1>You Logged In Successfully</h1></div> 
+                {sucess ? <div className="mt-4 text-lg text-center text-gray-700"><h1>You Logged In Successfully</h1></div> 
                  : loginError ? <div className="mt-4 text-lg text-center text-red-500"><h1>Please Enter Valid Email And Password</h1></div> : ""}
               </form>
             </div>

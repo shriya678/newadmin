@@ -1,8 +1,111 @@
 import { Card } from "@tremor/react";
+import { useState } from "react";
 
 
 function PushNotifications() {
 
+    const [indianCities, setIndianCities] = useState([
+        { name: 'Agra' },
+        { name: 'Ahmedabad' },
+        { name: 'Ajmer' },
+        { name: 'Alappuzha' },
+        { name: 'Aligarh' },
+        { name: 'Allahabad' },
+        { name: 'Amravati' },
+        { name: 'Amritsar' },
+        { name: 'Anand' },
+        { name: 'Aurangabad' },
+        { name: 'Bengaluru' },
+        { name: 'Bhopal' },
+        { name: 'Bhubaneswar' },
+        { name: 'Bhuj' },
+        { name: 'Chandigarh' },
+        { name: 'Chennai' },
+        { name: 'Coimbatore' },
+        { name: 'Cuttack' },
+        { name: 'Darjeeling' },
+        { name: 'Dehradun' },
+        { name: 'Delhi' },
+        { name: 'Dhanbad' },
+        { name: 'Durgapur' },
+        { name: 'Faridabad' },
+        { name: 'Gandhinagar' },
+        { name: 'Gangtok' },
+        { name: 'Gaya' },
+        { name: 'Ghaziabad' },
+        { name: 'Goa' },
+        { name: 'Gorakhpur' },
+        { name: 'Guwahati' },
+        { name: 'Gwalior' },
+        { name: 'Haridwar' },
+        { name: 'Hisar' },
+        { name: 'Hubli' },
+        { name: 'Hyderabad' },
+        { name: 'Imphal' },
+        { name: 'Indore' },
+        { name: 'Jabalpur' },
+        { name: 'Jaipur' },
+        { name: 'Jaisalmer' },
+        { name: 'Jalandhar' },
+        { name: 'Jammu' },
+        { name: 'Jamnagar' },
+        { name: 'Jamshedpur' },
+        { name: 'Jhansi' },
+        { name: 'Jodhpur' },
+        { name: 'Kakinada' },
+        { name: 'Kanpur' },
+        { name: 'Kochi' },
+        { name: 'Kolhapur' },
+        { name: 'Kolkata' },
+        { name: 'Kollam' },
+        { name: 'Kota' },
+        { name: 'Kottayam' },
+        { name: 'Kozhikode' },
+        { name: 'Kurnool' },
+        { name: 'Lucknow' },
+        { name: 'Ludhiana' },
+        { name: 'Madurai' },
+        { name: 'Mangalore' },
+        { name: 'Mathura' },
+        { name: 'Meerut' },
+        { name: 'Moradabad' },
+        { name: 'Mumbai' },
+        { name: 'Mysuru' },
+        { name: 'Nagpur' },
+        { name: 'Nashik' },
+        { name: 'Navi Mumbai' },
+        { name: 'Noida' },
+        { name: 'Palakkad' },
+        { name: 'Panaji' },
+        { name: 'Patiala' },
+        { name: 'Patna' },
+        { name: 'Pondicherry' },
+        { name: 'Pune' },
+        { name: 'Raipur' },
+        { name: 'Rajkot' },
+        { name: 'Ranchi' },
+        { name: 'Rishikesh' },
+        { name: 'Salem' },
+        { name: 'Shillong' },
+        { name: 'Shimla' },
+        { name: 'Siliguri' },
+        { name: 'Solapur' },
+        { name: 'Srinagar' },
+        { name: 'Surat' },
+        { name: 'Thane' },
+        { name: 'Thiruvananthapuram' },
+        { name: 'Thrissur' },
+        { name: 'Tiruchirapalli' },
+        { name: 'Udaipur' },
+        { name: 'Udupi' },
+        { name: 'Vadodara' },
+        { name: 'Varanasi' },
+        { name: 'Vasai-Virar' },
+        { name: 'Vellore' },
+        { name: 'Vijayawada' },
+        { name: 'Visakhapatnam' },
+        { name: 'Warangal' }
+    ]);
 
 
     return (
@@ -72,7 +175,7 @@ function PushNotifications() {
                                     // onChange={(e) => console.log(e.target.value)}
                                     >
                                         <option value="online">Promotion</option>
-                                        <option value="offline">Other</option>
+                                        <option value="offline">Promocode</option>
                                     </select>
                                 </div>
                             </div>
@@ -88,7 +191,7 @@ function PushNotifications() {
                                     // onChange={(e) => console.log(e.target.value)}
                                     >
                                         <option value="online">In-App</option>
-                                        <option value="offline">Other</option>
+                                        <option value="offline">Website</option>
                                     </select>
                                 </div>
                             </div>
@@ -103,9 +206,10 @@ function PushNotifications() {
                                         className="border border-gray-300 rounded-md px-2 py-1 w-full text-center"
                                     // onChange={(e) => console.log(e.target.value)}
                                     >
-                                        <option value="online">Delhi</option>
-                                        <option value="offline">Mumbai</option>
-                                        <option value="offline">Banglore</option>
+                                        <option value="null">--Select--</option>
+                                        {indianCities.map((city, i) => (
+                                            <option key={i} value={city.name}>{city.name}</option>
+                                        ))}
                                     </select>
                                 </div>
                             </div>

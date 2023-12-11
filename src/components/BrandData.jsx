@@ -9,9 +9,9 @@ function BrandData(props){
     const [isAddPopupOpen, setAddPopupOpen] = useState(false);
     const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
     const [newModelName, setNewModelName] = useState('');
-    const [searchBrand, setSearchBrand] = useState('');
+    const [searchModel, setSearchModel] = useState('');
     const [newModelFuelType, setNewModelFuelType] = useState('');
-    const [carBrands, setCarBrands] = useState([]);
+    const [carModel, setCarModel] = useState([]);
     const [deleteModelName, setDeleteModelName] = useState('');
     const [deleteModelFuelType, setDeleteModelFuelType] = useState('');
     const {name, logo, _id} = props.currentBrand;
@@ -24,7 +24,7 @@ function BrandData(props){
 
     const submitDeleteModel = () =>{
         if (deleteModelName && deleteModelFuelType){
-            const modelId = (carBrands.find(car =>
+            const modelId = (carModel.find(car =>
                 car.name === deleteModelName && car.fuelType === deleteModelFuelType          
                 ) || {})._id;
             if(modelId){
@@ -55,7 +55,7 @@ function BrandData(props){
           })
           .then((data) => {
             const initialData = data?.models.filter(model => model.brandId === _id);
-            setCarBrands(initialData);
+            setCarModel(initialData);
           })
           .catch((error) => console.error(error));
     }, []);
@@ -97,7 +97,7 @@ function BrandData(props){
 
             <div className="flex justify-between my-2">
                 <div onClick={() => props.backToBrandsPage()}>
-                    <ArrowCircleLeftIcon className="h-7 w-7 cursor-pointer"></ArrowCircleLeftIcon>
+                    <ArrowCircleLeftIcon className="h-7 w-7 cursor-pointer hover:scale-110 transition-transform"></ArrowCircleLeftIcon>
                 </div>
 
                 <div>
@@ -120,8 +120,8 @@ function BrandData(props){
                 </div>
                 <div className="flex items-center w-[60%]">
                     <input
-                        onChange={(e) => setSearchBrand(e.target.value)}
-                        placeholder="Search by name"
+                        onChange={(e) => setSearchModel(e.target.value)}
+                        placeholder="Search by model name"
                         className="max-w-xs block w-full rounded-md border-2 pl-2 py-1.5 outline-violet-700 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     />
                 </div>
@@ -230,8 +230,9 @@ function BrandData(props){
 
             <div>
                 <div className='flex flex-wrap gap-6'>
-                {carBrands.filter((model) => {
-                            return searchBrand.toLowerCase() === '' ? model : model.name.toLowerCase().includes(searchBrand)
+                    {carModel.filter((model) => {
+                        const lowercaseSearchModel = searchModel.toLowerCase();
+                            return lowercaseSearchModel.toLowerCase() === '' ? model : model.name.toLowerCase().includes(lowercaseSearchModel)
                         }).map((model, index) => (
                             <div key={index} className='text-center m-5 w-[15%] cursor-pointer hover:border-2 hover:scale-110 transform transition duration-300 ease-in-out hover:bg-indigo-100 rounded-md'>
                             {/* <img src={model.photo} alt="Random image" /> */}
