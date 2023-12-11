@@ -161,7 +161,7 @@ function SubscriptionPlan() {
                 </Card>
             </div>
 
-            <div className="flex justify-end mt-3">
+            <div className="fixed bottom-0 right-0 flex justify-end mt-3">
                 <button className="px-2 py-1 cursor-pointer bg-red-300 mx-1 rounded hover:bg-red-500 transition-colors duration-300">Live Support</button>
             </div>
 

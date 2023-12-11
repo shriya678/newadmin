@@ -149,9 +149,9 @@ function ServerManagement(){
 
             <div className="mb-10 flex flex-col lg:flex-row w-full">
 
-                <div className="flex flex-wrap xl:flex-nowrap sm:justify-between gap-4 mb-4 sm:gap-8 lg:mr-5 lg:w-[60%] xl:w-[70%]">
+                <div className="flex flex-wrap xl:flex-nowrap sm:justify-between gap-4 mb-4 xl:mb-0 sm:gap-8 lg:mr-5 lg:w-[60%] xl:w-[70%]">
                     <Card className="sm:w-[46%]">
-                        <div className="flex justify-center bg-indigo-100 py-4 rounded-[10px] w-[30%] sm:w-[40%] xl:w-[30%]">
+                        <div className="flex justify-center bg-indigo-100 py-4 rounded-[10px] w-[30%] sm:w-[40%] xl:w-[35%]">
                             <EyeIcon className="w-4 h-4"></EyeIcon>
                         </div>
                         <h3 className="mt-6">CPU</h3>
@@ -162,7 +162,7 @@ function ServerManagement(){
                         </div>
                     </Card>
                     <Card className="sm:w-[46%]">
-                        <div className="flex justify-center bg-orange-100 py-4 rounded-[10px] w-[30%] sm:w-[40%] xl:w-[30%]">
+                        <div className="flex justify-center bg-orange-100 py-4 rounded-[10px] w-[30%] sm:w-[40%] xl:w-[35%]">
                             <EyeIcon className="w-4 h-4"></EyeIcon>
                         </div>
                         <h3 className="mt-6">RAM</h3>
@@ -173,7 +173,7 @@ function ServerManagement(){
                         </div>
                     </Card>
                     <Card className="sm:w-[46%]">
-                        <div className="flex justify-center bg-indigo-100 py-4 rounded-[10px] w-[30%] sm:w-[40%] xl:w-[30%]">
+                        <div className="flex justify-center bg-indigo-100 py-4 rounded-[10px] w-[30%] sm:w-[40%] xl:w-[35%]">
                             <EyeIcon className="w-4 h-4"></EyeIcon>
                         </div>
                         <h3 className="mt-6">DISK</h3>
@@ -184,7 +184,7 @@ function ServerManagement(){
                         </div>
                     </Card>
                     <Card className="sm:w-[46%]">
-                        <div className="flex justify-center bg-orange-100 py-4 rounded-[10px] w-[30%] sm:w-[40%] xl:w-[30%]">
+                        <div className="flex justify-center bg-orange-100 py-4 rounded-[10px] w-[30%] sm:w-[40%] xl:w-[35%]">
                             <EyeIcon className="w-4 h-4"></EyeIcon>
                         </div>
                         <h3 className="mt-6">SERVICES</h3>
@@ -196,9 +196,9 @@ function ServerManagement(){
                     </Card>
                 </div>
 
-                <div className="lg:w-[40%] xl:w-[30%]">
+                <div className="lg:w-[40%] xl:w-[30%] xl:flex xl:flex-col xl:justify-between">
                     <Card className="flex items-center mb-4 w-full p-2.5 sm:p-5 bg-orange-400">
-                        <div className="relative w-[20%] sm:w-[10%] lg:w-[20%] mr-2 sm:mr-4">
+                        <div className="relative w-[20%] sm:w-[10%] lg:w-[20%] xl:w-[18%] mr-2 sm:mr-4">
                             <Circle
                                 percent={75}
                                 strokeColor={'red'}

@@ -275,19 +275,19 @@ const AdminTableComponent = () => {
 
         <div className="py-2">
           <div className="sm:flex justify-between items-center">
-          {updateId? <Button className="mr-4 mb-2" color="emerald" disabled>
+          {updateId? <Button className="mr-4 mb-2" color="green" disabled>
               Add
             </Button>:
-            <Button className="mr-4 mb-2" color="emerald"  onClick={()=>setAddAdmin(true)}>
+            <Button className="mr-4 mb-2" color="green"  onClick={()=>setAddAdmin(true)}>
               Add
             </Button>}
 
             {updateId ? 
-              <Button className="mr-4 mb-2" color="emerald" onClick={()=>updateRecord()}>
+              <Button className="mr-4 mb-2" color="orange" onClick={()=>updateRecord()}>
               Update
             </Button>
             :
-            <Button className="mr-4 mb-2" color="emerald" onClick={()=>setModifyClick(true)}>
+            <Button className="mr-4 mb-2" color="orange" onClick={()=>setModifyClick(true)}>
               Modify
             </Button>}
 
@@ -297,11 +297,11 @@ const AdminTableComponent = () => {
             </Button> */}
 
 
-          {updateId?  <Button className="mr-4 mb-2" color="emerald" disabled>
+          {updateId?  <Button className="mr-4 mb-2" color="red" disabled>
               Delete
             </Button>
             :
-            <Button className="mr-4 mb-2" color="emerald" onClick={()=>handleDelete(isDeleteCheck)}>
+            <Button className="mr-4 mb-2" color="red" onClick={()=>handleDelete(isDeleteCheck)}>
               Delete
             </Button>}
            

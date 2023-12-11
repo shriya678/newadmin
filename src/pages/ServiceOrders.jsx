@@ -124,7 +124,7 @@ const ServiceOrders = () => {
 
   return (
     <div className='relative'>
-      <div className='flex justify-between'>
+      <div className='flex justify-between my-2'>
         <div style={{ fontWeight: 'bold', fontSize: '1.2rem', display: 'flex', padding: '4px 20px', marginBottom: '5px' }}>Service Orders</div>
         <div style={{ display: 'flex', alignItems: 'center', padding: '4px 20px', marginBottom: '5px' }}>
           <button className="border border-gray-300 rounded-md px-2 py-1 mr-1 bg-white cursor-pointer" onClick={openPopup}>Create New Order</button>

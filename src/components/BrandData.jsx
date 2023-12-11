@@ -1,32 +1,30 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { ArrowCircleLeftIcon } from '@heroicons/react/outline';
+import { Button } from "@tremor/react";
 
 function BrandData(props){
 
-    const [isPopupOpen, setPopupOpen] = useState(false);
+    const [isAddPopupOpen, setAddPopupOpen] = useState(false);
     const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
     const [newModelName, setNewModelName] = useState('');
-    const [searchBrand, setSearchBrand] = useState('');
+    const [searchModel, setSearchModel] = useState('');
     const [newModelFuelType, setNewModelFuelType] = useState('');
-    const [carBrands, setCarBrands] = useState([]);
+    const [carModel, setCarModel] = useState([]);
     const [deleteModelName, setDeleteModelName] = useState('');
     const [deleteModelFuelType, setDeleteModelFuelType] = useState('');
     const {name, logo, _id} = props.currentBrand;
 
-    const openPopup = () => {
-        setPopupOpen(true);
-    };
-
-    const closePopup = () => {
-        setPopupOpen(false);
+    const closeAddPopup = () => {
+        setAddPopupOpen(false);
         setNewModelName('');
         setNewModelFuelType('');
     }
 
-     const submitDeleteModel = () =>{
+    const submitDeleteModel = () =>{
         if (deleteModelName && deleteModelFuelType){
-            const modelId = (carBrands.find(car =>
+            const modelId = (carModel.find(car =>
                 car.name === deleteModelName && car.fuelType === deleteModelFuelType          
                 ) || {})._id;
             if(modelId){
@@ -57,12 +55,12 @@ function BrandData(props){
           })
           .then((data) => {
             const initialData = data?.models.filter(model => model.brandId === _id);
-            setCarBrands(initialData);
+            setCarModel(initialData);
           })
           .catch((error) => console.error(error));
-      }, []);
+    }, []);
 
-      const submitNewModel = async () => {
+    const submitNewModel = async () => {
         if (newModelName && newModelFuelType && _id) {
             try {
                 const response1 = await axios.post(
@@ -81,7 +79,7 @@ function BrandData(props){
             } catch (error) {
                 console.error("Error:", error);
             }
-            closePopup();
+            closeAddPopup();
         } else {
             alert('Please enter both model name and fuel type, and ensure brand ID is available.');
         }
@@ -97,9 +95,9 @@ function BrandData(props){
     return (
         <div className="px-4 my-2 relative">
 
-            <div className="flex justify-between">
-                <div onClick={() => props.goBack()}>
-                    <p className="cursor-pointer">Back</p>
+            <div className="flex justify-between my-2">
+                <div onClick={() => props.backToBrandsPage()}>
+                    <ArrowCircleLeftIcon className="h-7 w-7 cursor-pointer hover:scale-110 transition-transform"></ArrowCircleLeftIcon>
                 </div>
 
                 <div>
@@ -122,17 +120,17 @@ function BrandData(props){
                 </div>
                 <div className="flex items-center w-[60%]">
                     <input
-                        onChange={(e) => setSearchBrand(e.target.value)}
-                        placeholder="Search by name"
-                        className="max-w-xs block w-full rounded-md border-2 pl-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                        onChange={(e) => setSearchModel(e.target.value)}
+                        placeholder="Search by model name"
+                        className="max-w-xs block w-full rounded-md border-2 pl-2 py-1.5 outline-violet-700 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     />
                 </div>
             </div>
 
             <div className="flex justify-end">
                 <div className="flex">
-                    <button className="px-2 py-1 cursor-pointer bg-emerald-300 mx-1 rounded hover:bg-emerald-500 transition-colors duration-300" onClick={openPopup}>Add</button>
-                    {isPopupOpen && (
+                    <Button color="green" className="mr-2" onClick={() => setAddPopupOpen(true)}>Add</Button>
+                    {isAddPopupOpen && (
                         <div className="z-50 fixed top-0 left-[8%] w-full h-full flex items-center justify-center ">
                             <div className="bg-white p-8 rounded shadow-md">
                                 <h2 className="text-2xl font-bold mb-4">Add a New Model</h2>
@@ -163,15 +161,15 @@ function BrandData(props){
                                     className="border p-2 mb-4 w-full"
                                 />
 
-                                <button
+                                <Button
                                     onClick={submitNewModel}
-                                    className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors duration-300"
-                                    >
-                                    Submit
-                                </button>
+                                    color="green"
+                                >
+                                    Add
+                                </Button>
 
                                 <button
-                                    onClick={closePopup}
+                                    onClick={closeAddPopup}
                                     className="ml-4 border p-2 rounded text-gray-600 hover:bg-gray-100"
                                 >
                                     Close
@@ -179,7 +177,7 @@ function BrandData(props){
                             </div>
                         </div>
                     )}
-                    <button onClick={() => setDeletePopupOpen(true)} className="px-2 py-1 cursor-pointer bg-red-300 mx-1 rounded hover:bg-red-500 transition-colors duration-300">Delete</button>
+                    <Button onClick={() => setDeletePopupOpen(true)} color="red">Delete</Button>
                     {isDeletePopupOpen && (
                         <div className="z-50 fixed top-0 left-[8%] w-full h-full flex items-center justify-center ">
                             <div className="bg-white p-8 rounded shadow-md">
@@ -211,12 +209,12 @@ function BrandData(props){
                                     className="border p-2 mb-4 w-full"
                                 />
 
-                                <button
+                                <Button
                                     onClick={submitDeleteModel}
-                                    className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors duration-300"
+                                    color="red"
                                     >
-                                    Submit
-                                </button>
+                                    Delete
+                                </Button>
 
                                 <button
                                     onClick={closeDeletePopup}
@@ -232,8 +230,9 @@ function BrandData(props){
 
             <div>
                 <div className='flex flex-wrap gap-6'>
-                {carBrands.filter((model) => {
-                            return searchBrand.toLowerCase() === '' ? model : model.name.toLowerCase().includes(searchBrand)
+                    {carModel.filter((model) => {
+                        const lowercaseSearchModel = searchModel.toLowerCase();
+                            return lowercaseSearchModel.toLowerCase() === '' ? model : model.name.toLowerCase().includes(lowercaseSearchModel)
                         }).map((model, index) => (
                             <div key={index} className='text-center m-5 w-[15%] cursor-pointer hover:border-2 hover:scale-110 transform transition duration-300 ease-in-out hover:bg-indigo-100 rounded-md'>
                             {/* <img src={model.photo} alt="Random image" /> */}
