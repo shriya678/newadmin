@@ -1,4 +1,4 @@
-import { Table, TableHead, TableRow, TableHeaderCell, TableBody, TableCell, Text, Card } from "@tremor/react";
+import { Table, TableHead, TableRow, TableHeaderCell, TableBody, TableCell, Text, Card, Button } from "@tremor/react";
 
 
 function MarketingBanner() {
@@ -45,8 +45,8 @@ function MarketingBanner() {
                     </div>
                 </div>
                 <div className="flex w-full mt-2 lg:w-[20%] justify-between md:justify-end">
-                    <button className="px-2 py-1 cursor-pointer bg-emerald-300 mr-3 rounded hover:bg-emerald-500 transition-colors duration-300">Add</button>
-                    <button className="px-2 py-1 cursor-pointer bg-red-300 rounded hover:bg-red-500 transition-colors duration-300">Delete</button>
+                    <Button className="mr-2" color="green">Add</Button>
+                    <Button color="red">Delete</Button>
                 </div>
             </div>
 

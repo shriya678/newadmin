@@ -139,7 +139,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
 
   return (
     <div className="w-full p-4 dark:bg-tremor-background h-auto">
-      <section className="h-screen">
+      <section className="">
         <div className="px-6 h-full text-gray-800">
           <div className="flex justify-end items-end">
             <XCircleIcon
