@@ -2,10 +2,14 @@ import { Switch } from "@headlessui/react";
 import { CalculatorIcon, XCircleIcon } from "@heroicons/react/solid";
 import { Select, SelectItem } from "@tremor/react";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Card } from "react-bootstrap";
+import { CustomerContext } from "../pages/Customers";
 
 const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
+
+  const {setSucess,sucess} = useContext(CustomerContext);
+
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [firstName, seFirsttName] = useState();
@@ -13,124 +17,38 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
   const [phoneNumber, setPhoneNumber] = useState();
   const [address, setAddress] = useState();
 
-  const [toggleCheck, setToggleCheck] = useState(false);
-
-  //  for selectbox of selecting admin or superadmin
-  const [value, setValue] = useState("");
-
-  // console.log("Role: ",value);
-
-  const [customerCheck, setCustomerCheck] = useState(false);
-  const [serviceProviderCheck, setServiceProviderCheck] = useState(false);
-  const [serviceOrderCheck, setServiceOrderCheck] = useState(false);
-
-  const [customerPermission, setCustomerPermission] = useState({
-    create: false,
-    delete: false,
-    modify: false,
-  });
-
-  const [serviceProviderPermission, setServiceProviderPermission] = useState({
-    create: false,
-    delete: false,
-    modify: false,
-  });
-
-  const [serviceOrderPermission, setServiceOrderPermission] = useState({
-    create: false,
-    delete: false,
-    modify: false,
-  });
-
-  const customerInputEvent = (event) => {
-    const value = event.target.checked;
-    const name = event.target.name;
-
-    setCustomerPermission((pre) => {
-      // console.log("PreValue: ",pre);
-
-      return {
-        ...pre,
-        [name]: value,
-      };
-    });
-  };
-
-  const serviceProviderInputEvent = (event) => {
-    const value = event.target.checked;
-    const name = event.target.name;
-
-    setServiceProviderPermission((pre) => {
-      // console.log("PreValue: ",pre);
-
-      return {
-        ...pre,
-        [name]: value,
-      };
-    });
-  };
-
-  const serviceOrderInputEvent = (event) => {
-    const value = event.target.checked;
-    const name = event.target.name;
-
-    setServiceOrderPermission((pre) => {
-      // console.log("PreValue: ",pre);
-
-      return {
-        ...pre,
-        [name]: value,
-      };
-    });
-  };
-
+  const [message,setMessage] = useState();
 
 
   function handleSignUp() {
-    if (email && password) {
+
+    if (email) {
       const API = axios.create({
         baseURL: `${import.meta.env.VITE_BASE_URL}`,
         withCredentials: true,
       });
 
-      console.log("toggle: ",toggleCheck);
-
-      API.post("/api/v1/superadmin/", {
-        name: name,
+      API.post("/api/v1/admin/createUser", {
+        firstName: firstName,
+        lastName:lastName,
         email: email,
-        password: password,
+        password:password,
         phoneNo: phoneNumber,
-        role: value,
-        permissionCheck:toggleCheck,
-        permissions:{
-          customerCheck:customerCheck,
-          customer:{
-            create:customerPermission.create,
-            delete:customerPermission.delete,
-            modify:customerPermission.modify
-          },
-          serviceProviderCheck:serviceProviderCheck,
-          serviceProvider:{
-            create:serviceProviderPermission.create,
-            delete:serviceProviderPermission.delete,
-            modify:serviceProviderPermission.modify
-          },
-          serviceOrderCheck:serviceOrderCheck,
-          serviceOrder:{
-            create:serviceOrderPermission.create,
-            delete:serviceOrderPermission.delete,
-            modify:serviceOrderPermission.modify
-          }
-
-        }
+        address:address
 
       })
         .then((res) => {
           console.log(res.data);
-          // location.reload();
+          setSucess(!sucess);
+          setMessage(
+            <div className='text-center text-lg text-green-500'> Customer Created Sucessfully</div>
+          )
         })
         .catch((error) => {
           console.log(error);
+          setMessage(
+            <div className='text-center text-lg text-red-500'>Something Went Wrong Admin Not Created!</div>
+          )
         });
       return;
     }
@@ -156,7 +74,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
             </p>
           </div>
 
-          {/* <form> */}
+          <form>
             <div className=" grid lg:grid-cols-2 sm:grid-cols-1">
               {/* grid fist column */}
 
@@ -179,6 +97,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     id="exampleFormControlInput2"
                     placeholder="firstName"
+                    required
                   />
                 </div>
 
@@ -189,6 +108,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     id="exampleFormControlInput2"
                     placeholder="lastName"
+                    required
                   />
                 </div>
 
@@ -199,6 +119,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     id="exampleFormControlInput2"
                     placeholder="Email address"
+                    required
                   />
                 </div>
 
@@ -209,6 +130,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     id="exampleFormControlInput2"
                     placeholder="Password"
+                    required
                   />
                 </div>
 
@@ -219,6 +141,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     id="exampleFormControlInput2"
                     placeholder="PhoneNumber"
+                    required
                   />
                 </div>
 
@@ -229,6 +152,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     id="exampleFormControlInput2"
                     placeholder="Address"
+                    required
                   />
                 </div>
                 
@@ -239,16 +163,19 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
 
            
 
-            <div className="text-center lg:text-left mt-10">
+            <div className="text-center lg:text-left mt-10 mb-10">
               <button
-                type="button"
-                className="inline-block px-7 py-3 bg-green-400 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
+                type="submit"
+                className="inline-block px-7 py-3 bg-emerald-400 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-emerald-700 hover:shadow-lg focus:bg-emerald-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-emerald-800 active:shadow-lg transition duration-150 ease-in-out"
                   onClick={handleSignUp}
               >
                 Create Customer
               </button>
             </div>
-          {/* </form> */}
+          </form>
+
+          {/* for displaying message */}
+          {message}
         </div>
       </section>
     </div>

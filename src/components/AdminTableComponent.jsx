@@ -123,47 +123,6 @@ const AdminTableComponent = () => {
   console.log("Delete: ",isDeleteCheck);
 
 
-
-//this is not parmanent
- 
-
-  // const handleUpdate = () => {
-  //   setLoading(true);
-  //   setSucess(false);
-  //   setLoginError(false);
-
-  //   const API = axios.create({
-  //     baseURL: `${import.meta.env.VITE_BASE_URL}`,
-  //     withCredentials: true,
-  //   });
-
-  //   API.put(`/api/v1/superadmin/` + editId, {
-  //     _id: editId,
-  //     name,
-  //     email,
-  //     phoneNo,
-  //     role,
-  //   })
-  //     .then((res) => {
-  //       setSucess(true);
-  //       setLoading(false);
-  //       setLoginError(false);
-
-  //       console.log(res);
-  //       setEditID(false);
-  //       location.reload();
-  //     })
-  //     .catch((error) => {
-  //       setSucess(false);
-  //       setLoading(false);
-  //       setLoginError(true);
-
-  //       console.log("eror: ", error);
-  //       setEditID(false);
-  //     });
-  // };
-
-
   const handleRadio = (id)=>{
     const API = axios.create({
       baseURL: `${import.meta.env.VITE_BASE_URL}`,
@@ -186,6 +145,7 @@ const AdminTableComponent = () => {
 
   console.log("Role: ",role);
 
+  // for updating admin record
   const updateRecord = ()=>{
 
     const API = axios.create({
@@ -290,12 +250,6 @@ const AdminTableComponent = () => {
             <Button className="mr-4 mb-2" color="emerald" onClick={()=>setModifyClick(true)}>
               Modify
             </Button>}
-
-
-            {/* <Button className="mr-4 mb-2" color="emerald" onClick={()=>handleDelete(isDeleteCheck)}>
-              Delete
-            </Button> */}
-
 
           {updateId?  <Button className="mr-4 mb-2" color="emerald" disabled>
               Delete

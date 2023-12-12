@@ -14,45 +14,44 @@ import {
     SelectItem,
   } from "@tremor/react";
   
-  
-  
-  import { useEffect, useState } from "react";
+  import { createContext, useEffect, useState } from "react";
   import axios from "axios";
-  import PermissionComponent from "../components/PermissionComponent";
   import AddCustomerPage from "../components/AddCustomerPage";
+import CustomerImport from "../components/CustomerImport";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
+import { UpdateCustomer } from "../components/UpdateCustomer";
+import DeletePopUp from "../components/DeletePopUp";
+
   
-  
+const ITEMS_PER_PAGE = 10;
+
+export const CustomerContext = createContext();
+
   const Customers = () => {
     const [data, setData] = useState([]);
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phoneNo, setPhone] = useState("");
-    const [role, setRole] = useState("");
     const [editId, setEditID] = useState(null);
-  
-    // const [sucess, setSucess] = useState();
-    // const [loginError, setLoginError] = useState();
-    // const [loading, setLoading] = useState();
-  
-    // const [enabled, setEnabled] = useState(false);
+    const [sucess,setSucess] = useState(false);
 
-    const [userData,setUserData] = useState([
-      {id:1,name:'Aman',email:'aman@gmail.com',address:"hazrat ganj lucknow uttarPradesh India",phoneNo:657573718,rating:3.5},
-      {id:2,name:'Sita',email:'sita@gmail.com',address:"awad ayodya lucknow uttarPradesh India",phoneNo:865737373,rating:5},
-      {id:3,name:'Raghav',email:'raghav@gmail.com',address:"Mayur Vihar colony Jhansi uttarPradesh India",phoneNo:657573718,rating:3.5},
-      {id:4,name:'Aman',email:'aman@gmail.com',address:"hazrat ganj lucknow uttarPradesh India",phoneNo:657573718,rating:3.5},
-      {id:5,name:'Aman',email:'aman@gmail.com',address:"hazrat ganj lucknow uttarPradesh India",phoneNo:657573718,rating:3.5},
-    ])
+    const [page,setPage] = useState(1);
+
+    const totalItems = 57;  
+    
   
-    const [permissionData,setPermissionData] = useState();
+    const [importBtn,setImportBtn] = useState(false);
   
     const [addCustomer,setAddCustomer] = useState(false);
   
     const [isDeleteCheck,setIsDeleteCheck] = useState([]);
   
-    const [modifyClick,setModifyClick] = useState(false);
-  
     const [updateId,setUpdateId] = useState(null);
+
+    const [deletePopup,setDeletePopup] = useState(false);
+
+
+    const handlePage = (page) => {
+      console.log({page})
+      setPage(page);
+    };
 
     // this is demo for checking Allusers
       useEffect(() => {
@@ -60,7 +59,7 @@ import {
           baseURL: `${import.meta.env.VITE_BASE_URL}`,
           withCredentials: true,
         });
-        API.get("/api/v1/admin/getAllOrdersOfUser")
+        API.get(`/api/v1/admin/getAllUsers?limit=${ITEMS_PER_PAGE}&page=${page}`)
         .then((res) => {
           console.log("Customer Res:", res.data);
           setData(res.data.users);
@@ -70,139 +69,62 @@ import {
           console.log("Error: ",error);
         })
 
-    },[])
+    },[page,sucess])
 
+     //  Delete Functionality
+  const handleCheckbox = (e)=>{
+    const{value,checked} = e.target;
+    console.log("Deletevalue: ",value);
+    if(checked){
+      setIsDeleteCheck([...isDeleteCheck,value])
+    }
+    else{
+      setIsDeleteCheck(isDeleteCheck.filter((deleteItem)=>deleteItem!==value))
+    }
+  }
 
+  console.log("DeleteArray: ",isDeleteCheck);
+  
+    const handleDownloadFile = ()=>{
+      // e.preventDefault();
 
-  
-    // for fetching all
-    // useEffect(() => {
-    //   const API = axios.create({
-    //     baseURL: `${import.meta.env.VITE_BASE_URL}`,
-    //     withCredentials: true,
-    //   });
-  
-    //   API.get("/api/v1/superadmin/")
-    //     .then((res) => {
-    //       console.log("res:", res.data);
-    //       setData(res.data.admins);
-    //     })
-    //     .catch((error) => console.log(error));
-    // }, []);
-  
-    const handleEdit = (id) => {
+      console.log("download File");
       const API = axios.create({
         baseURL: `${import.meta.env.VITE_BASE_URL}`,
         withCredentials: true,
       });
+     API
+       .get(
+         `/api/v1/admin/bulkDownload`,
+         {
+          responseType:'blob'
+         }
+       )
+      .then((res)=>{
+        const url = window.URL.createObjectURL(res.data);
   
-      API.get(`/api/v1/superadmin/` + id)
-        .then((res) => {
-          console.log(res);
-          setPermissionData(res.data.admin);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'customer.csv';
   
-          // setName(res.data.admin.name);
-          setEmail(res.data.admin.email);
-          setPhone(res.data.admin.phoneNo);
-          setRole(res.data.admin.role);
-        })
-        .catch((error) => console.log(error));
-      setEditID(id);
-    };
+        document.body.appendChild(link);
   
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
   
-    //  Delete Functionality
-    const handleCheckbox = (e)=>{
-      const{value,checked} = e.target;
-      console.log("Deletevalue: ",value);
-      if(checked){
-        setIsDeleteCheck([...isDeleteCheck,value])
-      }
-      else{
-        setIsDeleteCheck(isDeleteCheck.filter((deleteItem)=>deleteItem!==value))
-      }
+        // link.parentNode.removeChild(link);
+      })
+      .catch((error)=>console.log('Customer Error: ',error));
     }
-  
-    console.log("Delete: ",JSON.stringify(isDeleteCheck)); 
-  
-
-  
-  
-    const handleRadio = (id)=>{
-      const API = axios.create({
-        baseURL: `${import.meta.env.VITE_BASE_URL}`,
-        withCredentials: true,
-      });
-  
-      API.get(`/api/v1/superadmin/` + id)
-        .then((res) => {
-          console.log(res);
-          // setPermissionData(res.data.admin);
-  
-          setName(res.data.admin.name);
-          setEmail(res.data.admin.email);
-          setPhone(res.data.admin.phoneNo);
-          setRole(res.data.admin.role);
-        })
-        .catch((error) => console.log(error));
-      setUpdateId(id);
-    }
-  
-    console.log("Role: ",role);
-  
-    const updateRecord = ()=>{
-  
-      const API = axios.create({
-            baseURL: `${import.meta.env.VITE_BASE_URL}`,
-            withCredentials: true,
-          });
-      
-          API.put(`/api/v1/superadmin/` + updateId, {
-            _id: updateId,
-            name,
-            email,
-            phoneNo,
-            role,
-          })
-            .then((res) => {
-              console.log("Update Rec: ",res);
-              setUpdateId(false);
-              location.reload();
-            })
-            .catch((error) => {
-              console.log("eror: ", error);
-              setUpdateId(false);
-            });
-  
-    }
-  
-  
-    const handleDelete = (id) => {
-      
-      const API = axios.create({
-        baseURL: `${import.meta.env.VITE_BASE_URL}`,
-        withCredentials: true,
-      });
-  
-      console.log("Delete Id: ",id);
-  
-      API.delete(`/api/v1/superadmin/` +id)
-        .then((res) => {
-          console.log(res);
-          location.reload();
-        })
-        .catch((error) => {
-        
-          console.log("eror: ", error);
-          // setEditID(false)
-        });
-    };
-  
   
     
   
     return (
 
+      <CustomerContext.Provider value={{page,setPage,editId,setEditID,sucess,setSucess,setIsDeleteCheck}}>
+
+    
     <div className="grid grid-cols-1 w-full p-4">
 
     <Card className="mt-4 dark:bg-tremor-background ">
@@ -211,43 +133,27 @@ import {
       <Title>Customers</Title>
       <div className="py-2">
         <div className="sm:flex justify-between items-center">
-        {updateId? <Button className="mr-4 mb-2" color="green" disabled>
+        {updateId? <Button className="mr-4 mb-2" color="emerald" disabled>
             Add
           </Button>:
-          <Button className="mr-4 mb-2" color="green" onClick={()=>setAddCustomer(true)}>
+          <Button className="mr-4 mb-2" color="emerald" onClick={()=>setAddCustomer(true)}>
             Add
           </Button>}
 
-          {/* {updateId ? 
-            <Button className="mr-4 mb-2" color="green" onClick={()=>updateRecord()}>
-            Update
-          </Button>
-          :
-          <Button className="mr-4 mb-2" color="green" onClick={()=>setModifyClick(true)}>
-            Modify
-          </Button>} */}
 
-
-          <Button className="mr-4 mb-2" color="green" onClick={()=>handleDelete(updateId)}>
+          <Button className="mr-4 mb-2" color="emerald" onClick={()=>
+            // handleDelete(updateId)
+            setDeletePopup(!deletePopup)}>
             Delete
           </Button>
 
-          <Button className="mr-4 mb-2" color="green" onClick={()=>handleDelete(updateId)}>
+          <Button className="mr-4 mb-2" color="emerald" onClick={()=>setImportBtn(true)}>
             Import
           </Button>
 
-          <Button className="mr-4 mb-2" color="green" onClick={()=>handleDelete(updateId)}>
+          <Button className="mr-4 mb-2" color="emerald" onClick={()=>handleDownloadFile()}>
             Export
           </Button>
-
-
-        {/* {updateId?  <Button className="mr-4 mb-2" color="green" disabled>
-            Delete
-          </Button>
-          :
-          <Button className="mr-4 mb-2" color="green" onClick={handleDelete}>
-            Delete
-          </Button>} */}
          
         </div>
       </div>
@@ -257,27 +163,30 @@ import {
   }
 
 
-    {editId ? 
-      permissionData? (<PermissionComponent permissionData={permissionData} editId={editId} handleEdit={()=>setEditID(null)}/>)  : <h1>Loading</h1>      
-     :
+    { 
+    importBtn ? <CustomerImport setImportBtn={setImportBtn}/>:
 
     addCustomer ? (<AddCustomerPage setAddCustomer={()=>setAddCustomer(false)}/>) : 
+
+    editId ? (<UpdateCustomer editId={editId} setEditID={()=>setEditID(null)}/>):
+
+    deletePopup ? (<DeletePopUp isDeleteCheck={isDeleteCheck} setIsDeleteCheck={()=>setIsDeleteCheck([])} setDeletePopup={()=>setDeletePopup(false)} />) :
+
      (
-      <Table className="mt-5 dark:bg-tremor-background">
+      <Table className="mt-5 dark:bg-tremor-background h-[450px]">
         <TableHead>
           <TableRow>
-          {modifyClick?<TableHeaderCell>Choose Update</TableHeaderCell>:
-          <TableHeaderCell>
+          <TableHeaderCell className="bg-white">
            SelectDelete 
           </TableHeaderCell>
-          }
-            <TableHeaderCell>CustomerName</TableHeaderCell>
-            <TableHeaderCell>Email</TableHeaderCell>
-            <TableHeaderCell>PhoneNo</TableHeaderCell>
-            <TableHeaderCell >Address</TableHeaderCell>
-            <TableHeaderCell>Rating</TableHeaderCell>
-            <TableHeaderCell>Total Orders</TableHeaderCell>
-            <TableHeaderCell>Cancelled Orders</TableHeaderCell>
+          
+            <TableHeaderCell className="bg-white">CustomerName</TableHeaderCell>
+            <TableHeaderCell className="bg-white">Email</TableHeaderCell>
+            <TableHeaderCell className="bg-white">PhoneNo</TableHeaderCell>
+            <TableHeaderCell className="bg-white" >Address</TableHeaderCell>
+            <TableHeaderCell className="bg-white">Rating</TableHeaderCell>
+            <TableHeaderCell className="bg-white">Total Orders</TableHeaderCell>
+            <TableHeaderCell className="bg-white">Cancelled Orders</TableHeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -285,10 +194,19 @@ import {
         {data.map((user,index)=>
             <TableRow key={index}>
             <TableCell>
-              <input type="checkbox" />
+              <input type="checkbox" value={user._id}  checked={user.isDeleteCheck} onChange={(e)=>handleCheckbox(e)}  />
             </TableCell>
               <TableCell>
-                <Text>{user.firstName+" "+ user.lastName}</Text>
+
+              <Button 
+              onClick={()=>setEditID(user._id)}
+               style={{color:"transparent",backgroundColor:"transparent",border:"none"}}>
+              <Text>
+                    {user.firstName+" "+ user.lastName}
+                </Text>
+              </Button>
+             
+              
               </TableCell>
               <TableCell>
                 <Text>{user.email}</Text>
@@ -312,170 +230,94 @@ import {
               </TableCell>
             </TableRow>            
           )}
-
-
-            {/* {data.map((user, index) => 
-
-            user._id === updateId ? 
-
-            (
-              <TableRow key={index}>
-
-              <TableCell>
-              <input type="radio" checked={true} />
-              </TableCell>
-
-              <TableCell>
-                <TextInput
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </TableCell>
-
-              <TableCell>
-                <TextInput
-                  type="text"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </TableCell>
-
-              <TableCell>
-                <TextInput
-                  type="text"
-                  value={phoneNo}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-              </TableCell>
-
-              <TableCell>
-
-              <Select
-                  value={role}
-                  onValueChange={setRole}
-                  placeholder={role}
-                >
-                  <SelectItem value="admin" icon={CalculatorIcon}>
-                    Admin
-                  </SelectItem>
-                  <SelectItem value="superAdmin" icon={CalculatorIcon}>
-                    SuperAdmin
-                  </SelectItem>
-                </Select>
-
-              </TableCell>
-
-              <TableCell>
-                <Button style={{ color: "#ffffff" }} disabled>
-                  Permission
-                </Button>
-              </TableCell>
-
-              <TableCell>
-                <div className="sm:flex justify-between items-center">
-                  <Switch
-                    className={`${
-                      user.permissionCheck ? "bg-blue-600" : "bg-gray-200"
-                    } relative inline-flex h-6 w-11 items-center rounded-full`}
-                  >
-                    <span
-                      className={`${
-                        user.permissionCheck ? "translate-x-6" : "translate-x-1"
-                      } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-                    />
-                  </Switch>
-                </div>
-              </TableCell>
-
-
-            </TableRow>
-            )
-
-            :
-
-          (  <TableRow key={index}>
-
-            <TableCell>
-
-            {modifyClick?
-
-              <input type="radio" onClick={()=>handleRadio(user._id)}/>:
-
-              <input type="checkbox" value={user._id} checked={user.isDeleteCheck} onChange={(e)=>handleCheckbox(e)} />
-
-            }
-            </TableCell>
-
-              <TableCell>
-                <Text> {user.name} </Text>
-              </TableCell>
-
-              <TableCell>
-                <Text>{user.email}</Text>
-              </TableCell>
-
-              <TableCell>
-                <Text>{user.phoneNo}</Text>
-              </TableCell>
-
-              <TableCell>
-                <Text>{user.role}</Text>
-              </TableCell>
-
-              <TableCell>
-                <Button
-                  className="mr-1 mb-2"
-                  color="green"
-                  onClick={() => {
-                    handleEdit(user._id);
-                  }}
-                >
-                  Permission
-                </Button>
-              </TableCell>
-
-              <TableCell>
-                <div className="sm:flex justify-between items-center">
-                  <Switch
-                    className={`${
-                      user.permissionCheck ? " bg-green-500" : "bg-gray-200"
-                    } relative inline-flex h-6 w-11 items-center rounded-full`}
-                  >
-                    <span
-                      className={`${
-                        user.permissionCheck ? "translate-x-6" : "translate-x-1"
-                      } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-                    />
-                  </Switch>
-                </div>
-              </TableCell>
-
-
-            </TableRow>
-          )
-
-
-          )} */}
-
          
-
-
-
         </TableBody>
       </Table>
     )
     }
+
+  {!addCustomer ? <Pagination page={page} setPage={setPage} handlePage={handlePage} totalItems={totalItems}></Pagination> :""}
+
   </Card>
 
         </div>
 
-
+        </CustomerContext.Provider>
      
   
     )
     
   };
+
+
+  function Pagination({page,setPage,handlePage,totalItems}) {
+
+    const totalPages = Math.ceil(totalItems/ITEMS_PER_PAGE);
+  
+    return (
+      <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+        <div className="flex flex-1 justify-between sm:hidden">
+          <div
+             onClick={(e)=>handlePage( page > 1 ?  page - 1 : page)}
+            className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+          >
+            Previous
+          </div>
+          <div
+             onClick={(e)=>handlePage( page<totalPages ?  page + 1 : page)}
+            className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+          >
+            Next
+          </div>
+        </div>
+        <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm text-gray-700">
+              Showing <span className="font-medium">{(page-1)*ITEMS_PER_PAGE+1}</span> to{' '}
+              <span className="font-medium">{page*ITEMS_PER_PAGE > totalItems ? totalItems : page * ITEMS_PER_PAGE}</span> of{' '}
+              <span className="font-medium">{totalItems}</span> results
+            </p>
+          </div>
+          <div>
+            <nav
+              className="isolate inline-flex -space-x-px rounded-md shadow-sm"
+              aria-label="Pagination"
+            >
+              <div
+                 onClick={()=>handlePage( page > 1 ?  page - 1 : page)}
+                className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+              >
+                <span className="sr-only">Previous</span>
+                <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+              </div>
+              {/* Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" */}
+              {Array.from({length:Math.ceil(totalItems/ITEMS_PER_PAGE)})
+              .map((el,index)=>
+                <div
+                key={index}
+                onClick={()=>handlePage(index+1)}
+                aria-current="page"
+                className={`relative cursor-pointer z-10 inline-flex items-center ${index+1===page ? 'bg-indigo-600 text-white':' bg-gray-400'} px-4 py-2 text-sm font-semibold
+                 text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+                  focus-visible:outline-indigo-600`}
+              >
+                {index+1}
+              </div>
+              )}
+  
+              <div
+                onClick={()=>handlePage( page < totalPages ?  page + 1 : page)}
+                className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+              >
+                <span className="sr-only">Next</span>
+                <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    );
+  }
   
   
   export default Customers;
