@@ -301,8 +301,8 @@ function PromoCode() {
                         </div>
 
                         <div className="flex justify-between md:justify-end mt-2">
-                            <button className="px-2 py-1 cursor-pointer mr-4 bg-red-300 rounded hover:bg-red-500 transition-colors duration-300">Cancel</button>
-                            <button className="px-2 py-1 cursor-pointer bg-indigo-300 rounded hover:bg-indigo-400 transition-colors duration-300">Save</button>
+                            <Button className="mr-2" color="red">Cancel</Button>
+                            <Button color="blue">Save</Button>
                         </div>
                     </div>
 
