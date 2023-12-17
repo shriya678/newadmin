@@ -25,6 +25,7 @@ import ServiceManagement from "./components/ServiceManagement";
 import Customers from "./pages/Customers";
 import Setting from "./pages/Setting";
 import ServerManagement from "./components/ServerManagement";
+import ServiceProviderPage from "./pages/ServiceProviderPage";
 
 export const RecoveryContext = createContext();
 
@@ -103,6 +104,7 @@ function App() {
               <Route path="/SubscriptionPlan" element={<SubscriptionPlan/>}/>
               <Route path="/ServiceManagement" element={<ServiceManagement /> } />
               <Route path="/ServerManagement" element={<ServerManagement />} />
+              <Route path="/ServiceProviders" element={profiledata ? <ServiceProviderPage/>:<Navigate to="../auth"/>}/>
             </Routes>
 
           </div>

@@ -2,11 +2,14 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Button } from "@tremor/react";
 import axios from "axios";
 import React, { Fragment, useContext, useState } from "react";
-import { CustomerContext } from "../pages/Customers";
+import { ServiceProviderContext } from "../pages/ServiceProviderPage";
 
-export default function CustomerImport({ setImportBtn }) {
+export default function ServiceProviderImport({ setImportBtn,value }) {
 
-  const { sucess, setSucess } = useContext(CustomerContext);
+    const role = value+'s';
+    console.log("role: ",role);
+
+    const { sucess, setSucess } = useContext(ServiceProviderContext);
 
   let [isOpen, setIsOpen] = useState(true);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -72,7 +75,7 @@ export default function CustomerImport({ setImportBtn }) {
         baseURL: `${import.meta.env.VITE_BASE_URL}`,
         withCredentials: true,
       });
-      API.post(`/api/v1/superadmin/upload/` + "users", formData, {
+      API.post(`/api/v1/superadmin/upload/` + role, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -83,16 +86,16 @@ export default function CustomerImport({ setImportBtn }) {
           <div className="mt-2 text-sm text-green-600">
           Records Uploaded SucessFully!
         </div>)
-        setSucess(!sucess);
           setSelectedFile(null);
+          setSucess(!sucess)
           // closeModal();
         })
         .catch((error) => {
-          console.log("Cutomer Error: ", error);
+          console.log("ServiceProvider Error: ", error);
           setSelectedFile(null);
          setMessage( 
          <div className="mt-2 text-sm text-red-600">
-         {error.response.data.error}
+          {error.response.data.error}
         </div>)
         });
       return;
@@ -142,7 +145,7 @@ export default function CustomerImport({ setImportBtn }) {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Choose Customer CSV file Bulk upload
+                    Choose ServiceProvider CSV file Bulk upload
                   </Dialog.Title>
                   <div className="mt-2">
                     <input

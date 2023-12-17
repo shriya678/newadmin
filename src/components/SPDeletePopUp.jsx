@@ -1,14 +1,14 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useContext, useState } from 'react'
-import { CustomerContext } from '../pages/Customers'
 import axios from 'axios';
+import { ServiceProviderContext } from '../pages/ServiceProviderPage';
 
-export default function DeletePopUp({isDeleteCheck,deletePopup,setDeletePopup}) {
+export default function SPDeletePopUp({isDeleteCheck,deletePopup,setDeletePopup}) {
 
-  const {setSucess,sucess,setIsDeleteCheck} = useContext(CustomerContext);
+  const {setSucess,sucess,setIsDeleteCheck} = useContext(ServiceProviderContext);
 
   // console.log("IsDelete: ",isDeleteCh
-  let [isOpen, setIsOpen] = useState(true);
+  let [isOpen, setIsOpen] = useState(true)
 
   const [message,setMessage] = useState();
 
@@ -25,6 +25,7 @@ export default function DeletePopUp({isDeleteCheck,deletePopup,setDeletePopup}) 
     const deleteArray = JSON.stringify(isDeleteCheck);
     
     if(deleteArray){
+
       setMessage(
         <div className='text-center text-lg text-green-500'>Loading...</div>
       )
@@ -33,30 +34,32 @@ export default function DeletePopUp({isDeleteCheck,deletePopup,setDeletePopup}) 
       baseURL: `${import.meta.env.VITE_BASE_URL}`,
       withCredentials: true,
     });
-    API.delete(`/api/v1/admin/deleteBulkUser`,{
+    API.delete(`/api/v1/admin/serviceProvider/bulkDelete`,{
       data:{array:[...isDeleteCheck]}
     }
     )
-
 
       .then((res) => {
         console.log(res);
         setIsDeleteCheck(null);
         // setSucess(true);
         setMessage(
-          <div className='text-center text-lg text-green-500'> Record Deleted Sucessfully</div>
-        )
+            <div className='text-center text-lg text-green-500'> Record Deleted Sucessfully</div>
+          )
       })
       .catch((error) => {
       
         console.log("eror: ", error);
         // setEditID(false);
         setMessage(
-          <div className='text-center text-lg text-red-500'> Something Went Wrong </div>
-        )
+            <div className='text-center text-lg text-red-500'> Something Went Wrong </div>
+          )
+
         setIsDeleteCheck(null);
       });
+
     }
+
   };
 
   return (
@@ -122,8 +125,6 @@ export default function DeletePopUp({isDeleteCheck,deletePopup,setDeletePopup}) 
                       Delete
                     </button>
                   </div>
-
-                
 
                   </div>
                 </Dialog.Panel>
