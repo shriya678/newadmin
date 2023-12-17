@@ -62,7 +62,7 @@ const AdminTableComponent = () => {
 
     API.get("/api/v1/superadmin/")
       .then((res) => {
-        console.log("res:", res.data);
+        // console.log("res:", res.data);
         setData(res.data.admins);
         setLoading(false);
       })
@@ -94,7 +94,7 @@ const AdminTableComponent = () => {
 
     API.get(`/api/v1/superadmin/` + id)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setPermissionData(res.data.admin);
 
         // setName(res.data.admin.name);
@@ -110,7 +110,7 @@ const AdminTableComponent = () => {
   //  Delete Functionality
   const handleCheckbox = (e)=>{
     const{value,checked} = e.target;
-    console.log("Deletevalue: ",value);
+    // console.log("Deletevalue: ",value);
     if(checked){
       setIsDeleteCheck([...isDeleteCheck,value])
     }
@@ -120,7 +120,7 @@ const AdminTableComponent = () => {
   }
 
   // console.log("Delete: ",JSON.stringify(isDeleteCheck));
-  console.log("Delete: ",isDeleteCheck);
+  // console.log("Delete: ",isDeleteCheck);
 
 
   const handleRadio = (id)=>{
@@ -143,7 +143,7 @@ const AdminTableComponent = () => {
     setUpdateId(id);
   }
 
-  console.log("Role: ",role);
+  // console.log("Role: ",role);
 
   // for updating admin record
   const updateRecord = ()=>{
@@ -161,7 +161,7 @@ const AdminTableComponent = () => {
           role,
         })
           .then((res) => {
-            console.log("Update Rec: ",res);
+            // console.log("Update Rec: ",res);
             setUpdateId(false);
             setSucess(true);
             // location.reload();
@@ -185,7 +185,7 @@ const AdminTableComponent = () => {
 
     // console.log("Delete Id: ",id);
 
-    console.log("Is Delete: ",JSON.stringify(isDeleteCheck));
+    // console.log("Is Delete: ",JSON.stringify(isDeleteCheck));
 
     // API.delete(`/api/v1/superadmin/deleteBulkAdmins/` +id)
     API.post(`/api/v1/superadmin/deleteBulkAdmins/`,{
@@ -213,7 +213,7 @@ const AdminTableComponent = () => {
   }
 
 
-  console.log("EdittId: ",editId);
+  // console.log("EdittId: ",editId);
   
 
   return (

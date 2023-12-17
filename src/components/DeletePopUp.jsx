@@ -7,7 +7,6 @@ export default function DeletePopUp({isDeleteCheck,deletePopup,setDeletePopup}) 
 
   const {setSucess,sucess,setIsDeleteCheck} = useContext(CustomerContext);
 
-  // console.log("IsDelete: ",isDeleteCh
   let [isOpen, setIsOpen] = useState(true);
 
   const [message,setMessage] = useState();
@@ -37,7 +36,6 @@ export default function DeletePopUp({isDeleteCheck,deletePopup,setDeletePopup}) 
       data:{array:[...isDeleteCheck]}
     }
     )
-
 
       .then((res) => {
         console.log(res);

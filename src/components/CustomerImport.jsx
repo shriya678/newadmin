@@ -27,7 +27,7 @@ export default function CustomerImport({ setImportBtn }) {
   // onchange event
   const handleFile = (e) => {
    const File = e.target.files[0];
-    console.log("file: ", File);
+    // console.log("file: ", File);
 
     setMessage(null);
 
@@ -55,9 +55,8 @@ export default function CustomerImport({ setImportBtn }) {
 
   // submit event
   const handleFileSubmit = () => {
-    console.log("hello");
-
-    console.log("Selected: ", selectedFile);
+  
+    // console.log("Selected: ", selectedFile);
 
     if (selectedFile) {
       const formData = new FormData();
@@ -78,14 +77,12 @@ export default function CustomerImport({ setImportBtn }) {
         },
       })
         .then((res) => {
-          console.log("Bulk Response: ", res);
           setMessage(
           <div className="mt-2 text-sm text-green-600">
           Records Uploaded SucessFully!
         </div>)
         setSucess(!sucess);
-          setSelectedFile(null);
-          // closeModal();
+        setSelectedFile(null);
         })
         .catch((error) => {
           console.log("Cutomer Error: ", error);

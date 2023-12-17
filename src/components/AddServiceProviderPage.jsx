@@ -24,7 +24,7 @@ const AddServiceProviderPage = ({ addSP, setAddSP }) => {
 
   const [value,setValue] = useState(null);
 
-  console.log("role:",value);
+  // console.log("role:",value);
 
 
   function handleSignUp(e) {
@@ -47,7 +47,7 @@ const AddServiceProviderPage = ({ addSP, setAddSP }) => {
         phoneNo: phoneNumber,
       })
         .then((res) => {
-          console.log("ServiceProviderAdded: ",res.data);
+          // console.log("ServiceProviderAdded: ",res.data);
           setSucess(!sucess);
           setMessage(
             <div className='text-center text-lg text-green-500'> Service Provider Created Sucessfully</div>

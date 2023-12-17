@@ -54,8 +54,8 @@ export const CustomerContext = createContext();
       });
       API.get(`/api/v1/admin/getAllUsers?limit=${itemsPerPage}&page=${currentPage}`)
       .then((res) => {
-        console.log("customer Count: ",res.data.count)
-        console.log("Customer Res:", res.data);
+        // console.log("customer Count: ",res.data.count)
+        // console.log("Customer Res:", res.data);
         setData(res.data.users);
         setTotalItems(res.data.count);
         
@@ -78,11 +78,11 @@ if(totalItems>1){
           while(num>=10){
               num/=10
           }
-          console.log("num: ",parseInt(num/2));
+          // console.log("num: ",parseInt(num/2));
           const end = parseInt(num/2);
 
           for(let i=2;i<=end;i++){
-              console.log("hello")
+              // console.log("hello")
               temp.push(i*10)
           }
       }
@@ -105,7 +105,7 @@ if(totalItems>1){
         range=[10,...temp,totalItems]
         }
       }
-      console.log("Range: ",range);
+      // console.log("Range: ",range);
 }  
 
     // this is responsible for rendering new pages pageNumberLimit is important
@@ -208,7 +208,7 @@ if(totalItems>1){
      //  Delete Functionality
   const handleCheckbox = (e)=>{
     const{value,checked} = e.target;
-    console.log("Deletevalue: ",value);
+    // console.log("Deletevalue: ",value);
     if(checked){
       setIsDeleteCheck([...isDeleteCheck,value])
     }
@@ -217,14 +217,14 @@ if(totalItems>1){
     }
   }
 
-  console.log("DeleteArray: ",isDeleteCheck);
+  // console.log("DeleteArray: ",isDeleteCheck);
   
     const handleDownloadFile = (currentPage,itemsPerPage)=>{
       // e.preventDefault();
 
       const fileName=`customer_From_${currentPage}_page.csv`
 
-      console.log("download File");
+      // console.log("download File");
       const API = axios.create({
         baseURL: `${import.meta.env.VITE_BASE_URL}`,
         withCredentials: true,

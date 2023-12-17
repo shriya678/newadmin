@@ -39,7 +39,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
 
       })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           setSucess(!sucess);
           setMessage(
             <div className='text-center text-lg text-green-500'> Customer Created Sucessfully</div>

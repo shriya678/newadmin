@@ -58,26 +58,6 @@ const ServiceProviderPage = () => {
 
   const [value, setValue] = useState(roles[0]);
 
-  // this is demo for checking Allusers
-  //   useEffect(() => {
-  //     const API = axios.create({
-  //       baseURL: `${import.meta.env.VITE_BASE_URL}`,
-  //       withCredentials: true,
-  //     });
-  //     API.get(`/api/v1/admin/getAllUsers?limit=${itemsPerPage}&page=${currentPage}`)
-  //     .then((res) => {
-  //       console.log("customer Count: ",res.data.count)
-  //       console.log("Customer Res:", res.data);
-  //       setData(res.data.users);
-  //       setTotalItems(res.data.count);
-
-  //     })
-  //     .catch((error)=>{
-  //       console.log("Error: ",error);
-  //     })
-
-  // },[itemsPerPage])
-
   if (totalItems > 1) {
     let num = totalItems;
     let temp = [];
@@ -105,7 +85,7 @@ const ServiceProviderPage = () => {
       range = [10, ...temp, totalItems];
     } else {
       temp = myFun(totalItems);
-      console.log("else case");
+      // console.log("else case");
       if (totalItems <= 10) {
         // res=[10]
         // setRange([10])
@@ -114,7 +94,7 @@ const ServiceProviderPage = () => {
         range = [10, ...temp, totalItems];
       }
     }
-    console.log("Range: ", range);
+    // console.log("Range: ", range);
   }
 
   // this is responsible for rendering new pages pageNumberLimit is important
@@ -168,12 +148,12 @@ const ServiceProviderPage = () => {
       `/api/v1/admin/serviceProvider/getAll/${value}?limit=${itemsPerPage}&page=${currentPage}`
     )
       .then((res) => {
-        console.log("SP Before: ", res.data);
+        // console.log("SP Before: ", res.data);
         setData(res.data.serviceProviders[0].providers);
         setTotalItems(res.data.serviceProviders[0].totalCount[0].total);
       })
       .catch((error) => {
-        console.log("ServiceProvider Error: ", error);
+        // console.log("ServiceProvider Error: ", error);
       });
   }, [value, itemsPerPage, currentPage, sucess]);
 
@@ -238,7 +218,7 @@ const ServiceProviderPage = () => {
     }
   };
 
-  console.log("DeleteArray: ", isDeleteCheck);
+  // console.log("DeleteArray: ", isDeleteCheck);
 
   const handleDownloadFile = (currentPage, itemsPerPage) => {
     // e.preventDefault();

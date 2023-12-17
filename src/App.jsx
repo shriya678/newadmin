@@ -37,11 +37,11 @@ function App() {
   const [showSidebar, setShowSidebar] = useState(false);
 
 
-  console.log("user: ", user);
+  // console.log("user: ", user);
 
   const profiledata = JSON.parse(localStorage.getItem("profile"));
 
-  console.log("profile: ",profiledata);
+  // console.log("profile: ",profiledata);
 
   const logindata = JSON.parse(localStorage.getItem("login"));
 
@@ -62,7 +62,7 @@ function App() {
         password: logindata.password,
       })
         .then((res) => {
-          console.log("loginAPP: ", res);
+          // console.log("loginAPP: ", res);
           setShowNavbar(true); // Set to true after successful login
           setShowSidebar(true); // Set to true after successful login
         })
