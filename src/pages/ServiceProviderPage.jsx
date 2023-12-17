@@ -265,7 +265,7 @@ const ServiceProviderPage = () => {
       }}
     >
       <div className="grid grid-cols-1 w-full p-4">
-        <Card className="mt-4 dark:bg-tremor-background ">
+        <Card className={addSP? `mt-4 dark:bg-tremor-background  h-[150vh]`: `mt-4 dark:bg-tremor-background`}>
           {addSP ? null : (
             <>
               <Title className=" text-center">Service Providers</Title>

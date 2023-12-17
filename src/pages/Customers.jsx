@@ -260,7 +260,7 @@ if(totalItems>1){
     <CustomerContext.Provider value={{currentPage,editId,setEditID,sucess,setSucess,setIsDeleteCheck}}>
 
     <div className="grid grid-cols-1 w-full p-4">
-    <Card className="mt-4 dark:bg-tremor-background ">
+    <Card className={addCustomer? `mt-4 dark:bg-tremor-background  h-[150vh]`: `mt-4 dark:bg-tremor-background`}>
   
     {addCustomer ? null :  <div className="sm:flex justify-between items-center">
       <Title>Customers</Title>
