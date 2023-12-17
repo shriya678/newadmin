@@ -85,7 +85,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                   className="w-full h-full object-fit"
                   alt="Sample image"
                 />
-              </div> */}
+              </div> */
 
 
               {/* grid second column */}
