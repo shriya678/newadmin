@@ -58,7 +58,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
 
   return (
     <div className="w-full p-4 dark:bg-tremor-background h-auto">
-      <section className="">
+      <section className="h-screen">
         <div className="px-6 h-full text-gray-800">
           <div className="flex justify-end items-end">
             <XCircleIcon
@@ -85,12 +85,12 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                   className="w-full h-full object-fit"
                   alt="Sample image"
                 />
-              </div> */
+              </div>
 
 
               {/* grid second column */}
 
-              <div className="w-1/2">
+              <div>
                 <div className="mb-6">
                   <input
                     onChange={(e) => seFirsttName(e.target.value)}
@@ -124,7 +124,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                   />
                 </div>
 
-                {/* <div className="mb-6">
+                <div className="mb-6">
                   <input
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
@@ -133,7 +133,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                     placeholder="Password"
                     required
                   />
-                </div> */}
+                </div>
 
                 <div className="mb-6">
                   <input
@@ -159,17 +159,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                 
               </div>
 
-              <div className="text-center lg:text-left mt-10">
-                <button
-                  type="button"
-                  className="inline-block px-7 py-3 bg-green-400 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
-                    onClick={handleSignUp}
-                >
-                  Create Customer
-                </button>
               </div>
-
-            </div>
              
 
            
