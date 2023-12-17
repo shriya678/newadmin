@@ -1,4 +1,4 @@
-import { Card } from "@tremor/react";
+import { Button, Card } from "@tremor/react";
 import { useState } from "react";
 
 
@@ -138,6 +138,7 @@ function PushNotifications() {
                                         className="border border-gray-300 rounded-md px-2 py-1 w-full text-center"
                                     // onChange={(e) => console.log(e.target.value)}
                                     >
+                                        <option value="null">--Select--</option>
                                         <option value="online">Customer</option>
                                         <option value="offline">Other</option>
                                     </select>
@@ -174,6 +175,7 @@ function PushNotifications() {
                                         className="border border-gray-300 rounded-md px-2 py-1 w-full text-center"
                                     // onChange={(e) => console.log(e.target.value)}
                                     >
+                                        <option value="null">--Select--</option>
                                         <option value="online">Promotion</option>
                                         <option value="offline">Promocode</option>
                                     </select>
@@ -190,6 +192,7 @@ function PushNotifications() {
                                         className="border border-gray-300 rounded-md px-2 py-1 w-full text-center"
                                     // onChange={(e) => console.log(e.target.value)}
                                     >
+                                        <option value="null">--Select--</option>
                                         <option value="online">In-App</option>
                                         <option value="offline">Website</option>
                                     </select>
@@ -224,9 +227,10 @@ function PushNotifications() {
                                         className="border border-gray-300 rounded-md px-2 py-1 w-full text-center"
                                     // onChange={(e) => console.log(e.target.value)}
                                     >
-                                        <option value="online">Delhi</option>
-                                        <option value="offline">Mumbai</option>
-                                        <option value="offline">Banglore</option>
+                                        <option value="null">--Select--</option>
+                                        <option value="online">Banner 1</option>
+                                        <option value="offline">Banner 2</option>
+                                        <option value="offline">Banner 3</option>
                                     </select>
                                 </div>
                             </div>
@@ -246,8 +250,8 @@ function PushNotifications() {
                         </div>
 
                         <div className="flex justify-between md:justify-end mt-2">
-                            <button className="px-2 py-1 cursor-pointer mr-4 bg-red-300 rounded hover:bg-red-500 transition-colors duration-300">Cancel</button>
-                            <button className="px-2 py-1 cursor-pointer bg-indigo-300 rounded hover:bg-indigo-400 transition-colors duration-300">Save</button>
+                            <Button className="mr-2" color="red">Cancel</Button>
+                            <Button color="blue">Save</Button>
                         </div>
                     </div>
 

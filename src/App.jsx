@@ -25,6 +25,7 @@ import ServiceManagement from "./components/ServiceManagement";
 import Customers from "./pages/Customers";
 import Setting from "./pages/Setting";
 import ServerManagement from "./components/ServerManagement";
+import ServiceProviderPage from "./pages/ServiceProviderPage";
 
 export const RecoveryContext = createContext();
 
@@ -36,11 +37,11 @@ function App() {
   const [showSidebar, setShowSidebar] = useState(false);
 
 
-  console.log("user: ", user);
+  // console.log("user: ", user);
 
   const profiledata = JSON.parse(localStorage.getItem("profile"));
 
-  console.log("profile: ",profiledata);
+  // console.log("profile: ",profiledata);
 
   const logindata = JSON.parse(localStorage.getItem("login"));
 
@@ -61,7 +62,7 @@ function App() {
         password: logindata.password,
       })
         .then((res) => {
-          console.log("loginAPP: ", res);
+          // console.log("loginAPP: ", res);
           setShowNavbar(true); // Set to true after successful login
           setShowSidebar(true); // Set to true after successful login
         })
@@ -103,6 +104,7 @@ function App() {
               <Route path="/SubscriptionPlan" element={<SubscriptionPlan/>}/>
               <Route path="/ServiceManagement" element={<ServiceManagement /> } />
               <Route path="/ServerManagement" element={<ServerManagement />} />
+              <Route path="/ServiceProviders" element={profiledata ? <ServiceProviderPage/>:<Navigate to="../auth"/>}/>
             </Routes>
 
           </div>
