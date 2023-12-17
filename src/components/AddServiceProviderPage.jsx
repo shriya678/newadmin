@@ -82,7 +82,7 @@ const AddServiceProviderPage = ({ addSP, setAddSP }) => {
           </div>
 
           <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
-            <p className="text-center text-4xl font-semibold mx-4 mb-0">
+            <p className="text-center sm:text-lg md:text-2xl lg:text-4xl font-semibold mx-4 mb-0">
               Create Service Provider Page
             </p>
           </div>
@@ -91,7 +91,7 @@ const AddServiceProviderPage = ({ addSP, setAddSP }) => {
             <div className=" grid lg:grid-cols-2 sm:grid-cols-1">
               {/* grid fist column */}
 
-              <div className=" h-80 w-full overflow-hidden">
+              <div className="sm:h-48 md:h-72 lg:h-96 lg:w-full sm:w-full overflow-hidden mb-5">
                 <img
                   src={Logo}
                   className="w-full h-full object-fit"
