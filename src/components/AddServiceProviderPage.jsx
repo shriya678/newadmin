@@ -6,6 +6,7 @@ import React, { useContext, useState } from "react";
 import { Card } from "react-bootstrap";
 import { CustomerContext } from "../pages/Customers";
 import { ServiceProviderContext } from "../pages/ServiceProviderPage";
+import Logo from "../asset/Logo.png"
 
 const AddServiceProviderPage = ({ addSP, setAddSP }) => {
 
@@ -92,7 +93,7 @@ const AddServiceProviderPage = ({ addSP, setAddSP }) => {
 
               <div className=" h-80 w-full overflow-hidden">
                 <img
-                  src="../../public/companyLogo.jpeg"
+                  src={Logo}
                   className="w-full h-full object-fit"
                   alt="Sample image"
                 />
