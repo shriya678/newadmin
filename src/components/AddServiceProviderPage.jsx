@@ -5,44 +5,53 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { Card } from "react-bootstrap";
 import { CustomerContext } from "../pages/Customers";
+import { ServiceProviderContext } from "../pages/ServiceProviderPage";
 import Logo from "../asset/Logo.png"
 
-const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
+const AddServiceProviderPage = ({ addSP, setAddSP }) => {
 
-  const {setSucess,sucess} = useContext(CustomerContext);
+  const {setSucess,sucess} = useContext(ServiceProviderContext);
 
   const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+//   const [password, setPassword] = useState();
   const [firstName, seFirsttName] = useState();
   const [lastName, setLastName] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
-  const [address, setAddress] = useState();
+//   const [address, setAddress] = useState();
 
   const [message,setMessage] = useState();
 
+  const roles = ['mechanic','driver','cleaner'];
 
-  function handleSignUp() {
+  const [value,setValue] = useState(null);
+
+  // console.log("role:",value);
+
+
+  function handleSignUp(e) {
+
+    e.preventDefault();
+
+    if(value){
 
     if (email) {
+        
       const API = axios.create({
         baseURL: `${import.meta.env.VITE_BASE_URL}`,
         withCredentials: true,
       });
 
-      API.post("/api/v1/admin/createUser", {
+      API.post(`/api/v1/admin/create/${value}`,{
         firstName: firstName,
         lastName:lastName,
         email: email,
-        password:password,
         phoneNo: phoneNumber,
-        address:address
-
       })
         .then((res) => {
-          // console.log(res.data);
+          // console.log("ServiceProviderAdded: ",res.data);
           setSucess(!sucess);
           setMessage(
-            <div className='text-center text-lg text-green-500'> Customer Created Sucessfully</div>
+            <div className='text-center text-lg text-green-500'> Service Provider Created Sucessfully</div>
           )
         })
         .catch((error) => {
@@ -54,6 +63,9 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
       return;
     }
     return alert("Please enter your email");
+    }
+    return alert("please Select Role");
+
   }
 
   return (
@@ -65,13 +77,13 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
               className=" cursor-pointer"
               width={35}
               color="#00FF00"
-              onClick={() => setAddCustomer(false)}
+              onClick={() => setAddSP(false)}
             />
           </div>
 
           <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
             <p className="text-center text-4xl font-semibold mx-4 mb-0">
-              Create Customer Page
+              Create Service Provider Page
             </p>
           </div>
 
@@ -79,18 +91,18 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
             <div className=" grid lg:grid-cols-2 sm:grid-cols-1">
               {/* grid fist column */}
 
-              <div className=" h-96 w-full overflow-hidden">
+              <div className=" h-80 w-full overflow-hidden">
                 <img
                   src={Logo}
                   className="w-full h-full object-fit"
                   alt="Sample image"
                 />
-              </div> */}
+              </div>
 
 
               {/* grid second column */}
 
-              <div className="w-1/2">
+              <div>
                 <div className="mb-6">
                   <input
                     onChange={(e) => seFirsttName(e.target.value)}
@@ -124,17 +136,6 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                   />
                 </div>
 
-                {/* <div className="mb-6">
-                  <input
-                    onChange={(e) => setPassword(e.target.value)}
-                    type="password"
-                    className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                    id="exampleFormControlInput2"
-                    placeholder="Password"
-                    required
-                  />
-                </div> */}
-
                 <div className="mb-6">
                   <input
                     onChange={(e) => setPhoneNumber(e.target.value)}
@@ -146,41 +147,28 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                   />
                 </div>
 
-                <div className="mb-6">
-                  <input
-                    onChange={(e) => setAddress(e.target.value)}
-                    type="text"
-                    className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                    id="exampleFormControlInput2"
-                    placeholder="Address"
-                    required
-                  />
-                </div>
-                
+
+        <div className="max-w-sm mx-auto space-y-6">
+        <Select value={value} onValueChange={setValue} placeholder="Select Role">
+        {roles.map((role,key)=>(
+            <SelectItem key={key} value={role} >
+            {role}
+            </SelectItem>
+        ))}
+        </Select>
+      </div>
+   
               </div>
 
-              <div className="text-center lg:text-left mt-10">
-                <button
-                  type="button"
-                  className="inline-block px-7 py-3 bg-green-400 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
-                    onClick={handleSignUp}
-                >
-                  Create Customer
-                </button>
               </div>
-
-            </div>
              
-
-           
-
             <div className="text-center lg:text-left mt-10 mb-10">
               <button
                 type="submit"
                 className="inline-block px-7 py-3 bg-emerald-400 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-emerald-700 hover:shadow-lg focus:bg-emerald-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-emerald-800 active:shadow-lg transition duration-150 ease-in-out"
                   onClick={handleSignUp}
               >
-                Create Customer
+                Create Service Provider
               </button>
             </div>
           </form>
@@ -193,4 +181,4 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
   );
 };
 
-export default AddCustomerPage;
+export default AddServiceProviderPage;
