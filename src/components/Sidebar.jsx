@@ -104,7 +104,7 @@ const Sidebar = () => {
         <h1 className={`text-black mb-1 ${isCollapsed ? 'hidden' : 'block'}`}>Customers</h1>
         </NavLink>
 
-        <NavLink to="/" className="items-center justify-start flex cursor-pointer">
+        <NavLink to="ServiceProviders" className="items-center justify-start flex cursor-pointer">
         <UserCircleIcon
           width={40}
           className="p-2 mb-1 text-black"

@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 import { PermissionContext } from "./AdminTableComponent";
 import { useContext } from "react";
+import Logo from "../asset/Logo.png"
 
 const AddAdminPage = ({ admin, setAddAdmin }) => {
 
@@ -176,7 +177,7 @@ const AddAdminPage = ({ admin, setAddAdmin }) => {
 
               <div className=" h-80 w-full overflow-hidden">
                 <img
-                  src="../../public/companyLogo.jpeg"
+                   src={Logo}
                   className="w-full h-full object-fit"
                   alt="Sample image"
                 />
