@@ -257,131 +257,131 @@ if(totalItems>1){
   
     return (
 
-    <CustomerContext.Provider value={{currentPage,editId,setEditID,sucess,setSucess,setIsDeleteCheck}}>
+      <CustomerContext.Provider value={{ currentPage, editId, setEditID, sucess, setSucess, setIsDeleteCheck }}>
 
-    <div className="grid grid-cols-1 w-full p-4">
-    <Card className={addCustomer? `mt-4 dark:bg-tremor-background  h-[150vh]`: `mt-4 dark:bg-tremor-background`}>
-  
-    {addCustomer ? null :  <div className="sm:flex justify-between items-center">
-      <Title>Customers</Title>
-      <div className="py-2">
-        <div className="sm:flex justify-between items-center">
+        <div className="grid grid-cols-1 w-full p-2 sm:p-4">
+          <Card className={addCustomer ? `p-3 sm:p-6 dark:bg-tremor-background` : `p-3 sm:p-6 dark:bg-tremor-background`}>
 
-          <Button className="mr-4 mb-2" color="emerald" onClick={()=>setAddCustomer(true)}>
-            Add
-          </Button>
+            {addCustomer ? null : <div className="sm:flex justify-between items-center">
+              <Title>Customers</Title>
+              <div className="py-2">
+                <div className="sm:flex justify-between items-center">
 
-          <Button className="mr-4 mb-2" color="emerald" onClick={()=>
-            setDeletePopup(!deletePopup)}>
-            Delete
-          </Button>
+                  <Button className="mr-4 mb-2" color="green" onClick={() => setAddCustomer(true)}>
+                    Add
+                  </Button>
 
-          <Button className="mr-4 mb-2" color="emerald" onClick={()=>setImportBtn(true)}>
-            Import
-          </Button>
+                  <Button className="mr-4 mb-2" color="red" onClick={() =>
+                    setDeletePopup(!deletePopup)}>
+                    Delete
+                  </Button>
 
-          <Button className="mr-4 mb-2" color="emerald" onClick={()=>handleDownloadFile(currentPage,itemsPerPage)}>
-            Export
-          </Button>
-         
-        </div>
-      </div>
+                  <Button className="mr-4 mb-2" color="blue" onClick={() => setImportBtn(true)}>
+                    Import
+                  </Button>
 
-    </div>
+                  <Button className="mr-4 mb-2" color="orange" onClick={() => handleDownloadFile(currentPage, itemsPerPage)}>
+                    Export
+                  </Button>
 
-  }
-
-    { 
-    importBtn ? <CustomerImport setImportBtn={setImportBtn}/>:
-
-    addCustomer ? (<AddCustomerPage setAddCustomer={()=>setAddCustomer(false)}/>) : 
-
-    editId ? (<UpdateCustomer editId={editId} setEditID={()=>setEditID(null)}/>):
-
-    deletePopup ? (<DeletePopUp isDeleteCheck={isDeleteCheck} setIsDeleteCheck={()=>setIsDeleteCheck([])} setDeletePopup={()=>setDeletePopup(false)} />) :
-
-     (
-      <Table className="mt-5 dark:bg-tremor-background h-[450px]">
-        <TableHead>
-          <TableRow>
-          <TableHeaderCell className="bg-white">
-           SelectDelete 
-          </TableHeaderCell>
-          
-            <TableHeaderCell className="bg-white">CustomerName</TableHeaderCell>
-            <TableHeaderCell className="bg-white">Email</TableHeaderCell>
-            <TableHeaderCell className="bg-white">PhoneNo</TableHeaderCell>
-            <TableHeaderCell className="bg-white" >Address</TableHeaderCell>
-            <TableHeaderCell className="bg-white">Rating</TableHeaderCell>
-            <TableHeaderCell className="bg-white">Total Orders</TableHeaderCell>
-            <TableHeaderCell className="bg-white">Cancelled Orders</TableHeaderCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-
-        {data.map((user,index)=>
-            <TableRow key={index}>
-            <TableCell>
-              <input type="checkbox" value={user._id}  checked={user.isDeleteCheck} onChange={(e)=>handleCheckbox(e)}  />
-            </TableCell>
-              <TableCell>
-
-              <Button 
-              onClick={()=>setEditID(user._id)}
-               style={{color:"transparent",backgroundColor:"transparent",border:"none"}}>
-              <Text>
-                    {user.firstName+" "+ user.lastName}
-                </Text>
-              </Button>
-             
-              
-              </TableCell>
-              <TableCell>
-                <Text>{user.email}</Text>
-              </TableCell>
-              <TableCell>
-                <Text>{user.phoneNo}</Text>
-              </TableCell>
-              <TableCell>
-              <div className="w-32">
-                <Text className="w-full h-full overflow-auto">{user.address}</Text>
                 </div>
-              </TableCell>
-              <TableCell>
-                <Text>{user.avgRating}</Text>
-              </TableCell>
-              <TableCell>
-                <Text>{user.totalOrders}</Text>
-              </TableCell>
-              <TableCell>
-                <Text>{user.cancelledOrders}</Text>
-              </TableCell>
-            </TableRow>            
-          )}
-         
-        </TableBody>
-      </Table>
-    )
-    }
+              </div>
 
-  {!addCustomer ?  
-  <>
-   <Pagination currentPage={currentPage} pages={pages} handlePrevbtn={handlePrevbtn} handleNextbtn={handleNextbtn}
-   pageDecrementBtn={pageDecrementBtn} pageIncrementBtn={pageIncrementBtn} renderPageNumbers={renderPageNumbers}
-   itemsPerPage={itemsPerPage}
-   totalItems={totalItems}
-   />
-  {itemsPerPage ? <RangeSelector itemsPerPage={itemsPerPage} 
-  SetItemsPerPage={SetItemsPerPage}
-   range={range}/> : ""}
-   </>
-   
-    :""}
+            </div>
 
-  </Card>
+            }
+
+            {
+              importBtn ? <CustomerImport setImportBtn={setImportBtn} /> :
+
+                addCustomer ? (<AddCustomerPage setAddCustomer={() => setAddCustomer(false)} />) :
+
+                  editId ? (<UpdateCustomer editId={editId} setEditID={() => setEditID(null)} />) :
+
+                    deletePopup ? (<DeletePopUp isDeleteCheck={isDeleteCheck} setIsDeleteCheck={() => setIsDeleteCheck([])} setDeletePopup={() => setDeletePopup(false)} />) :
+
+                      (
+                        <Table className="mt-5 dark:bg-tremor-background h-[450px]">
+                          <TableHead>
+                            <TableRow>
+                              <TableHeaderCell className="bg-white">
+                                SelectDelete
+                              </TableHeaderCell>
+
+                              <TableHeaderCell className="bg-white">CustomerName</TableHeaderCell>
+                              <TableHeaderCell className="bg-white">Email</TableHeaderCell>
+                              <TableHeaderCell className="bg-white">PhoneNo</TableHeaderCell>
+                              <TableHeaderCell className="bg-white" >Address</TableHeaderCell>
+                              <TableHeaderCell className="bg-white">Rating</TableHeaderCell>
+                              <TableHeaderCell className="bg-white">Total Orders</TableHeaderCell>
+                              <TableHeaderCell className="bg-white">Cancelled Orders</TableHeaderCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+
+                            {data.map((user, index) =>
+                              <TableRow key={index}>
+                                <TableCell>
+                                  <input type="checkbox" value={user._id} checked={user.isDeleteCheck} onChange={(e) => handleCheckbox(e)} />
+                                </TableCell>
+                                <TableCell>
+
+                                  <Button
+                                    onClick={() => setEditID(user._id)}
+                                    style={{ color: "transparent", backgroundColor: "transparent", border: "none" }}>
+                                    <Text>
+                                      {user.firstName + " " + user.lastName}
+                                    </Text>
+                                  </Button>
+
+
+                                </TableCell>
+                                <TableCell>
+                                  <Text>{user.email}</Text>
+                                </TableCell>
+                                <TableCell>
+                                  <Text>{user.phoneNo}</Text>
+                                </TableCell>
+                                <TableCell>
+                                  <div className="w-32">
+                                    <Text className="w-full h-full overflow-auto">{user.address}</Text>
+                                  </div>
+                                </TableCell>
+                                <TableCell>
+                                  <Text>{user.avgRating}</Text>
+                                </TableCell>
+                                <TableCell>
+                                  <Text>{user.totalOrders}</Text>
+                                </TableCell>
+                                <TableCell>
+                                  <Text>{user.cancelledOrders}</Text>
+                                </TableCell>
+                              </TableRow>
+                            )}
+
+                          </TableBody>
+                        </Table>
+                      )
+            }
+
+            {!addCustomer ?
+              <>
+                <Pagination currentPage={currentPage} pages={pages} handlePrevbtn={handlePrevbtn} handleNextbtn={handleNextbtn}
+                  pageDecrementBtn={pageDecrementBtn} pageIncrementBtn={pageIncrementBtn} renderPageNumbers={renderPageNumbers}
+                  itemsPerPage={itemsPerPage}
+                  totalItems={totalItems}
+                />
+                {itemsPerPage ? <RangeSelector itemsPerPage={itemsPerPage}
+                  SetItemsPerPage={SetItemsPerPage}
+                  range={range} /> : ""}
+              </>
+
+              : ""}
+
+          </Card>
 
         </div>
-        </CustomerContext.Provider>
+      </CustomerContext.Provider>
     )
     
   };
