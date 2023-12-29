@@ -57,9 +57,9 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
   }
 
   return (
-    <div className="w-full p-4 dark:bg-tremor-background h-auto">
-      <section className="h-screen">
-        <div className="px-6 h-full text-gray-800">
+    <div className="w-full sm:p-4 dark:bg-tremor-background h-auto">
+      <section>
+        <div className="px-2 sm:px-6 h-full text-gray-800">
           <div className="flex justify-end items-end">
             <XCircleIcon
               className=" cursor-pointer"
@@ -69,20 +69,20 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
             />
           </div>
 
-          <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
-            <p className="text-center sm:text-lg md:text-2xl lg:text-4xl font-semibold mx-4 mb-0">
-              Create Customer Page
+          {/* <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"> */}
+            <p className="text-center text-xl md:text-2xl lg:text-4xl font-semibold my-4 sm:my-8">
+              Create Customer
             </p>
-          </div>
+          {/* </div> */}
 
           <form>
             <div className=" grid lg:grid-cols-2 sm:grid-cols-1">
               {/* grid fist column */}
 
-              <div className="sm:h-48 md:h-72 lg:h-96 lg:w-full sm:w-full overflow-hidden mb-5">
+              <div className="flex justify-center sm:h-48 md:h-72 lg:h-96 lg:w-full sm:w-full overflow-hidden mb-5">
                 <img
                   src={Logo}
-                  className="w-full h-full object-fit"
+                  className="lg:w-full xl:w-[70%]"
                   alt="Sample image"
                 />
               </div>
@@ -159,12 +159,12 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
                 
               </div>
 
-              </div>
+            </div>
              
 
            
 
-            <div className="text-center lg:text-left mt-10 mb-10">
+            <div className="flex justify-center lg:text-left mt-10 mb-10">
               <button
                 type="submit"
                 className="inline-block px-7 py-3 bg-emerald-400 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-emerald-700 hover:shadow-lg focus:bg-emerald-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-emerald-800 active:shadow-lg transition duration-150 ease-in-out"
