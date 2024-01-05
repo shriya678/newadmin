@@ -16,7 +16,7 @@ import OTPValidation from "./pages/OTPValidation";
 import axios from "axios";
 import VehicleData from "./components/VehicleData";
 import AdminManagement from "./components/AdminManagement";
-import OrderDetails from './components/OrderDetails';
+import OrderDetails from "./components/OrderDetails";
 import MarketingBanner from "./components/MarketingBanner";
 import PushNotifications from "./components/PushNotifications";
 import PromoCode from "./components/PromoCode";
@@ -30,12 +30,10 @@ import ServiceProviderPage from "./pages/ServiceProviderPage";
 export const RecoveryContext = createContext();
 
 function App() {
-
-  const [user,setUser] = useState();
-  const [isSuperAdmin,setSuperAdmin] = useState();
+  const [user, setUser] = useState();
+  const [isSuperAdmin, setSuperAdmin] = useState();
   const [showNavbar, setShowNavbar] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
-
 
   // console.log("user: ", user);
 
@@ -45,10 +43,7 @@ function App() {
 
   const logindata = JSON.parse(localStorage.getItem("login"));
 
-
-
   // profiledata ? setUser(profiledata) : setUser(undefined)
-
 
   useEffect(() => {
     if (logindata) {
@@ -71,50 +66,94 @@ function App() {
         });
     }
   }, [logindata]);
-  
+
+  // testing
 
   return (
     <BrowserRouter>
-
-      <RecoveryContext.Provider value={{user,setUser,isSuperAdmin,setSuperAdmin,profiledata}}>
-      <main className="flex w-[98.5vw]">
+      <RecoveryContext.Provider
+        value={{ user, setUser, isSuperAdmin, setSuperAdmin, profiledata }}
+      >
+        <main className="flex w-[98.5vw]">
           <div className="relative">
             {showSidebar && <Sidebar />} {/* Show Sidebar based on condition */}
           </div>
           <div className="flex flex-col flex-1 relative">
             {showNavbar && <Navbar />} {/* Show Navbar based on condition */}
-
             <Routes>
-              <Route path="/" element={profiledata ? <Navigate to="home"/> : <Navigate to="auth"/>}/>
-              <Route path="/home" element={profiledata ? <Dashboard/> : <Navigate to="../auth"/>}/>
-              <Route path="/auth" element={profiledata ? <Navigate to='../home/'/>:<Login/>}/>
-              <Route path="/kyc" element={profiledata ? <KYC/>:<Navigate to="../auth"/>}/>
-              <Route path="/manageAdmin" element={profiledata ? <ManageAdmin/>:<Navigate to="../auth"/>}/>
-              <Route path="/customers" element={profiledata ? <Customers/>:<Navigate to="../auth"/>}/>
-              <Route path="/setting" element={profiledata ? <Setting/>:<Navigate to="../auth"/>}/>
-              <Route path='/reset' element={isSuperAdmin? <ResetPassword/> : ''} />
-              <Route path='/otp' element={isSuperAdmin? <OTPValidation/> : ''} />
+              <Route
+                path="/"
+                element={
+                  profiledata ? <Navigate to="home" /> : <Navigate to="auth" />
+                }
+              />
+              <Route
+                path="/home"
+                element={
+                  profiledata ? <Dashboard /> : <Navigate to="../auth" />
+                }
+              />
+              <Route
+                path="/auth"
+                element={profiledata ? <Navigate to="../home/" /> : <Login />}
+              />
+              <Route
+                path="/kyc"
+                element={profiledata ? <KYC /> : <Navigate to="../auth" />}
+              />
+              <Route
+                path="/manageAdmin"
+                element={
+                  profiledata ? <ManageAdmin /> : <Navigate to="../auth" />
+                }
+              />
+              <Route
+                path="/customers"
+                element={
+                  profiledata ? <Customers /> : <Navigate to="../auth" />
+                }
+              />
+              <Route
+                path="/setting"
+                element={profiledata ? <Setting /> : <Navigate to="../auth" />}
+              />
+              <Route
+                path="/reset"
+                element={isSuperAdmin ? <ResetPassword /> : ""}
+              />
+              <Route
+                path="/otp"
+                element={isSuperAdmin ? <OTPValidation /> : ""}
+              />
               <Route path="/vehicleData" element={<VehicleData />} />
               <Route path="/adminManagement" element={<AdminManagement />} />
               <Route path="/ServiceOrders" element={<ServiceOrders />} />
-              <Route path="/order/:orderId" element={<OrderDetails/>} />
+              <Route path="/order/:orderId" element={<OrderDetails />} />
               <Route path="/MarketingBanner" element={<MarketingBanner />} />
               <Route path="/Notifications" element={<PushNotifications />} />
               <Route path="/PromoCode" element={<PromoCode />} />
-              <Route path="/SubscriptionPlan" element={<SubscriptionPlan/>}/>
-              <Route path="/ServiceManagement" element={<ServiceManagement /> } />
+              <Route path="/SubscriptionPlan" element={<SubscriptionPlan />} />
+              <Route
+                path="/ServiceManagement"
+                element={<ServiceManagement />}
+              />
               <Route path="/ServerManagement" element={<ServerManagement />} />
-              <Route path="/ServiceProviders" element={profiledata ? <ServiceProviderPage/>:<Navigate to="../auth"/>}/>
+              <Route
+                path="/ServiceProviders"
+                element={
+                  profiledata ? (
+                    <ServiceProviderPage />
+                  ) : (
+                    <Navigate to="../auth" />
+                  )
+                }
+              />
             </Routes>
-
           </div>
         </main>
       </RecoveryContext.Provider>
-
     </BrowserRouter>
   );
-
-  
 }
 
 export default App;
