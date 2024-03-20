@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../asset/Logo.png";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
 import {
   ArrowUpIcon,
   PresentationChartBarIcon,
@@ -49,7 +51,7 @@ const MarketingDropdown = () => {
       </NavLink>
 
       <NavLink
-        to="/PromoCode"
+        to="/PromoCode" 
         className="items-center flex cursor-pointer px-6 hover:bg-gray-200 transition-colors duration-200"
         activeClassName="bg-gray-50"
       >
@@ -65,13 +67,16 @@ const Sidebar = () => {
   const [scrollable, setScrollable] = useState(false);
 
   const toggleMarketingDropdown = () => {
-    setMarketingDropdownOpen(!marketingDropdownOpen);
-    setScrollable(true);
+    if (!isCollapsed) {
+      setMarketingDropdownOpen(!marketingDropdownOpen);
+      setScrollable(true);
+    }
   };
 
   const toggleCollapse = () => {
     if (window.innerWidth < 450) {
       return;
+      
     }
     setIsCollapsed(!isCollapsed);
     setMarketingDropdownOpen(false);
@@ -124,7 +129,13 @@ const Sidebar = () => {
           to="/"
           className="items-center justify-start flex cursor-pointer"
         >
-          <TableIcon width={40} className="p-2 mb-1 text-black" />
+          {isCollapsed ? (
+            <Tooltip title="Dashboard" placement="right">
+              <TableIcon width={40} className="p-2 mb-1 text-black" />
+            </Tooltip>
+          ) : (
+            <TableIcon width={40} className="p-2 mb-1 text-black" />
+          )}
           <h1 className={`text-black mb-1 ${isCollapsed ? "hidden" : "block"}`}>
             Dashboard
           </h1>
@@ -134,7 +145,14 @@ const Sidebar = () => {
           to="VehicleData"
           className="items-center justify-start flex cursor-pointer"
         >
-          <DatabaseIcon width={40} className="p-2 mb-1 text-black" />
+          {isCollapsed ? (
+            <Tooltip title="Brands Database" placement="right">
+              <DatabaseIcon width={40} className="p-2 mb-1 text-black" />
+            </Tooltip>
+          ) : (
+            <DatabaseIcon width={40} className="p-2 mb-1 text-black" />
+          )}
+
           <h1 className={`text-black mb-1 ${isCollapsed ? "hidden" : "block"}`}>
             Brands Database
           </h1>
@@ -144,7 +162,14 @@ const Sidebar = () => {
           to="Customers"
           className="items-center justify-start flex cursor-pointer"
         >
-          <TableIcon width={40} className="p-2 mb-1 text-black" />
+          {isCollapsed ? (
+            <Tooltip title="Customers" placement="right">
+              <TableIcon width={40} className="p-2 mb-1 text-black" />
+            </Tooltip>
+          ) : (
+            <TableIcon width={40} className="p-2 mb-1 text-black" />
+          )}
+
           <h1 className={`text-black mb-1 ${isCollapsed ? "hidden" : "block"}`}>
             Customers
           </h1>
@@ -154,7 +179,14 @@ const Sidebar = () => {
           to="ServiceProviders"
           className="items-center justify-start flex cursor-pointer"
         >
-          <UserCircleIcon width={40} className="p-2 mb-1 text-black" />
+          {isCollapsed ? (
+            <Tooltip title="Service Providers" placement="right">
+              <UserCircleIcon width={40} className="p-2 mb-1 text-black" />
+            </Tooltip>
+          ) : (
+            <TableIcon width={40} className="p-2 mb-1 text-black" />
+          )}
+
           <h1 className={`text-black mb-1 ${isCollapsed ? "hidden" : "block"}`}>
             Service Providers
           </h1>
@@ -164,7 +196,14 @@ const Sidebar = () => {
           to="ServiceOrders"
           className="items-center justify-start flex cursor-pointer"
         >
-          <ShoppingCartIcon width={40} className="p-2 mb-1 text-black" />
+          {isCollapsed ? (
+            <Tooltip title="Service Orders" placement="right">
+              <ShoppingCartIcon width={40} className="p-2 mb-1 text-black" />
+            </Tooltip>
+          ) : (
+            <TableIcon width={40} className="p-2 mb-1 text-black" />
+          )}
+
           <h1 className={`text-black mb-1 ${isCollapsed ? "hidden" : "block"}`}>
             Service Orders
           </h1>
@@ -174,7 +213,14 @@ const Sidebar = () => {
           to="/"
           className="items-center justify-start flex cursor-pointer"
         >
-          <CurrencyRupeeIcon width={40} className="p-2 mb-1 text-black" />
+          {isCollapsed ? (
+            <Tooltip title="Payment Reports" placement="right">
+              <CurrencyRupeeIcon width={40} className="p-2 mb-1 text-black" />
+            </Tooltip>
+          ) : (
+            <TableIcon width={40} className="p-2 mb-1 text-black" />
+          )}
+
           <h1 className={`text-black mb-1 ${isCollapsed ? "hidden" : "block"}`}>
             Payment Reports
           </h1>
@@ -184,7 +230,14 @@ const Sidebar = () => {
           to="/"
           className="items-center justify-start flex cursor-pointer"
         >
-          <TableIcon width={40} className="p-2 mb-1 text-black" />
+          {isCollapsed ? (
+            <Tooltip title="Customer Support LO" placement="right">
+              <TableIcon width={40} className="p-2 mb-1 text-black" />
+            </Tooltip>
+          ) : (
+            <TableIcon width={40} className="p-2 mb-1 text-black" />
+          )}
+
           <h1 className={`text-black mb-1 ${isCollapsed ? "hidden" : "block"}`}>
             Customer Support LO
           </h1>
@@ -194,7 +247,14 @@ const Sidebar = () => {
           to="/ServiceManagement"
           className="items-center justify-start flex cursor-pointer"
         >
-          <TableIcon width={40} className="p-2 mb-1 text-black" />
+          {isCollapsed ? (
+            <Tooltip title="Service Management" placement="right">
+              <TableIcon width={40} className="p-2 mb-1 text-black" />
+            </Tooltip>
+          ) : (
+            <TableIcon width={40} className="p-2 mb-1 text-black" />
+          )}
+
           <h1 className={`text-black mb-1 ${isCollapsed ? "hidden" : "block"}`}>
             Service Management
           </h1>
@@ -204,7 +264,14 @@ const Sidebar = () => {
           to="/SubscriptionPlan"
           className="items-center justify-start flex cursor-pointer"
         >
-          <TableIcon width={40} className="p-2 mb-1 text-black" />
+          {isCollapsed ? (
+            <Tooltip title="Subscription Plan" placement="right">
+              <TableIcon width={40} className="p-2 mb-1 text-black" />
+            </Tooltip>
+          ) : (
+            <TableIcon width={40} className="p-2 mb-1 text-black" />
+          )}
+
           <h1 className={`text-black mb-1 ${isCollapsed ? "hidden" : "block"}`}>
             Subscription Plan
           </h1>
@@ -214,7 +281,14 @@ const Sidebar = () => {
           to="ManageAdmin"
           className="items-center justify-start flex cursor-pointer"
         >
-          <TableIcon width={40} className="p-2 mb-1 text-black" />
+          {isCollapsed ? (
+            <Tooltip title="Admin Management" placement="right">
+              <TableIcon width={40} className="p-2 mb-1 text-black" />
+            </Tooltip>
+          ) : (
+            <TableIcon width={40} className="p-2 mb-1 text-black" />
+          )}
+
           <h1 className={`text-black mb-1 ${isCollapsed ? "hidden" : "block"}`}>
             Admin Management
           </h1>
@@ -224,7 +298,14 @@ const Sidebar = () => {
           to="/ServerManagement"
           className="items-center justify-start flex cursor-pointer"
         >
-          <TableIcon width={40} className="p-2 mb-1 text-black" />
+          {isCollapsed ? (
+            <Tooltip title="Server Monitoring" placement="right">
+              <TableIcon width={40} className="p-2 mb-1 text-black" />
+            </Tooltip>
+          ) : (
+            <TableIcon width={40} className="p-2 mb-1 text-black" />
+          )}
+
           <h1 className={`text-black mb-1 ${isCollapsed ? "hidden" : "block"}`}>
             Server Monitoring
           </h1>
@@ -235,7 +316,14 @@ const Sidebar = () => {
             className="flex items-center justify-start cursor-pointer"
             onClick={toggleMarketingDropdown}
           >
-            <TableIcon width={40} className="p-2 mb-1 text-black" />
+            {isCollapsed ? (
+              <Tooltip title="Marketing Management" placement="right">
+                <TableIcon width={40} className="p-2 mb-1 text-black" />
+              </Tooltip>
+            ) : (
+              <TableIcon width={40} className="p-2 mb-1 text-black" />
+            )}
+
             <h1 className={`text-black ${isCollapsed ? "hidden" : "block"}`}>
               Marketing Management
             </h1>
