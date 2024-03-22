@@ -265,14 +265,21 @@ const ServiceProviderPage = () => {
       }}
     >
       <div className="grid grid-cols-1 w-full p-4">
-        <Card className={addSP? `mt-4 dark:bg-tremor-background  h-[150vh]`: `mt-4 dark:bg-tremor-background`}>
+        <Card
+          className={
+            addSP
+              ? `mt-4 dark:bg-tremor-background  h-[150vh]`
+              : `mt-4 dark:bg-tremor-background`
+          }
+        >
           {addSP ? null : (
             <>
               <Title className=" text-center">Service Providers</Title>
               <div className="sm:flex justify-between items-center">
-                <div className="flex justify-start items-center">
+                {/* Role Select */}
+                <div className="flex flex-col sm:flex-row items-center mb-2 sm:mb-0">
                   <label
-                    className=" text-gray-700 text-sm mb-2 font-semibold mr-4"
+                    className="text-gray-700 text-sm mb-2 font-semibold mr-4"
                     htmlFor="role"
                   >
                     Role
@@ -292,42 +299,41 @@ const ServiceProviderPage = () => {
                   </Select>
                 </div>
 
-                <div className="py-2">
-                  <div className="sm:flex justify-between items-center">
-                    <Button
-                      className="mr-4 mb-2"
-                      color="emerald"
-                      onClick={() => setAddSP(true)}
-                    >
-                      Add
-                    </Button>
+                {/* Action Buttons */}
+                <div className="py-2 flex flex-wrap justify-center sm:justify-end">
+                  <Button
+                    className="mb-2 mr-2"
+                    color="emerald"
+                    onClick={() => setAddSP(true)}
+                  >
+                    Add
+                  </Button>
 
-                    <Button
-                      className="mr-4 mb-2"
-                      color="emerald"
-                      onClick={() => setDeletePopup(!deletePopup)}
-                    >
-                      Delete
-                    </Button>
+                  <Button
+                    className="mb-2 mr-2"
+                    color="red"
+                    onClick={() => setDeletePopup(!deletePopup)}
+                  >
+                    Delete
+                  </Button>
 
-                    <Button
-                      className="mr-4 mb-2"
-                      color="emerald"
-                      onClick={() => setImportBtn(true)}
-                    >
-                      Import
-                    </Button>
+                  <Button
+                    className="mb-2 mr-2"
+                    color="blue"
+                    onClick={() => setImportBtn(true)}
+                  >
+                    Import
+                  </Button>
 
-                    <Button
-                      className="mr-4 mb-2"
-                      color="emerald"
-                      onClick={() =>
-                        handleDownloadFile(currentPage, itemsPerPage)
-                      }
-                    >
-                      Export
-                    </Button>
-                  </div>
+                  <Button
+                    className="mb-2 mr-2"
+                    color="orange"
+                    onClick={() =>
+                      handleDownloadFile(currentPage, itemsPerPage)
+                    }
+                  >
+                    Export
+                  </Button>
                 </div>
               </div>
             </>
