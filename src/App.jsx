@@ -26,6 +26,7 @@ import Customers from "./pages/Customers";
 import Setting from "./pages/Setting";
 import ServerManagement from "./components/ServerManagement";
 import ServiceProviderPage from "./pages/ServiceProviderPage";
+import  Chat from "./pages/chat/Chatnew";
 
 export const RecoveryContext = createContext();
 
@@ -87,9 +88,10 @@ function App() {
                   profiledata ? <Navigate to="home" /> : <Navigate to="auth" />
                 }
               />
+              <Route path="/chat" element={<Chat/>}/>
               <Route
                 path="/home"
-                element={
+                element={ 
                   profiledata ? <Dashboard /> : <Navigate to="../auth" />
                 }
               />
