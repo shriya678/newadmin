@@ -9,7 +9,7 @@ function VehicleData() {
   const [newBrandName, setNewBrandName] = useState("");
   const [newBrandLogo, setNewBrandLogo] = useState("");
   const [deleteBrandName, setDeleteBrandName] = useState("");
-  const [deleteBrandLogo, setDeleteBrandLogo] = useState("");
+  // const [deleteBrandLogo, setDeleteBrandLogo] = useState("");
   const [searchBrand, setSearchBrand] = useState("");
   const [brandDetail, setBrandDetail] = useState(false);
   const [currentBrand, setCurrentBrand] = useState(null);
@@ -30,6 +30,7 @@ function VehicleData() {
       .catch((error) => console.error(error));
   }, []);
 
+  
   const closeAddPopup = () => {
     setAddPopupOpen(false);
     setNewBrandName("");
@@ -39,7 +40,7 @@ function VehicleData() {
   const submitNewBrand = async () => {
     if (newBrandName && newBrandLogo) {
       try {
-        const response1 = await axios.post(
+         await axios.post(
           "https://service-provider-apis.onrender.com/api/v1/brand/create",
           {
             name: newBrandName,
@@ -66,7 +67,7 @@ function VehicleData() {
       )._id;
       if (brandId) {
         try {
-          const response1 = await axios.delete(
+           await axios.delete(
             `https://service-provider-apis.onrender.com/api/v1/brand/${brandId}`,
             {
               withCredentials: true,
@@ -94,7 +95,7 @@ function VehicleData() {
   const closeDeletePopup = () => {
     setDeletePopupOpen(false);
     setDeleteBrandName("");
-    setDeleteBrandLogo("");
+    // setDeleteBrandLogo("");
   };
 
   return (

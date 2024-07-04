@@ -2,24 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const sampleData = [
-  {
-    id: 1,
-    orderId: 'ORD001',
-    shortDescription: 'Sample Description 1',
-    orderType: 'onTime',
-    serviceCategory: 'mechanic',
-    status: 'open',
-  },
-  {
-    id: 2,
-    orderId: 'ORD002',
-    shortDescription: 'Sample Description 2',
-    orderType: 'schedule',
-    serviceCategory: 'cleaner',
-    status: 'inProgress',
-  },
-];
+// const sampleData = [
+//   {
+//     id: 1,
+//     orderId: 'ORD001',
+//     shortDescription: 'Sample Description 1',
+//     orderType: 'onTime',
+//     serviceCategory: 'mechanic',
+//     status: 'open',
+//   },
+//   {
+//     id: 2,
+//     orderId: 'ORD002',
+//     shortDescription: 'Sample Description 2',
+//     orderType: 'schedule',
+//     serviceCategory: 'cleaner',
+//     status: 'inProgress',
+//   },
+// ];
 
 const result1 = [
   {
@@ -121,9 +121,67 @@ const ServiceOrders = () => {
   const closePopup = () => {
     setPopupOpen(false);
   };
+  // const vlig = async () => {
+  //   alert("Mayank");
+  
+  //   const sampleData = {
+  //     id: 1,
+  //     orderId: 'ORD001',
+  //     shortDescription: 'Sample Description 1',
+  //     orderType: 'onTime',
+  //     serviceCategory: 'mechanic',
+  //     status: 'open',
+  //   };
+  
+  //   try {
+  //     // Fetch the existing data using GET request
+  //     const response = await fetch('https://service-provider-apis.onrender.com/api/v1/admin/getAllServiceOrders', {
+  //       method: 'GET', // Change to GET if required
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //     });
+  
+  //     // Debugging step: Log the response status
+  //     console.log("Response status: ", response.status);
+  
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! status: ${response.status}`);
+  //     }
+  
+  //     const data = await response.json();
+  
+  //     // Insert the new order into the orders array
+  //     data.orders.driverTickets.orders.push(sampleData);
+  
+  //     console.log("Updated orders:", data.orders.driverTickets.orders);
+  
+  //     // Optionally, send the updated data back to the server
+  //     const updateResponse = await fetch('https://service-provider-apis.onrender.com/api/v1/admin/updateServiceOrders', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(data),
+  //     });
+  
+  //     if (!updateResponse.ok) {
+  //       throw new Error(`HTTP error! status: ${updateResponse.status}`);
+  //     }
+  
+  //     const updatedData = await updateResponse.json();
+  //     console.log("Updated data:", updatedData);
+  
+  //   } catch (error) {
+  //     console.error("Request failed: ", error);
+  //   }
+  // };
+  
+  
 
   return (
     <div className='relative'>
+     
       <div className='flex justify-between my-2'>
         <div style={{ fontWeight: 'bold', fontSize: '1.2rem', display: 'flex', padding: '4px 20px', marginBottom: '5px' }}>Service Orders</div>
         <div style={{ display: 'flex', alignItems: 'center', padding: '4px 20px', marginBottom: '5px' }}>

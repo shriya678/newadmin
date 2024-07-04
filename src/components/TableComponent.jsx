@@ -1,5 +1,5 @@
 // import { BellIcon, ChartBarIcon, ExternalLinkIcon, MailIcon, StatusOnlineIcon } from "@heroicons/react/outline";
-import { HomeIcon, SearchIcon, ChartBarIcon, BellIcon, ExternalLinkIcon, MailIcon, StatusOnlineIcon, StatusOfflineIcon } from "@heroicons/react/solid";
+// import { HomeIcon, SearchIcon, ChartBarIcon, BellIcon, ExternalLinkIcon, MailIcon, StatusOnlineIcon, StatusOfflineIcon } from "@heroicons/react/solid";
 import {
   Card,
   Table,
@@ -10,9 +10,9 @@ import {
   TableCell,
   Text,
   Title,
-  Badge,
-  Flex,
-  TextInput,
+  // Badge,
+  // Flex,
+  // TextInput,
 } from "@tremor/react";
 import { SelectComponent } from "./SelectComponent";
 import { useState, useEffect, useContext } from "react";
@@ -46,6 +46,7 @@ const TableComponent = () => {
     }
     return true;
   });
+  
 
   const [selectedDates, setSelectedDates] = useState({ startdate: '2023-11-15', enddate: '2023-11-25' });
 
@@ -118,11 +119,13 @@ const TableComponent = () => {
           {result.map((item) => {
 
             return (
-              <TableRow key={item.name}>
+              <TableRow key={item._id}>
 
-                <div className="flex justify-start items-center">
-                  <TableCell>{item.customer_name}</TableCell>
-                </div>
+                <TableCell>
+                  <div className="flex justify-start items-center">
+                    {item.customer_name}
+                  </div>
+                </TableCell>
 
                 <TableCell>
                   <Text>{item.scheduleOfService}</Text>

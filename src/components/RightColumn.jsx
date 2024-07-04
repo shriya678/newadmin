@@ -1,7 +1,7 @@
-import React from "react";
-import SalesItem from "./SalesItem";
-import WebAnalytics from "./WebAnalytics";
-import ScoreList from "./ScoreList";
+
+// import SalesItem from "./SalesItem";
+// import WebAnalytics from "./WebAnalytics";
+// import ScoreList from "./ScoreList";
 import TableComponent from "./TableComponent";
 import BarChartComponent from "./BarChartComponent";
 

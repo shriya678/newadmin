@@ -1,11 +1,11 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import LeftColumn from "./components/LeftColumn";
-import Navbar from "./components/Navbar";
-import RightColumn from "./components/RightColumn";
-import Sidebar from "./components/Sidebar";
+// import LeftColumn from "./components/LeftColumn";
+// import Navbar from "./components/Navbar";
+// import RightColumn from "./components/RightColumn";
+import Layout from "./components/layout/layout";
 import Dashboard from "./pages/Dashboard";
 import KYC from "./pages/KYC";
-import Auth from "./pages/Auth";
+// import Auth from "./pages/Auth";
 import { createContext, useEffect, useState } from "react";
 import Login from "./pages/Login";
 import ManageAdmin from "./pages/ManageAdmin";
@@ -58,7 +58,7 @@ function App() {
         password: logindata.password,
       })
         .then((res) => {
-          // console.log("loginAPP: ", res);
+          console.log("loginAPP: ", res);
           setShowNavbar(true); // Set to true after successful login
           setShowSidebar(true); // Set to true after successful login
         })
@@ -75,13 +75,16 @@ function App() {
       <RecoveryContext.Provider
         value={{ user, setUser, isSuperAdmin, setSuperAdmin, profiledata }}
       >
-        <main className="flex w-[98.5vw]">
+        <main className=" w-[98.5vw]">
           <div className="relative">
-            {showSidebar && <Sidebar />} {/* Show Sidebar based on condition */}
+           {/* {showSidebar && <Sidebar />} 
           </div>
           <div className="flex flex-col flex-1 relative">
-            {showNavbar && <Navbar />} {/* Show Navbar based on condition */}
+            {showNavbar && <Navbar />} */}
             <Routes>
+              <Route element={showSidebar && <Layout showNavbar={showNavbar} />}>
+              
+              
               <Route
                 path="/"
                 element={
@@ -150,6 +153,7 @@ function App() {
                   )
                 }
               />
+              </Route>
             </Routes>
           </div>
         </main>

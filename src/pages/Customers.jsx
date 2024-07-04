@@ -12,6 +12,8 @@ import {
 } from "@tremor/react";
 
 import { Fragment, createContext, useEffect, useState } from "react";
+import PropTypes from 'prop-types';
+
 import axios from "axios";
 import AddCustomerPage from "../components/AddCustomerPage";
 import CustomerImport from "../components/CustomerImport";
@@ -45,7 +47,7 @@ const Customers = () => {
 
   const [currentPage, setcurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(null);
-
+  
   // this is demo for checking Allusers
   useEffect(() => {
     const API = axios.create({
@@ -65,6 +67,10 @@ const Customers = () => {
         console.log("Error: ", error);
       });
   }, [itemsPerPage, currentPage, sucess]);
+
+ 
+    
+ 
 
   if (totalItems > 1) {
     let num = totalItems;
@@ -107,7 +113,7 @@ const Customers = () => {
   }
 
   // this is responsible for rendering new pages pageNumberLimit is important
-  const [pageNumberLimit, setpageNumberLimit] = useState(5);
+  const [pageNumberLimit] = useState(5);
   const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(5);
   const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
 
@@ -292,7 +298,7 @@ const Customers = () => {
                   >
                     Add
                   </Button>
-
+                 
                   <Button
                     className="mr-4 mb-2"
                     color="red"
@@ -593,5 +599,31 @@ function RangeSelector({ itemsPerPage, SetItemsPerPage, range }) {
     </div>
   );
 }
+
+
+RangeSelector.propTypes={
+  itemsPerPage: PropTypes.number.isRequired,
+  SetItemsPerPage: PropTypes.func.isRequired,
+ 
+  range: PropTypes.arrayOf(PropTypes.number).isRequired,
+}
+
+Pagination.propTypes = {
+  currentPage: PropTypes.number.isRequired,
+  pages: PropTypes.array.isRequired,
+  handlePrevbtn: PropTypes.func.isRequired,
+  handleNextbtn: PropTypes.func.isRequired,
+  pageDecrementBtn: PropTypes.func,
+  pageIncrementBtn: PropTypes.object,
+  renderPageNumbers: PropTypes.array.isRequired,
+  itemsPerPage: PropTypes.number.isRequired,
+  totalItems: PropTypes.number,
+};
+
+Pagination.defaultProps = {
+  pageDecrementBtn: null,
+  pageIncrementBtn: null,
+  totalItems:null,
+};
 
 export default Customers;
