@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ChevronLeftIcon } from '@heroicons/react/solid';
 import axios from 'axios';
+
 import {
-  Card,
+  // Card,
   Table,
   TableHead,
   TableRow,
@@ -11,16 +12,16 @@ import {
   TableBody,
   TableCell,
   Text,
-  Title,
-  Badge,
-  Flex,
-  TextInput,
+  // Title,
+  // Badge,
+  // Flex,
+  // TextInput,
 } from "@tremor/react";
 
 const OrderDetails = () => {
   const { orderId } = useParams();
   const [isPopupOpen, setPopupOpen] = useState(false);
-
+  
   const handleBack = () => {
   };
 
@@ -28,45 +29,45 @@ const OrderDetails = () => {
   const [orderDetails, setOrderDetails] = useState();
   const [providerDetails, setProviderDetails] = useState();
 
-  const result = [
-    {
-      providername: 'Jhon Doe',
-      designation: 'Mechanic',
-      ontime: '2',
-      schedule: '4',
-      contact: '9876543210'
-    }, {
-      providername: 'James',
-      designation: 'Driver',
-      ontime: '4',
-      schedule: '6',
-      contact: '9988776655'
-    }, {
-      providername: 'James',
-      designation: 'Driver',
-      ontime: '4',
-      schedule: '6',
-      contact: '9988776655'
-    }, {
-      providername: 'James',
-      designation: 'Driver',
-      ontime: '4',
-      schedule: '6',
-      contact: '9988776655'
-    }, {
-      providername: 'Jhon Doe',
-      designation: 'Mechanic',
-      ontime: '2',
-      schedule: '4',
-      contact: '9876543210'
-    }, {
-      providername: 'Jhon Doe',
-      designation: 'Mechanic',
-      ontime: '2',
-      schedule: '4',
-      contact: '9876543210'
-    },
-  ];
+  // const result = [
+  //   {
+  //     providername: 'Jhon Doe',
+  //     designation: 'Mechanic',
+  //     ontime: '2',
+  //     schedule: '4',
+  //     contact: '9876543210'
+  //   }, {
+  //     providername: 'James',
+  //     designation: 'Driver',
+  //     ontime: '4',
+  //     schedule: '6',
+  //     contact: '9988776655'
+  //   }, {
+  //     providername: 'James',
+  //     designation: 'Driver',
+  //     ontime: '4',
+  //     schedule: '6',
+  //     contact: '9988776655'
+  //   }, {
+  //     providername: 'James',
+  //     designation: 'Driver',
+  //     ontime: '4',
+  //     schedule: '6',
+  //     contact: '9988776655'
+  //   }, {
+  //     providername: 'Jhon Doe',
+  //     designation: 'Mechanic',
+  //     ontime: '2',
+  //     schedule: '4',
+  //     contact: '9876543210'
+  //   }, {
+  //     providername: 'Jhon Doe',
+  //     designation: 'Mechanic',
+  //     ontime: '2',
+  //     schedule: '4',
+  //     contact: '9876543210'
+  //   },
+  // ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -85,7 +86,7 @@ const OrderDetails = () => {
     };
 
     fetchData();
-  }, []);
+  }, [orderId]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -132,6 +133,9 @@ const OrderDetails = () => {
     setServiceProvider(newProviderName);
     setPopupOpen(false);
   };
+
+  
+  
   return (
     <div className="flex flex-col lg:flex-row justify-center bg-white rounded m-4 lg:justify-between gap-6 lg:gap-12 p-4 lg:p-8">
       {/* Left Side */}
@@ -143,7 +147,10 @@ const OrderDetails = () => {
             onClick={handleBack}
           />
           {/* Order details title */}
+          
+
           <h2 className="text-2xl font-bold">Order Details - {orderId}</h2>
+          
         </div>
         <div className="space-y-2">
           <div className="space-y-2 border-2 border-black rounded">

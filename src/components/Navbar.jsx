@@ -27,6 +27,7 @@ const Navbar = () => {
 
   return (
     <div
+      style={{ zIndex:"1"}}
       id="top"
       className={`relative w-full ${window.innerWidth < 426 ? 'py-[12.8px]' : ''} flex sm:flex justify-between items-center p-2 bg-black`}
     >

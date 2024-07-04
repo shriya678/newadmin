@@ -1,27 +1,30 @@
-import React, { useEffect, useState } from "react";
+import  { useState } from "react";
+import { NavLink } from "react-router-dom";
 import Logo from "../asset/Logo.png";
-import IconButton from "@material-ui/core/IconButton";
+// import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
+// import {Outlet} from 'react-router-dom'
+
 import {
-  ArrowUpIcon,
-  PresentationChartBarIcon,
-  LogoutIcon,
+  // ArrowUpIcon,
+  // PresentationChartBarIcon,
+  // LogoutIcon,
   TableIcon,
   MenuIcon,
-  BriefcaseIcon,
-  UserIcon,
-  CashIcon,
-  TrendingUpIcon,
-  QuestionMarkCircleIcon,
-  TruckIcon,
+  // BriefcaseIcon,
+  // UserIcon,
+  // CashIcon,
+  // TrendingUpIcon,
+  // QuestionMarkCircleIcon,
+  // TruckIcon,
   DatabaseIcon,
-  UsersIcon,
-  UserGroupIcon,
+  // UsersIcon,
+  // UserGroupIcon,
   UserCircleIcon,
   ShoppingCartIcon,
-  ReceiptTaxIcon,
+  // ReceiptTaxIcon,
   CurrencyRupeeIcon,
-  SpeakerphoneIcon,
+  // SpeakerphoneIcon,
 } from "@heroicons/react/solid";
 
 // import {
@@ -30,7 +33,7 @@ import {
 
 // import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-import { NavLink } from "react-router-dom";
+
 
 const MarketingDropdown = () => {
   return (
@@ -64,12 +67,12 @@ const MarketingDropdown = () => {
 const Sidebar = () => {
   const [marketingDropdownOpen, setMarketingDropdownOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [scrollable, setScrollable] = useState(false);
+  // const [scrollable, setScrollable] = useState(false);
 
   const toggleMarketingDropdown = () => {
     if (!isCollapsed) {
       setMarketingDropdownOpen(!marketingDropdownOpen);
-      setScrollable(true);
+      // setScrollable(true);
     }
   };
 
@@ -83,9 +86,15 @@ const Sidebar = () => {
   };
 
   return (
+    <>
+    <div 
+    className={`${
+        isCollapsed ? "w-14" : "w-60"}`}>
     <div
-      className={`sticky top-0 bg-white w-${
-        isCollapsed ? "14" : "60"
+    style={{ zIndex:"1"}}
+      className={`sticky top-0 bg-white 
+        ${
+          isCollapsed ? "w-14" : "w-60"}
       } transition-all duration-300 ease-in-out`}
     >
       <div
@@ -332,6 +341,10 @@ const Sidebar = () => {
         </div>
       </div>
     </div>
+    
+    </div>
+    
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import  { createContext, useState } from 'react'
 import LeftColumn from '../components/LeftColumn'
 import RightColumn from '../components/RightColumn'
 

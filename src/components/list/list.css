@@ -1,0 +1,9 @@
+.list{
+    
+   display: flex;
+   flex-direction: column;
+
+    flex:1;
+overflow: hidden;
+border-right: 2px white solid;
+}

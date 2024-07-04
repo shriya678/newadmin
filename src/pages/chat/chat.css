@@ -1,0 +1,27 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#chat{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 62.5%;
+    
+    color: white;
+    
+}
+
+
+.chatContainer{
+    width:100vw;
+    height: 100vh;
+    background-color: #000000;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.802);
+    display: flex;
+    padding: 0rem 0rem 2rem 2rem;
+}
+
