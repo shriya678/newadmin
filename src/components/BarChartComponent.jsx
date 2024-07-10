@@ -172,9 +172,9 @@ const customTooltip = ({ payload, active }) => {
 const BarChartComponent = () => {
   const BarDB = ['Yearly', 'Monthly', 'Weekly'];
   const { selectBar } = useContext(SelectBoxContext);
-  const [dates, setDates] = useState([]);
+  // const [dates, setDates] = useState([]);
 
-  const [exportData, setExportData] = useState([]);
+  // const [exportData, setExportData] = useState([]);
   const convertToCSV = (chartData) => {
     const csvData = [];
     csvData.push(['Date', 'Value']);

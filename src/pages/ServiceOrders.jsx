@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-// const sampleData = [
-//   {
-//     id: 1,
-//     orderId: 'ORD001',
-//     shortDescription: 'Sample Description 1',
-//     orderType: 'onTime',
-//     serviceCategory: 'mechanic',
-//     status: 'open',
-//   },
-//   {
-//     id: 2,
-//     orderId: 'ORD002',
-//     shortDescription: 'Sample Description 2',
-//     orderType: 'schedule',
-//     serviceCategory: 'cleaner',
-//     status: 'inProgress',
-//   },
-// ];
+const Data = [
+  {
+    id: 1,
+    orderId: 'ORD001',
+    shortDescription: 'Sample Description 1',
+    orderType: 'onTime',
+    serviceCategory: 'mechanic',
+    status: 'open',
+  },
+  {
+    id: 2,
+    orderId: 'ORD002',
+    shortDescription: 'Sample Description 2',
+    orderType: 'schedule',
+    serviceCategory: 'cleaner',
+    status: 'inProgress',
+  },
+];
 
 const result1 = [
   {
@@ -48,9 +48,9 @@ const ServiceOrders = () => {
   const [orderType, setOrderType] = useState();
   const [serviceCategory, setServiceCategory] = useState();
   const [status, setStatus] = useState();
-  const [mechanicData, setMechanicData] = useState();
-  const [driverData, setDriverData] = useState();
-  const [cleanerData, setCleanerData] = useState();
+  // const [mechanicData, setMechanicData] = useState();
+  // const [driverData, setDriverData] = useState();
+  // const [cleanerData, setCleanerData] = useState();
   const [ongoingData, setOngoingData] = useState();
   const [closedData, setClosedData] = useState();
 
@@ -157,25 +157,29 @@ const ServiceOrders = () => {
   //     console.log("Updated orders:", data.orders.driverTickets.orders);
   
   //     // Optionally, send the updated data back to the server
-  //     const updateResponse = await fetch('https://service-provider-apis.onrender.com/api/v1/admin/updateServiceOrders', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(data),
-  //     });
-  
-  //     if (!updateResponse.ok) {
-  //       throw new Error(`HTTP error! status: ${updateResponse.status}`);
-  //     }
-  
-  //     const updatedData = await updateResponse.json();
-  //     console.log("Updated data:", updatedData);
-  
-  //   } catch (error) {
-  //     console.error("Request failed: ", error);
-  //   }
-  // };
+      const submitNewModel =  async()=>{
+        try{
+         const updateResponse =await fetch('https://service-provider-apis.onrender.com/api/v1/admin/createOrder', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(Data),
+          });
+      
+          if (!updateResponse.ok) {
+            throw new Error(`HTTP error! status: ${updateResponse.status}`);
+          }
+      
+          const updatedData = await updateResponse.json();
+          console.log("Updated data:", updatedData);
+      
+        }
+        
+          catch (error) {
+      console.error("Request failed: ", error);
+    }
+  };
   
   
 
@@ -323,7 +327,7 @@ const ServiceOrders = () => {
                   Close
                 </button>
                 <button
-                  // onClick={submitNewModel}
+                  onClick={submitNewModel}
                   className="bg-green-500 text-white px-4 py-2 rounded"
                 >
                   Create

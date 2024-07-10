@@ -21,8 +21,8 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
   const [message,setMessage] = useState();
 
 
-  function handleSignUp() {
-
+  function handleSignUp(e) {
+    e.preventDefault()
     if (email) {
       const API = axios.create({
         baseURL: `${import.meta.env.VITE_BASE_URL}`,
@@ -57,6 +57,7 @@ const AddCustomerPage = ({ addCustomer, setAddCustomer }) => {
   }
 
   return (
+   
     <div className="w-full sm:p-4 dark:bg-tremor-background h-auto">
       <section>
         <div className="px-2 sm:px-6 h-full text-gray-800">
