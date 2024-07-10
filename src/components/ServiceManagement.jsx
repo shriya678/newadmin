@@ -13,13 +13,18 @@ import {
 
 function ServiceManagement(){
 
+    // const handleformvalues=(e)=>{
+    //     e.preventDefalult()
+    //     console.log("form submitted")
+    // }
+
     return (
         <div className="p-2 grid grid-cols-1 w-full">
             <p className="text-center text-3xl font-semibold my-2">Services</p>
             <div className="sm:flex justify-between md:justify-end items-center">
                 <div className="py-2">
                     <div className="sm:flex justify-between items-center">
-                        <Button className="mr-4 mb-2" color="green">
+                        <Button className="mr-4 mb-2" color="green" >
                             Add Services
                         </Button>
 
@@ -31,7 +36,8 @@ function ServiceManagement(){
                             Import
                         </Button>
 
-                        <Button className="mr-4 mb-2" color="orange">
+                        <Button className="mr-4 mb-2" color="orange"> 
+                            
                             Export
                         </Button>
                     </div>
