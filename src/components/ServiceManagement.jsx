@@ -9,22 +9,24 @@ import {
     Text,
     Button
 } from "@tremor/react";
-
+import { AddServiceForm } from "./ServiceManagementForm/AddServiceForm"; 
+import { useState } from "react";
 
 function ServiceManagement(){
+    const [visible,setVisible]=useState(true)
+    const AddServiceform=()=>{
+    setVisible(false)
 
-    // const handleformvalues=(e)=>{
-    //     e.preventDefalult()
-    //     console.log("form submitted")
-    // }
+    }
 
     return (
-        <div className="p-2 grid grid-cols-1 w-full">
+        <div className= {`p-2 grid grid-cols-1 w-full`}>
+            <AddServiceForm visible={visible}/>
             <p className="text-center text-3xl font-semibold my-2">Services</p>
             <div className="sm:flex justify-between md:justify-end items-center">
                 <div className="py-2">
                     <div className="sm:flex justify-between items-center">
-                        <Button className="mr-4 mb-2" color="green" >
+                        <Button onClick={AddServiceform} className="mr-4 mb-2" color="green">
                             Add Services
                         </Button>
 
@@ -36,8 +38,7 @@ function ServiceManagement(){
                             Import
                         </Button>
 
-                        <Button className="mr-4 mb-2" color="orange"> 
-                            
+                        <Button className="mr-4 mb-2" color="orange">
                             Export
                         </Button>
                     </div>

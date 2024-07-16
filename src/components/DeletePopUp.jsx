@@ -36,7 +36,6 @@ export default function DeletePopUp({isDeleteCheck,deletePopup,setDeletePopup}) 
       data:{array:[...isDeleteCheck]}
     }
     )
-
       .then((res) => {
         console.log(res);
         setIsDeleteCheck(null);
