@@ -57,6 +57,7 @@ import {
     const roles = ["mechanic", "driver", "cleaner"];
   
     const [value, setValue] = useState(roles[0]);
+    console.log("mayank",value)
   
     if (totalItems > 1) {
       let num = totalItems;

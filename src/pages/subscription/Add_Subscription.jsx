@@ -113,12 +113,12 @@ export default function Add_Subscription({setAddPopupOpen}) {
                                                 />
                                             </div>
                                             <div>
-                                            <label>
+                                                <label>
                                                     Service Type:
                                                     <select name="serviceType" value={formData.serviceType} onChange={handleInputValues} required>
-                                                        <option value="active">Active</option>
-                                                        <option value="inActve">Inactive</option>
-                                                        <option value="onHold">On Hold</option>
+                                                        {/* <option value="active">Active</option> */}
+                                                        <option value="scheduled">scheduled</option>
+                                                        {/* <option value="onHold">On Hold</option> */}
                                                         <option value="onTime">On Time</option>
                                                     </select>
                                                 </label>
@@ -153,7 +153,9 @@ export default function Add_Subscription({setAddPopupOpen}) {
                                         </div>
 
                                         <div className="w-1/2 px-2 flex justify-between flex-col">
-                                            <input
+                                        <label htmlFor="">
+                                            Promo Codes
+                                        <input
                                                 type="text"
                                                 id="newBrandName"
                                                 placeholder="Promo Codes"
@@ -164,6 +166,9 @@ export default function Add_Subscription({setAddPopupOpen}) {
                                                 // onChange={(e) => setNewModelName(e.target.value)}
                                                 className="border-2 border-black rounded p-2 w-full"
                                             />
+                                        </label>
+                                            <label>
+                                                Marketting Banners
                                             <input
                                                 type="text"
                                                 id="newBrandName"
@@ -175,6 +180,9 @@ export default function Add_Subscription({setAddPopupOpen}) {
                                                 // onChange={(e) => setNewModelName(e.target.value)}
                                                 className="border-2 border-black rounded p-2 w-full"
                                             />
+                                            </label>
+                                            <label>
+                                                Upload Image
                                             <input
                                                 type="file"
                                                 id="newBrandName"
@@ -186,6 +194,8 @@ export default function Add_Subscription({setAddPopupOpen}) {
                                                 // onChange={(e) => setNewModelName(e.target.value)}
                                                 className="border-2 border-black rounded p-2 w-full"
                                             />
+                                            </label>
+                                            
                                         </div>
 
                                     </div>
@@ -205,6 +215,8 @@ export default function Add_Subscription({setAddPopupOpen}) {
                                             />
                                         </div> */}
                                         <div className="px-2 w-1/2">
+                                            <label htmlFor="">
+                                                Discount
                                             <input
                                                 type="text"
                                                 id="newBrandName"
@@ -215,8 +227,13 @@ export default function Add_Subscription({setAddPopupOpen}) {
                                                 // onChange={(e) => setNewModelName(e.target.value)}
                                                 className="border-2 border-black rounded p-2 w-4/5"
                                             />
+                                            </label>
+                                            
                                         </div>
                                         <div className="px-2 w-1/2">
+                                            <label htmlFor="">
+                                               Service Type
+                                            
                                             <input
                                                 type="text"
                                                 id="newBrandName"
@@ -227,8 +244,12 @@ export default function Add_Subscription({setAddPopupOpen}) {
                                                 // onChange={(e) => setNewModelName(e.target.value)}
                                                 className="border-2 border-black rounded p-2 w-4/5"
                                             />
+                                            </label>
                                         </div>
                                         <div className="px-2 w-1/2">
+                                            <label htmlFor="">
+                                                Service Category
+                                            
                                             <input
                                                 type="text"
                                                 id="newBrandName"
@@ -239,8 +260,11 @@ export default function Add_Subscription({setAddPopupOpen}) {
                                                 // onChange={(e) => setNewModelName(e.target.value)}
                                                 className="border-2 border-black rounded p-2 w-4/5"
                                             />
+                                            </label>
                                         </div>
                                         <div className="px-2 w-1/2">
+                                        <label>
+                                            Price
                                             <input
                                                 type="text"
                                                 id="newBrandName"
@@ -251,6 +275,7 @@ export default function Add_Subscription({setAddPopupOpen}) {
                                                 // onChange={(e) => setNewModelName(e.target.value)}
                                                 className="border-2 border-black rounded p-2 w-4/5"
                                             />
+                                            </label>
                                         </div>
                                         {/* <div className="px-2 w-1/2">
                                             <input

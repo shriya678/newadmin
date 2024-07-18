@@ -1,0 +1,16 @@
+.tabledata{
+    overflow: scroll;
+    max-height: 500px;
+}
+
+.boxBackground{
+    background-color: rgba(0, 0, 0, 0.221);
+    width: 100vw;
+    height: 100vh;
+   position: fixed;
+    z-index: 1;
+}
+
+.boxBack{
+
+}

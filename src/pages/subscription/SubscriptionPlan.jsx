@@ -1,16 +1,20 @@
 import { Table, TableHead, TableRow, TableHeaderCell, TableBody,  Card, Button } from "@tremor/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SubscriptionDetailPage from "../../pages/SubscriptionDetailPage";
 // import { CogIcon } from "@heroicons/react/outline";
 // import Add_Subscription from "./Add_Subscription";
 import DeleteSubscription from "./Delete";
 import GetPlans from "./getPlans";
 import Add_Subscription from "./Add_Subscription";
+import { handleDownloadFile } from "./downloadsubscription";
+import Importsubcription from "./importsubcription";
+import './subscriptionPlan.css'
 
 function SubscriptionPlan() {
-
+    const [importdata, setimportdata]=useState(false)
     const [isAddPopupOpen, setAddPopupOpen] = useState(false);
-    const [deletePopup, setDeletePopupOpen]=useState(false)
+    const [deletePopup, setDeletePopupOpen]=useState(false);
+    const [dataFromChild, setDataFromChild] = useState(null);
     // const [checkBox, setcheckBox] = useState({
     //     check: false
     // })
@@ -41,12 +45,20 @@ function SubscriptionPlan() {
 //         )
 //    }
 
+const handleDataFromChild = (data) => {
+    const dat=Object.values(data)
+    setDataFromChild(dat);
+    console.log("rishabh")
+  };
+useEffect(()=>{
+    console.log("me",dataFromChild)
+},[dataFromChild])
     return (
         <>
             {!subscriptionDetail ? (
                 <>
-                    
-                    <div className="p-2 grid grid-cols-1 w-full">
+                    <div className={`${deletePopup||importdata?"boxBackground":"boxback"} ` }></div>
+                    <div className={` p-2 grid grid-cols-1 w-full`} >
                         <p className="text-center text-3xl font-semibold my-2">Subscription Plans</p>
                         <div className="sm:flex justify-between md:justify-end items-center">
                             <div className="py-2">
@@ -63,78 +75,49 @@ function SubscriptionPlan() {
                                         Modify
                                     </Button>
 
-                                    <Button className="mr-4 mb-2" color="indigo">
+                                    <Button  className="mr-4 mb-2" color="indigo"  onClick={()=>setimportdata(true)}>
                                         Import
                                     </Button>
 
-                                    <Button className="mr-4 mb-2" color="yellow">
+                                    <Button onClick={handleDownloadFile} className="mr-4 mb-2" color="yellow">
                                         Export
                                     </Button>
                                 </div>
                             </div>
 
                         </div>
-
-                        <Card className="dark:bg-tremor-background">
-                            <Table className="dark:bg-tremor-background">
+                
+                <Card className="dark:bg-tremor-background tabledata">
+                            <Table className="dark:bg-tremor-background" >
                                 <TableHead>
                                     <TableRow>
+                                        <TableHeaderCell></TableHeaderCell>
                                         <TableHeaderCell>S. No.</TableHeaderCell>
                                         <TableHeaderCell>Subscription Title</TableHeaderCell>
-                                        <TableHeaderCell>No of Subscribers</TableHeaderCell>
+                                        <TableHeaderCell>Description</TableHeaderCell>
                                         <TableHeaderCell>Service Type</TableHeaderCell>
-                                        <TableHeaderCell>Start Date</TableHeaderCell>
-                                        <TableHeaderCell>End Date</TableHeaderCell>
+                                        <TableHeaderCell>Price</TableHeaderCell>
                                         <TableHeaderCell className="text-center">Permissions</TableHeaderCell>
                                     </TableRow>
                                 </TableHead>
-                                <TableBody>
+                                <TableBody >
 
-                                    {/* {subcriptionData.map((data, i) => (
+                                    
                                         
-                                        <TableRow key={i}>
-                                            <TableCell>
-                                                <input type="checkbox" name="check" value={checkBox} onClick={handlecheck}/>
-                                            </TableCell>
-
-                                            <TableCell>
-                                                <Text>{i + 1}</Text>
-                                            </TableCell>
-
-                                            <TableCell>
-                                                <p className="cursor-pointer" onClick={() => handleSubscriptionData(data)}>{data.planName}</p>
-                                            </TableCell>
-
-                                            <TableCell>
-                                                <Text>{data.subscriberNo}</Text>
-                                            </TableCell>
-
-                                            <TableCell>
-                                                <Text>{data.serviceType}</Text>
-                                            </TableCell>
-
-                                            <TableCell>
-                                                <Text>{data.startDate}</Text>
-                                            </TableCell>
-
-                                            <TableCell>
-                                                <Text>{data.endDate}</Text>
-                                            </TableCell>
-
-                                            <TableCell className="flex justify-center">
-                                                <CogIcon className="w-5 h-5 cursor-pointer"></CogIcon>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))} */}
-                                        <GetPlans handleSubscriptionData={handleSubscriptionData}/>
+                                         <GetPlans handleSubscriptionData={handleSubscriptionData}  sendDataToParent={handleDataFromChild}/>
+                                    
+                                        
                                 </TableBody>
                             </Table>
                         </Card>
                        
-                        <DeleteSubscription isOpen={deletePopup} />
+                </div>
+                      
+                       
+                        <DeleteSubscription isOpen={deletePopup} dataFromChild={dataFromChild} setIsOpen={setDeletePopupOpen} />
                     
-
-                    </div>
+                        <Importsubcription  importdata={importdata} setimportdata={setimportdata}/>
+                    
                     {isAddPopupOpen && (
                         <>
                             <Add_Subscription setAddPopupOpen={setAddPopupOpen}/>

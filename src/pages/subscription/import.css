@@ -1,0 +1,40 @@
+.importdiv{
+    position:fixed;
+    left:50%;
+    top:30%;
+    background-color:white;
+    padding:30px;
+    border: 2px solid green;
+    border-radius: 10px;
+    display: flex !important;
+    gap:10px;
+    z-index: 1;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+
+.importdiv .submitbutton{
+    padding: 5px 20px;
+    background-color: rgba(0, 0, 255, 0.555);
+    color:white;
+    border-radius: 8px;
+    
+}
+
+.importdiv .cancelbutton{
+    padding: 5px 20px;
+    background-color: black;
+    color:white;
+    border-radius: 8px;
+   
+}
+
+.visible{
+    display: block;
+}
+
+.invisible{
+    display: none;
+}

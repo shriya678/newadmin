@@ -4,10 +4,10 @@ import {  TableRow,  TableCell, Text } from "@tremor/react";
 import { CogIcon } from "@heroicons/react/outline";
 import PropTypes from 'prop-types';
 
-export default function GetPlans({handleSubscriptionData}) {
+export default function GetPlans({handleSubscriptionData, sendDataToParent }) {
   
  
-const [t, sett]=useState(false)
+// const [t, sett]=useState(false)
 const [subscriptionDatas, setsubscriptionDatas]=useState("")
 //   const [subcriptionData, setSubscriptionData] = useState([
 //     { planName: 'Subscription Plan 1', subscriberNo: 1200, serviceType: 'Mechanic', startDate: '17-12-2023', endDate: '20-12-2023'},
@@ -41,51 +41,53 @@ const [check, setcheck]=useState({
     // get all plans
     ,[])
 
-    const handle=(e)=>{
-      const {name}=e.target
-      sett(!t)
-      if(t===false){
-        delete check[name]
-        setcheck(...check)
-      }
-        console.log("clicked")
-    }
+    // const handle=(e)=>{
+    //   const {name}=e.target
+    //   sett(!t)
+    //   if(t===false){
+    //     delete check[name]
+    //     setcheck(...check)
+    //   }
+    //     console.log("clicked")
+    // }
+
+    
    const  handlecheck=async(e)=>{
-    const {name, value}=e.target
+    const {name, value, checked}=e.target
     console.log(name, value)
       await setcheck((previous)=>{
-      //   return{
-      //     ...previous,
-      //     [name]:value
-      //   }
-        
-    
-      // })
-
+     
       const newState = { ...previous };
 
       
-        return {
-          ...newState,
-          [name]: value,
-        };
-      // } else {
-      //     delete newState[name];
-      // }
-
-      // return newState;
+      if (checked) {
+        newState[name] = value;
+      } else {
+        delete newState[name];
+      }
+      return newState;
+      
      
     })
-    console.log(check)
+    
+    
   }
-   
+  useEffect(() => {
+    console.log("Updated file:", check);
+  }, [check]);
+
+  useEffect(() => {
+    sendDataToParent(check);
+  }, [check]);
+  
   return (
     <>
-         {subscriptionDatas?subscriptionDatas.map((data, i) => (
-                                        
+     
+      {subscriptionDatas?subscriptionDatas.map((data, i) => (
+                                         
                                         <TableRow key={i}>
                                             <TableCell>
-                                                <input type="checkbox" name={`check${i}`} value={data.title} onChange={handlecheck} onClick={handle} />
+                                                <input type="checkbox" name={`check${i}`} value={data._id} onChange={handlecheck}  />
                                             </TableCell>
 
                                             <TableCell>
@@ -116,11 +118,20 @@ const [check, setcheck]=useState({
                                                 <CogIcon className="w-5 h-5 cursor-pointer"></CogIcon>
                                             </TableCell>
                                         </TableRow>
-                                        )):<h1>no data</h1>}
+                                        
+                                      
+                                        )
+                                        ):<h1>no data</h1>
+                                        
+                                        }
+    
+        
     </>
   )
 }
 
 GetPlans.propTypes = {
   handleSubscriptionData: PropTypes.func.isRequired,
+  sendDataToParent:PropTypes.func.isRequired,
+
 };  
