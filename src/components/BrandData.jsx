@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 import { ArrowCircleLeftIcon } from '@heroicons/react/outline';
 import { Button } from "@tremor/react";
 
@@ -21,7 +21,7 @@ function BrandData(props){
         setNewModelName('');
         setNewModelFuelType('');
     }
-
+    
     const submitDeleteModel = () =>{
         if (deleteModelName && deleteModelFuelType){
             const modelId = (carModel.find(car =>
@@ -44,21 +44,25 @@ function BrandData(props){
             }
         }
     };
-
+    
     useEffect(() => {
+        
         fetch(`https://service-provider-apis.onrender.com/api/v1/model/getAll`)
           .then((response) => {
             if (!response.ok) {
               throw new Error(`Network response was not ok: ${response.status}`);
             }
+            
             return response.json();
           })
           .then((data) => {
             const initialData = data?.models.filter(model => model.brandId === _id);
             setCarModel(initialData);
+            
+            console.log(initialData)
           })
           .catch((error) => console.error(error));
-    }, []);
+    });
 
     const submitNewModel = async () => {
         if (newModelName && newModelFuelType && _id) {
