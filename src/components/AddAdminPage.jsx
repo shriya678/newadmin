@@ -2,7 +2,7 @@ import { Switch } from "@headlessui/react";
 import { CalculatorIcon, XCircleIcon } from "@heroicons/react/solid";
 import { Select, SelectItem } from "@tremor/react";
 import axios from "axios";
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Card } from "react-bootstrap";
 import { PermissionContext } from "./AdminTableComponent";
 import { useContext } from "react";

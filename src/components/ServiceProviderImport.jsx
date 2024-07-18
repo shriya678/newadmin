@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { Fragment, useContext, useState } from "react";
 import { ServiceProviderContext } from "../pages/ServiceProviderPage";
 
+
 export default function ServiceProviderImport({ setImportBtn,value }) {
 
     const role = value+'s';
@@ -30,6 +31,7 @@ export default function ServiceProviderImport({ setImportBtn,value }) {
   // onchange event
   const handleFile = (e) => {
    const File = e.target.files[0];
+   
     console.log("file: ", File);
 
     setMessage(null);

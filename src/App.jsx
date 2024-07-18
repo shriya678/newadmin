@@ -20,7 +20,7 @@ import OrderDetails from "./components/OrderDetails";
 import MarketingBanner from "./components/MarketingBanner";
 import PushNotifications from "./components/PushNotifications";
 import PromoCode from "./components/PromoCode";
-import SubscriptionPlan from "./pages/SubscriptionPlan";
+import SubscriptionPlan from "./pages/subscription/SubscriptionPlan";
 import ServiceManagement from "./components/ServiceManagement";
 import Customers from "./pages/Customers";
 import Setting from "./pages/Setting";

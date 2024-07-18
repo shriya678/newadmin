@@ -21,6 +21,7 @@ export default function SPDeletePopUp({isDeleteCheck,deletePopup,setDeletePopup}
   }
 
   const handleDelete = (isDeleteCheck) => {
+    console.log("isDeleteCheck: ",isDeleteCheck);
 
     const deleteArray = JSON.stringify(isDeleteCheck);
     

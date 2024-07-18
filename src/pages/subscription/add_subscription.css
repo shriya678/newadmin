@@ -1,0 +1,12 @@
+.inputBoxdiv{
+    flex-direction: column;
+}
+
+.parentBox{
+    display: flex;
+    flex-direction: row;
+}
+
+.ndBox{
+        flex-direction: column;
+}

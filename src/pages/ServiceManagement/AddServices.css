@@ -1,0 +1,251 @@
+.servicevisible{
+    display: block ;
+    position: absolute;
+    z-index:1 ;
+  }
+  
+  .serviceinvisible{
+    display: none;
+  }
+  
+  
+  
+  .form-container {
+    width: 80%;
+     background-color: #ffffff;
+     margin: 0 auto; /*Center align the form */
+     padding: 1rem;
+     height: auto;
+  }
+  
+  /* .sm\:p-4 {
+    padding: 1rem;
+  }
+  
+  .dark\:bg-tremor-background {
+    background-color: #1e1e1e;
+  }
+  
+  .h-auto {
+    height: auto;
+  } */
+  
+  .form-box{
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    color: #2d3748;
+  }
+  
+  /* .sm\:px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  } */
+  
+  /* .text-gray-800 {
+    color: #2d3748;
+  } */
+  
+  .form-box2 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+  
+  /* .justify-end {
+    justify-content: flex-end;
+  } */
+  
+  /* .items-end {
+    align-items: flex-end;
+  } */
+  
+  /* .cursor-pointer {
+    cursor: pointer;
+  }
+   */
+  .formparah{
+    text-align: center;
+    /* font-size: 1.25rem;
+    font-size: 1.5rem; */
+    font-size: 2.25rem;
+    font-weight: 600;
+    /* margin-top: 1rem;
+    margin-bottom: 1rem; */
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* .text-xl {
+    font-size: 1.25rem;
+  }
+   */
+
+  /* .md\:text-2xl {
+    font-size: 1.5rem;
+  }
+   */
+  /* .lg\:text-4xl {
+    font-size: 2.25rem;
+  } */
+  
+  /* .font-semibold {
+    font-weight: 600;
+  } */
+  
+  /* .my-4 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .sm\:my-8 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  } */
+  
+  .form-inputs{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* grid-template-columns: repeat(1, minmax(0, 1fr)); */
+  }
+  
+  /* .lg\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  } */
+  
+  /* .sm\:grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  } */
+  
+  .form-inputs-div {
+    justify-content: center;
+    /* height: 12rem;
+    height: 18rem; */
+    height: 24rem;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+  }
+  
+  /* .sm\:h-48 {
+    height: 12rem;
+  } */
+  
+  /* .md\:h-72 {
+    height: 18rem;
+  } */
+  
+  /* .lg\:h-96 {
+    height: 24rem;
+  }
+   */
+  /* .lg\:w-full {
+    width: 100%;
+  } */
+  
+  /* .sm\:w-full {
+    width: 100%;
+  }
+   */
+  /* .overflow-hidden {
+    overflow: hidden;
+  }
+  
+  .mb-5 {
+    margin-bottom: 1.25rem;
+  } */
+  
+  /* .lg\:w-full {
+    width: 100%;
+  }
+
+  
+  .xl\:w-\[70\%\] {
+    width: 70%;
+  } */
+
+  .logo-image{
+    width: 100%;
+  }
+
+  .inputcontainer{
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-control {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  
+  .form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+  
+  .form-checkbox {
+    margin-right: 0.5rem;
+  }
+  
+  .form-label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .description-box {
+    height: calc(2 * 1.5rem + 1rem); /* Double the height of the regular form-control */
+  }
+  
+  .lg\:text-left {
+    text-align: left;
+  }
+  
+  .mt-10 {
+    margin-top: 2.5rem;
+  }
+  
+  .mb-10 {
+    margin-bottom: 2.5rem;
+  }
+  
+  .submit-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #34d399;
+    color: #fff;
+    font-weight: 500;
+    text-transform: uppercase;
+    border-radius: 0.25rem;
+    transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  
+  .submit-button:hover {
+    background-color: #10b981;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+  
+  .submit-button:focus {
+    background-color: #10b981;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    outline: none;
+  }
+  
+  .submit-button:active {
+    background-color: #059669;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+  
+  .text-green-500 {
+    color: #10b981;
+  }
